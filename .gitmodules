@@ -1,0 +1,6 @@
+[submodule "pdb"]
+	path = pdb
+	url = https://github.com/eddiedb6/pdb.git
+[submodule "w3"]
+	path = w3
+	url = https://github.com/eddiedb6/w3.git
