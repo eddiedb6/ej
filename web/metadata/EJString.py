@@ -1,38 +1,10 @@
-import sys
-sys.path.append("..")
-import W3Const
-
-w3Lan = {
-    ###################################
-    # User data should be added below #
-    ###################################
-
+{
     W3Const.w3LanEnglish: {
         # DB
-        "sidTablePaymentmode1": "Credit Card",
-        "sidTablePaymentmode2": "Cash",
-        "sidTablePaymentmode3": "Alipay",
-        "sidTablePaymentmode4": "WeChat Wallet",
-
-        "sidTableBillscene1": "Online Shopping",
-        "sidTableBillscene2": "Supermarket",
-        "sidTableBillscene3": "Restaurant",
-        "sidTableBillscene4": "Mall",
-        "sidTableBillscene5": "Cafe",
-        "sidTableBillscene6": "Automatic",
-        "sidTableBillscene7": "Roadside Stall",
-        "sidTableBillscene8": "Gas Station",
-        "sidTableBillscene9": "Parking Lot",
-        "sidTableBillscene10": "Tourist Attraction",
-        "sidTableBillscene11": "Toll Station",
-        "sidTableBillscene12": "Theater",
-        "sidTableBillscene13": "Hospital",
-        "sidTableBillscene14": "Bookstore",
-        "sidTableBillscene15": "4S",
-        "sidTableBillscene16": "Fair",
-        "sidTableBillscene17": "Traffic Net",
-        "sidTableBillscene18": "Salon",
-        "sidTableBillscene19": "Hotel",
+        "sidTablePaymentMode1": "Credit Card",
+        "sidTablePaymentMode2": "Cash",
+        "sidTablePaymentMode3": "Alipay",
+        "sidTablePaymentMode4": "WeChat Wallet",
 
         "sidTableCurrency1": "CNY",    # China Yuan
         "sidTableCurrency2": "USD",    # US Dollar
@@ -54,24 +26,24 @@ w3Lan = {
         "sidTableCurrency18": "MOP",    # Macau Pataca
         "sidTableCurrency19": "LKR",    # Sri Lanka Rupee
 
-        "sidTableBillcategory1": "Diet", 
-        "sidTableBillcategory2": "Dress", 
-        "sidTableBillcategory3": "Traffic",
-        "sidTableBillcategory4": "Living", 
-        "sidTableBillcategory6": "Communication",
-        "sidTableBillcategory7": "Pet", 
-        "sidTableBillcategory8": "Entertainment", 
-        "sidTableBillcategory9": "Sports", 
-        "sidTableBillcategory10": "Travel", 
-        "sidTableBillcategory11": "Education",
-        "sidTableBillcategory12": "Healthy", 
-        "sidTableBillcategory13": "Sociality", 
-        "sidTableBillcategory17": "Reside",
+        "sidTableBillCategory1": "Diet", 
+        "sidTableBillCategory2": "Dress", 
+        "sidTableBillCategory3": "Traffic",
+        "sidTableBillCategory4": "Living", 
+        "sidTableBillCategory6": "Communication",
+        "sidTableBillCategory7": "Pet", 
+        "sidTableBillCategory8": "Entertainment", 
+        "sidTableBillCategory9": "Sports", 
+        "sidTableBillCategory10": "Travel", 
+        "sidTableBillCategory11": "Education",
+        "sidTableBillCategory12": "Healthy", 
+        "sidTableBillCategory13": "Sociality", 
+        "sidTableBillCategory17": "Reside",
 
-        "sidTableIncomecategory1": "Salary", 
-        "sidTableIncomecategory2": "Lucky Money",
-        "sidTableIncomecategory3": "Bonus", 
-        "sidTableIncomecategory4": "Annual Bonus",
+        "sidTableIncomeCategory1": "Salary", 
+        "sidTableIncomeCategory2": "Lucky Money",
+        "sidTableIncomeCategory3": "Bonus", 
+        "sidTableIncomeCategory4": "Annual Bonus",
         
         # Common 
         "sidButtonBack": "Back",
@@ -91,7 +63,6 @@ w3Lan = {
         "sidAmountLabel": "Amount:",
         "sidCurrencyLabel": "Currency:",
         "sidCategoryLabel": "Category:",
-        "sidSceneLabel": "Scene:",
         "sidPaymentLabel": "Payment Mode:",
         "sidNoteLabel": "Note:",
         "sidOwnerLabel": "Owner:",
@@ -111,7 +82,6 @@ w3Lan = {
         "sidColumnAmount": "Amount",
         "sidColumnCurrency": "Currency",
         "sidColumnCategory": "Category",
-        "sidColumnScene": "Scene",
         "sidColumnPayment": "Payment Mode",
         "sidColumnNote": "Note",
         "sidColumnOwner": "Owner",
@@ -144,8 +114,4 @@ w3Lan = {
         "sidFinanceTabReport": "Report",
         "sidFinanceTabEvent": "Event"
     }
-
-    ###################################
-    # User data should be added above #
-    ###################################
 }

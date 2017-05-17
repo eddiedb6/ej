@@ -1,11 +1,3 @@
-/************************************
- * User event should be added below *
- ************************************/
-
-function W3GoBack() {
-    javascript:history.back(-1);
-}
-
 function EJUpdateBill(column, value, indexRow, countRow, indexColumn, countColumn, data) {
     var rowData = "";
 
@@ -263,7 +255,3 @@ function EJCancelFinanceEventAdd() {
     $("#uidFinanceTabEventQueryPanel").css("display", "block");
     $("#uidFinanceTabEventAddPanel").css("display", "none");
 }
-
-/************************************
- * User event should be added above *
- ************************************/

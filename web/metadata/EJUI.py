@@ -1,12 +1,4 @@
-import sys
-sys.path.append("..")
-import W3Const
-
-w3UI = {
-    ###################################
-    # User data should be added below #
-    ###################################
-
+{
     # Common UI
     "uidButtonBack": {
         W3Const.w3PropType: W3Const.w3TypeButton,
@@ -63,11 +55,6 @@ w3UI = {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropClass: "cidRightLable",
         W3Const.w3PropString: "sidCategoryLabel"
-    },
-    "uidSceneLabel": {
-        W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
-        W3Const.w3PropString: "sidSceneLabel"
     },
     "uidPaymentLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
@@ -160,11 +147,6 @@ w3UI = {
         W3Const.w3PropString: "sidColumnCategory",
         W3Const.w3PropClass: "cidLRPadding"
     },
-    "uidColumnScene": {
-        W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropString: "sidColumnScene",
-        W3Const.w3PropClass: "cidLRPadding"
-    },
     "uidColumnPayment": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidColumnPayment",
@@ -212,9 +194,11 @@ w3UI = {
     },
 
     # Main Page
-    "uidBody": {
+    W3Const.w3UIBody: {
+        W3Const.w3PropDefaultPage: "uidPageFinance",
+        W3Const.w3PropDefaultErrorPage: "uidPageError",
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidHeader",
             "uidMain",
             "uidFooter"
@@ -222,7 +206,7 @@ w3UI = {
     },
     "uidHeader": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidTitle",
             "uidLine"
         ],
@@ -230,16 +214,39 @@ w3UI = {
             "text-align": "center",
         }
     },
+    "uidTitle": {
+        W3Const.w3PropType: W3Const.w3TypeHeadline,
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrHeadlineLevel : "1"
+        },
+        W3Const.w3PropString: "sidTitle" 
+    },
+    "uidFooter": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidLine",
+            "uidCopyright"
+        ],
+        W3Const.w3PropCSS: {
+            "text-align": "center",
+            "clear": "both",
+            "padding-top": "5px",
+        }
+    },
+    "uidCopyright": {
+        W3Const.w3PropType: W3Const.w3TypeParagraph,
+        W3Const.w3PropString: "sidCopyright"
+    },
     "uidMain": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidNavigation",
-            "uidContent"
+            "uidPage"
         ]
     },
     "uidNavigation": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidNaviFinance",
             "uidLineBreak",
             "uidNaviDebug",
@@ -250,43 +257,22 @@ w3UI = {
             "padding-right": "15px"
         }
     },
-    "uidContent": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
+    "uidPage": {
+        W3Const.w3PropType: W3Const.w3TypePage,
         W3Const.w3PropClass: "cidLRPadding",
-        W3Const.w3PropFunc: {
-            W3Const.w3FuncCreator: "W3SelectPage"
-        },
-        W3Const.w3PropClass: "cidLeftBorder"
     },
-    "uidFooter": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
-            "uidLine",
-            "uidCopyright"
-        ],
-        W3Const.w3PropCSS: {
-            "text-align": "center",
-            "clear": "both",
-            "padding-top": "5px",
-        }
-    },
-    "uidTitle": {
-        W3Const.w3PropType: W3Const.w3TypeHeadline,
-        W3Const.w3PropTypeDef: "1",
-        W3Const.w3PropString: "sidTitle" 
-    },
-    "uidCopyright": {
-        W3Const.w3PropType: W3Const.w3TypeParagraph,
-        W3Const.w3PropString: "sidCopyright"
-    },
-
+    
     # Navigation
     "uidNaviFinance": {
         W3Const.w3PropType: W3Const.w3TypeLink,
         W3Const.w3PropString: "sidNaviFinance",
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidPage",
-            W3Const.w3ApiParam1: "uidPageFinance"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidPageFinance"
+            }]
         }
     },
     "uidNaviDebug": {
@@ -294,14 +280,18 @@ w3UI = {
         W3Const.w3PropString: "sidNaviDebug",
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidPage",
-            W3Const.w3ApiParam1: "uidPageDebug"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidPageDebug"
+            }]
         }
     },
 
     # Debug Page
     "uidPageDebug": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidDebugContent",
             "uidLineBreak",
             "uidButtonBack"
@@ -318,7 +308,7 @@ w3UI = {
     # Error Page
     "uidPageError": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidErrorContent",
             "uidLineBreak",
             "uidButtonBack"
@@ -335,18 +325,18 @@ w3UI = {
     # Finance Page
     "uidPageFinance": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceTab"
         ]
     },
     "uidFinanceTab": {
         W3Const.w3PropType: W3Const.w3TypeTab,
-        W3Const.w3PropTypeDef: [
-            ["uidFinanceTabBillLabel", "uidFinanceTabBillPanel"],
+        W3Const.w3PropSubUI: [
+            ["uidFinanceTabBillLabel",   "uidFinanceTabBillPanel"],
             ["uidFinanceTabIncomeLabel", "uidFinanceTabIncomePanel"],
-            ["uidFinanceTabDebtLabel", "uidFinanceTabDebtPanel"],
+            ["uidFinanceTabDebtLabel",   "uidFinanceTabDebtPanel"],
             ["uidFinanceTabReportLabel", "uidFinanceTabReportPanel"],
-            ["uidFinanceTabEventLabel", "uidFinanceTabEventPanel"]
+            ["uidFinanceTabEventLabel",  "uidFinanceTabEventPanel"]
         ],
         W3Const.w3PropCSS: {
             # CSS for tab only support these format
@@ -384,7 +374,7 @@ w3UI = {
     # Finance Page - bill tab
     "uidFinanceTabBillPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceTabBillQueryPanel",
             "uidFinanceTabBillAddPanel"
         ]
@@ -393,7 +383,7 @@ w3UI = {
     # Finance Page - bill tab, add
     "uidFinanceTabBillAddPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidBillAddTable",
             "uidBillAddOperationPanel"
         ],
@@ -403,18 +393,15 @@ w3UI = {
     },
     "uidBillAddOperationPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidBillAddOperationTable"
         ]
     },
     "uidBillAddOperationTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidBillAddSubmitButton",
-                "uidBillAddCancelButton"
-            ]
+            ["uidBillAddSubmitButton", "uidBillAddCancelButton"]
         ],
         W3Const.w3PropCSS: {
             "float": "right"
@@ -422,44 +409,16 @@ w3UI = {
     },
     "uidBillAddTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidOwnerLabel",
-                "uidBillAddOwner"
-            ],
-            [
-                "uidDatetimeLabel",
-                "uidBillAddDatetime"
-            ],
-            [
-                "uidAmountLabel",
-                "uidBillAddAmount"
-            ],
-            [
-                "uidCurrencyLabel",
-                "uidBillAddCurrency"
-            ],
-            [
-                "uidCategoryLabel",
-                "uidBillAddCategory"
-            ],
-            [
-                "uidSceneLabel",
-                "uidBillAddScene"
-            ],
-            [
-                "uidPaymentLabel",
-                "uidBillAddPaymentMode"
-            ],
-            [
-                "uidNoteLabel",
-                "uidBillAddNote"
-            ],
-            [
-                "uidEventLabel",
-                "uidBillAddEvent"
-            ]
+            ["uidOwnerLabel",    "uidBillAddOwner"],
+            ["uidDatetimeLabel", "uidBillAddDatetime"],
+            ["uidAmountLabel",   "uidBillAddAmount"],
+            ["uidCurrencyLabel", "uidBillAddCurrency"],
+            ["uidCategoryLabel", "uidBillAddCategory"],
+            ["uidPaymentLabel",  "uidBillAddPaymentMode"],
+            ["uidNoteLabel",     "uidBillAddNote"],
+            ["uidEventLabel",    "uidBillAddEvent"]
         ]
     },
     "uidBillAddDatetime": {
@@ -478,12 +437,6 @@ w3UI = {
         W3Const.w3PropType: W3Const.w3TypeCombobox,
         W3Const.w3PropFunc: {
             W3Const.w3FuncCreator: "EJCreateBillCategoryCombo"
-        }
-    },
-    "uidBillAddScene": {
-        W3Const.w3PropType: W3Const.w3TypeCombobox,
-        W3Const.w3PropFunc: {
-            W3Const.w3FuncCreator: "EJCreateBillSceneCombo"
         }
     },
     "uidBillAddPaymentMode": {
@@ -509,15 +462,39 @@ w3UI = {
         W3Const.w3PropString: "sidSubmit",
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidAddBill",
-            W3Const.w3ApiParam1: "uidBillAddOwner",
-            W3Const.w3ApiParam2: "uidBillAddDatetime",
-            W3Const.w3ApiParam3: "uidBillAddAmount",
-            W3Const.w3ApiParam4: "uidBillAddCurrency",
-            W3Const.w3ApiParam5: "uidBillAddCategory",
-            W3Const.w3ApiParam6: "uidBillAddScene",
-            W3Const.w3ApiParam7: "uidBillAddPaymentMode",
-            W3Const.w3ApiParam8: "uidBillAddNote",
-            W3Const.w3ApiParam9: "uidBillAddEvent"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillAddOwner"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillAddDatetime"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillAddAmount"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillAddCurrency"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillAddCategory"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillAddPaymentMode"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillAddNote"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillAddEvent"
+            }]
         },
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: "W3Submit('uidBillAddSubmitButton')"
@@ -534,26 +511,22 @@ w3UI = {
     # Finance Page - bill tab, query
     "uidFinanceTabBillQueryPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidBillFilterTable",
             "uidBillDisplayTable"
         ]
     },
     "uidBillDisplayTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [],
-            [
-                "uidBillTable"
-            ],
-            [
-                "uidBillTotalPanel"
-            ]
+            ["uidBillTable"],
+            ["uidBillTotalPanel"]
         ]
     },
     "uidBillTotalPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidTotalLabel",
             "uidBillTotalAmount"
         ],
@@ -567,41 +540,15 @@ w3UI = {
     },
     "uidBillFilterTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidFromLabel",
-                "uidBillFilterFromDatePicker",
-                "uidToLabel",
-                "uidBillFilterToDatePicker",
-                "uidBillFilterGetButton",
-                "uidBillFilterAddButton"
-            ]
+            ["uidFromLabel", "uidBillFilterFromDatePicker", "uidToLabel", "uidBillFilterToDatePicker", "uidBillFilterGetButton", "uidBillFilterAddButton"]
         ]
     },
     "uidBillTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
-            [
-                "uidColumnOwner",
-                "uidColumnDatetime",
-                "uidColumnAmount",
-                "uidColumnCurrency",
-                "uidColumnCategory",
-                "uidColumnScene",
-                "uidColumnPayment",
-                "uidColumnNote"
-            ]
-        ],
-        W3Const.w3PropApi: [
-            "owner",
-            "datetime",
-            "amount",
-            "currency",
-            "category",
-            "scene",
-            "paymentmode",
-            "note"
+        W3Const.w3PropSubUI: [
+            ["uidColumnOwner", "uidColumnDatetime", "uidColumnAmount", "uidColumnCurrency", "uidColumnCategory", "uidColumnPayment", "uidColumnNote"]
         ],
         W3Const.w3PropCSS: {
             "border": "1px solid"
@@ -621,8 +568,15 @@ w3UI = {
         },
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidBill",
-            W3Const.w3ApiParam1: "uidBillFilterFromDatePicker",
-            W3Const.w3ApiParam2: "uidBillFilterToDatePicker"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillFilterFromDatePicker"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidBillFilterToDatePicker"
+            }]
         }
     },
     "uidBillFilterAddButton": {
@@ -636,7 +590,7 @@ w3UI = {
     # Finance Page - income tab
     "uidFinanceTabIncomePanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceTabIncomeQueryPanel",
             "uidFinanceTabIncomeAddPanel"
         ]
@@ -645,26 +599,22 @@ w3UI = {
     # Finance Page - income tab, query
     "uidFinanceTabIncomeQueryPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidIncomeFilterTable",
             "uidIncomeDisplayTable"
         ],
     },
     "uidIncomeDisplayTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
-            [],
-            [
-                "uidIncomeTable"
-            ],
-            [
-                "uidIncomeTotalPanel"
-            ]
+        W3Const.w3PropSubUI: [
+            [], # No header
+            ["uidIncomeTable"],
+            ["uidIncomeTotalPanel"]
         ]
     },
     "uidIncomeTotalPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidTotalLabel",
             "uidIncomeTotalAmount"
         ],
@@ -678,16 +628,9 @@ w3UI = {
     },
     "uidIncomeFilterTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidFromLabel",
-                "uidIncomeFilterFromDatePicker",
-                "uidToLabel",
-                "uidIncomeFilterToDatePicker",
-                "uidIncomeFilterGetButton",
-                "uidIncomeFilterAddButton"
-            ]
+            ["uidFromLabel", "uidIncomeFilterFromDatePicker", "uidToLabel", "uidIncomeFilterToDatePicker", "uidIncomeFilterGetButton", "uidIncomeFilterAddButton"]
         ]
     },
     "uidIncomeFilterFromDatePicker": {
@@ -704,8 +647,15 @@ w3UI = {
         },
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidIncome",
-            W3Const.w3ApiParam1: "uidIncomeFilterFromDatePicker",
-            W3Const.w3ApiParam2: "uidIncomeFilterToDatePicker"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidIncomeFilterFromDatePicker"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidIncomeFilterToDatePicker"
+            }]
         }
     },
     "uidIncomeFilterAddButton": {
@@ -717,23 +667,8 @@ w3UI = {
     },
     "uidIncomeTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
-            [
-                "uidColumnOwner",
-                "uidColumnDatetime",
-                "uidColumnAmount",
-                "uidColumnCurrency",
-                "uidColumnCategory",
-                "uidColumnNote"
-            ]
-        ],
-        W3Const.w3PropApi: [
-            "owner",
-            "datetime",
-            "amount",
-            "currency",
-            "category",
-            "note"
+        W3Const.w3PropSubUI: [
+            ["uidColumnOwner", "uidColumnDatetime", "uidColumnAmount", "uidColumnCurrency", "uidColumnCategory", "uidColumnNote"]
         ],
         W3Const.w3PropCSS: {
             "border": "1px solid"
@@ -743,7 +678,7 @@ w3UI = {
     # Finance Page - income tab, add
     "uidFinanceTabIncomeAddPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidIncomeAddTable",
             "uidIncomeAddOperationPanel"
         ],
@@ -753,18 +688,15 @@ w3UI = {
     },
     "uidIncomeAddOperationPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidIncomeAddOperationTable"
         ]
     },
     "uidIncomeAddOperationTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidIncomeAddSubmitButton",
-                "uidIncomeAddCancelButton"
-            ]
+            ["uidIncomeAddSubmitButton", "uidIncomeAddCancelButton"]
         ],
         W3Const.w3PropCSS: {
             "float": "right"
@@ -772,32 +704,14 @@ w3UI = {
     },
     "uidIncomeAddTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidOwnerLabel",
-                "uidIncomeAddOwner"
-            ],
-            [
-                "uidDatetimeLabel",
-                "uidIncomeAddDatetime"
-            ],
-            [
-                "uidAmountLabel",
-                "uidIncomeAddAmount"
-            ],
-            [
-                "uidCurrencyLabel",
-                "uidIncomeAddCurrency"
-            ],
-            [
-                "uidCategoryLabel",
-                "uidIncomeAddCategory"
-            ],
-            [
-                "uidNoteLabel",
-                "uidIncomeAddNote"
-            ]
+            ["uidOwnerLabel",    "uidIncomeAddOwner"],
+            ["uidDatetimeLabel", "uidIncomeAddDatetime"],
+            ["uidAmountLabel",   "uidIncomeAddAmount"],
+            ["uidCurrencyLabel", "uidIncomeAddCurrency"],
+            ["uidCategoryLabel", "uidIncomeAddCategory"],
+            ["uidNoteLabel",     "uidIncomeAddNote"]
         ]
     },
     "uidIncomeAddDatetime": {
@@ -832,12 +746,31 @@ w3UI = {
         W3Const.w3PropString: "sidSubmit",
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidAddIncome",
-            W3Const.w3ApiParam1: "uidIncomeAddOwner",
-            W3Const.w3ApiParam2: "uidIncomeAddDatetime",
-            W3Const.w3ApiParam3: "uidIncomeAddAmount",
-            W3Const.w3ApiParam4: "uidIncomeAddCurrency",
-            W3Const.w3ApiParam5: "uidIncomeAddCategory",
-            W3Const.w3ApiParam6: "uidIncomeAddNote"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidIncomeAddOwner"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidIncomeAddDatetime"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidIncomeAddAmount"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidIncomeAddCurrency"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidIncomeAddCategory"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidIncomeAddNote"
+            }]
         },
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: "W3Submit('uidIncomeAddSubmitButton')"
@@ -860,7 +793,7 @@ w3UI = {
     # Financial Page - debt tab
     "uidFinanceTabDebtPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceTabDebtQueryPanel",
             "uidFinanceTabDebtAddPanel"
         ]
@@ -869,23 +802,16 @@ w3UI = {
     # Finance Page - debt tab, query
     "uidFinanceTabDebtQueryPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidDebtFilterTable",
             "uidDebtTable"
         ],
     },
     "uidDebtFilterTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidFromLabel",
-                "uidDebtFilterFromDatePicker",
-                "uidToLabel",
-                "uidDebtFilterToDatePicker",
-                "uidDebtFilterGetButton",
-                "uidDebtFilterAddButton"
-            ]
+            ["uidFromLabel", "uidDebtFilterFromDatePicker", "uidToLabel", "uidDebtFilterToDatePicker", "uidDebtFilterGetButton", "uidDebtFilterAddButton"]
         ]
     },
     "uidDebtFilterFromDatePicker": {
@@ -902,8 +828,15 @@ w3UI = {
         },
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidDebt",
-            W3Const.w3ApiParam1: "uidDebtFilterFromDatePicker",
-            W3Const.w3ApiParam2: "uidDebtFilterToDatePicker"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidDebtFilterFromDatePicker"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidDebtFilterToDatePicker"
+            }]
         }
     },
     "uidDebtFilterAddButton": {
@@ -915,21 +848,8 @@ w3UI = {
     },
     "uidDebtTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
-            [
-                "uidColumnStart",
-                "uidColumnEnd",
-                "uidColumnAmount",
-                "uidColumnBalance",
-                "uidColumnNote"
-            ]
-        ],
-        W3Const.w3PropApi: [
-            "start",
-            "end",
-            "amount",
-            "balance",
-            "note"
+        W3Const.w3PropSubUI: [
+            ["uidColumnStart", "uidColumnEnd", "uidColumnAmount", "uidColumnBalance", "uidColumnNote"]
         ],
         W3Const.w3PropCSS: {
             "border": "1px solid"
@@ -939,7 +859,7 @@ w3UI = {
     # Finance Page - debt tab, add
     "uidFinanceTabDebtAddPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidDebtAddTable",
             "uidDebtAddOperationPanel"
         ],
@@ -949,18 +869,15 @@ w3UI = {
     },
     "uidDebtAddOperationPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidDebtAddOperationTable"
         ]
     },
     "uidDebtAddOperationTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidDebtAddSubmitButton",
-                "uidDebtAddCancelButton"
-            ]
+            ["uidDebtAddSubmitButton", "uidDebtAddCancelButton"]
         ],
         W3Const.w3PropCSS: {
             "float": "right"
@@ -968,28 +885,13 @@ w3UI = {
     },
     "uidDebtAddTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidStartLabel",
-                "uidDebtAddStart"
-            ],
-            [
-                "uidEndLabel",
-                "uidDebtAddEnd"
-            ],
-            [
-                "uidAmountLabel",
-                "uidDebtAddAmount"
-            ],
-            [
-                "uidBalanceLabel",
-                "uidDebtAddBalance"
-            ],
-            [
-                "uidNoteLabel",
-                "uidDebtAddNote"
-            ]
+            ["uidStartLabel",   "uidDebtAddStart"],
+            ["uidEndLabel",     "uidDebtAddEnd"],
+            ["uidAmountLabel",  "uidDebtAddAmount"],
+            ["uidBalanceLabel", "uidDebtAddBalance"],
+            ["uidNoteLabel",    "uidDebtAddNote"]
         ]
     },
     "uidDebtAddStart": {
@@ -1012,11 +914,27 @@ w3UI = {
         W3Const.w3PropString: "sidSubmit",
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidAddDebt",
-            W3Const.w3ApiParam1: "uidDebtAddStart",
-            W3Const.w3ApiParam2: "uidDebtAddEnd",
-            W3Const.w3ApiParam3: "uidDebtAddAmount",
-            W3Const.w3ApiParam4: "uidDebtAddBalance",
-            W3Const.w3ApiParam5: "uidDebtAddNote"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidDebtAddStart"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidDebtAddEnd"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidDebtAddAmount"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidDebtAddBalance"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidDebtAddNote"
+            }]
         },
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: "W3Submit('uidDebtAddSubmitButton')"
@@ -1039,23 +957,21 @@ w3UI = {
     # Financial Page - report tab
     "uidFinanceTabReportPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceReportFilterTable",
             "uidFinanceReportTable"
         ]
     },
     "uidFinanceReportFilterTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidFinanceReportFilterPanel"
-            ]
+            ["uidFinanceReportFilterPanel"]
         ]
     },
     "uidFinanceReportFilterPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidMonthLabel",
             "uidFinanceReportFilterDatePicker",
             "uidFinanceReportFilterGetButton"
@@ -1069,7 +985,11 @@ w3UI = {
         W3Const.w3PropString: "sidGet",
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidFinanceReport",
-            W3Const.w3ApiParam1: "uidFinanceReportFilterDatePicker"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidFinanceReportFilterDatePicker"
+            }]
         },
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: "EJGetFinaceReport('uidFinanceReportFilterGetButton')"
@@ -1080,52 +1000,15 @@ w3UI = {
         W3Const.w3PropCSS: {
             "border": "1px solid"
         },
-        W3Const.w3PropTypeDef: [
-            [
-                "uidNullLabel",
-                "uidColumnMonthReport",
-                "uidColumnYearReport"
-            ],
-            [
-                "uidIncomeLabel",
-                "uidFinanceReportIncomeValue",
-                "uidFinanceReportIncomeYearValue"
-            ],
-            [
-                "uidDepositLabel",
-                "uidFinanceReportDepositValue",
-                "uidFinanceReportDepositYearValue"
-            ],
-            [
-                "uidDebtLabel",
-                "uidFinanceReportDebtValue",
-                "uidFinanceReportDebtYearValue"
-            ],
-            [
-                "uidConsumeLabel",
-                "uidFinanceReportConsumeValue",
-                "uidFinanceReportConsumeYearValue"
-            ],
-            [
-                "uidBalanceLabel",
-                "uidFinanceReportBalanceValue",
-                "uidFinanceReportBalanceYearValue"
-            ],
-            [
-                "uidCategoryLabel",
-                "uidFinanceCategoryReportPanel",
-                "uidFinanceCategoryYearReportPanel"
-            ],
-            [
-                "uidSceneLabel",
-                "uidFinanceSceneReportPanel",
-                "uidFinanceSceneYearReportPanel"
-            ],
-            [
-                "uidPaymentLabel",
-                "uidFinancePaymentmodeReportPanel",
-                "uidFinancePaymentmodeYearReportPanel"
-            ]
+        W3Const.w3PropSubUI: [
+            ["uidNullLabel",     "uidColumnMonthReport",             "uidColumnYearReport"],
+            ["uidIncomeLabel",   "uidFinanceReportIncomeValue",      "uidFinanceReportIncomeYearValue"],
+            ["uidDepositLabel",  "uidFinanceReportDepositValue",     "uidFinanceReportDepositYearValue"],
+            ["uidDebtLabel",     "uidFinanceReportDebtValue",        "uidFinanceReportDebtYearValue"],
+            ["uidConsumeLabel",  "uidFinanceReportConsumeValue",     "uidFinanceReportConsumeYearValue"],
+            ["uidBalanceLabel",  "uidFinanceReportBalanceValue",     "uidFinanceReportBalanceYearValue"],
+            ["uidCategoryLabel", "uidFinanceCategoryReportPanel",    "uidFinanceCategoryYearReportPanel"],
+            ["uidPaymentLabel",  "uidFinancePaymentmodeReportPanel", "uidFinancePaymentmodeYearReportPanel"]
         ]
     },
     "uidFinanceReportCanvasPlaceHolder": {
@@ -1185,37 +1068,25 @@ w3UI = {
     },
     "uidFinanceCategoryReportPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceReportCanvasPlaceHolder"
         ]        
     },
     "uidFinanceCategoryYearReportPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
-            "uidFinanceReportCanvasPlaceHolder"
-        ]
-    },
-    "uidFinanceSceneReportPanel": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
-            "uidFinanceReportCanvasPlaceHolder"
-        ]        
-    },
-    "uidFinanceSceneYearReportPanel": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceReportCanvasPlaceHolder"
         ]
     },
     "uidFinancePaymentmodeReportPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceReportCanvasPlaceHolder"
         ]        
     },
     "uidFinancePaymentmodeYearReportPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceReportCanvasPlaceHolder"
         ]
     },
@@ -1223,7 +1094,7 @@ w3UI = {
     # Financial Page - event tab
     "uidFinanceTabEventPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceTabEventQueryPanel",
             "uidFinanceTabEventAddPanel"
         ]
@@ -1232,7 +1103,7 @@ w3UI = {
     # Finance Page - event tab, add
     "uidFinanceTabEventAddPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceEventAddTable",
             "uidFinanceEventAddOperationPanel"
         ],
@@ -1242,18 +1113,15 @@ w3UI = {
     },
     "uidFinanceEventAddOperationPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceEventAddOperationTable"
         ]
     },
     "uidFinanceEventAddOperationTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidFinanceEventAddSubmitButton",
-                "uidFinanceEventAddCancelButton"
-            ]
+            ["uidFinanceEventAddSubmitButton", "uidFinanceEventAddCancelButton"]
         ],
         W3Const.w3PropCSS: {
             "float": "right"
@@ -1261,20 +1129,11 @@ w3UI = {
     },
     "uidFinanceEventAddTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidEventLabel",
-                "uidFinanceEventAddName"
-            ],
-            [
-                "uidBudgetLabel",
-                "uidFinanceEventAddBudget"
-            ],
-            [
-                "uidNoteLabel",
-                "uidFinanceEventAddNote"
-            ]
+            ["uidEventLabel",  "uidFinanceEventAddName"],
+            ["uidBudgetLabel", "uidFinanceEventAddBudget"],
+            ["uidNoteLabel",   "uidFinanceEventAddNote"]
         ]
     },
     "uidFinanceEventAddName": {
@@ -1291,9 +1150,19 @@ w3UI = {
         W3Const.w3PropString: "sidSubmit",
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidAddFinanceEvent",
-            W3Const.w3ApiParam1: "uidFinanceEventAddName",
-            W3Const.w3ApiParam2: "uidFinanceEventAddBudget",
-            W3Const.w3ApiParam3: "uidFinanceEventAddNote"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidFinanceEventAddName"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidFinanceEventAddBudget"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidFinanceEventAddNote"
+            }]
         },
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: "W3Submit('uidFinanceEventAddSubmitButton')"
@@ -1310,26 +1179,15 @@ w3UI = {
     # Finance Page - event tab, query
     "uidFinanceTabEventQueryPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             "uidFinanceEventFilterTable",
             "uidFinanceEventTable"
         ]
     },
     "uidFinanceEventTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
-            [
-                "uidColumnEvent",
-                "uidColumnBudget",
-                "uidColumnBalance",
-                "uidColumnNote"
-            ]
-        ],
-        W3Const.w3PropApi: [
-            "name",
-            "budget",
-            "balance",
-            "note"
+        W3Const.w3PropSubUI: [
+            ["uidColumnEvent", "uidColumnBudget", "uidColumnBalance", "uidColumnNote"]
         ],
         W3Const.w3PropCSS: {
             "border": "1px solid"
@@ -1337,14 +1195,9 @@ w3UI = {
     },
     "uidFinanceEventFilterTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
-        W3Const.w3PropTypeDef: [
+        W3Const.w3PropSubUI: [
             [], # No header
-            [
-                "uidEventLabel",
-                "uidFinanceEventNameText",
-                "uidFinanceEventGetButton",
-                "uidFinanceEventAddButton"
-            ]
+            ["uidEventLabel", "uidFinanceEventNameText", "uidFinanceEventGetButton", "uidFinanceEventAddButton"]
         ]
     },
     "uidFinanceEventNameText": {
@@ -1355,7 +1208,11 @@ w3UI = {
         W3Const.w3PropString: "sidGet",
         W3Const.w3PropApi: {
             W3Const.w3ApiID: "aidFinanceEvent",
-            W3Const.w3ApiParam1: "uidFinanceEventNameText"
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidFinanceEventNameText"
+            }]
         },
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: "W3UpdateTable('uidFinanceEventGetButton', 'uidFinanceEventTable', EJUpdateFinanceEvent)"
@@ -1371,8 +1228,4 @@ w3UI = {
             W3Const.w3EventClick: "EJAddFinanceEvent()"
         }
     }
-
-    ###################################
-    # User data should be added above #
-    ###################################
 }
