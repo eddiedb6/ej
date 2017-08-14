@@ -28,11 +28,7 @@ function EJCreateIncomeCategoryCombo() {
     return EJCreateOptionListFromDB("incomecategory", "ID", "SID");
 }
 
-function EJCreateBillSceneCombo() {
-    return EJCreateOptionListFromDB("billscene", "ID", "SID");
-}
-
-function EJCreatePaymentmodeCombo() {
+function EJCreatePaymentModeCombo() {
     return EJCreateOptionListFromDB("paymentmode", "ID", "SID");
 }
 

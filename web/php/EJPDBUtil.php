@@ -67,7 +67,7 @@ function EJInsertBill(&$bill) {
 
     # First insert bill
     
-    $columns = array ("PID", "Datetime", "Amount", "Currency", "Category", "Scene", "PaymentMode", "Note");
+    $columns = array ("PID", "Datetime", "Amount", "Currency", "Category", "PaymentMode", "Note");
     $size = sizeof($columns);
 
     if (sizeof($bill) - 2 != $size) {
@@ -84,8 +84,7 @@ function EJInsertBill(&$bill) {
                     $bill[4],
                     $bill[5],
                     $bill[6],
-                    $bill[7],
-                    W3MakeString($bill[8], true));
+                    W3MakeString($bill[7], true));
     $sql = "insert into bill (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
 
     if (!$ejConn->query($sql)) {
@@ -95,7 +94,7 @@ function EJInsertBill(&$bill) {
 
     // Then map bill to finance event
 
-    $events = $bill[9];
+    $events = $bill[8];
     if (trim($events) == "") {
         return true;
     }
@@ -108,7 +107,8 @@ function EJInsertBill(&$bill) {
         if (trim($billId) == "") {
             return;
         }
-        
+
+        // Support multiple events separated by ","
         $eventsArray = explode(",", $events);
         foreach ($eventsArray as $value) {
             $event = trim($value);

@@ -1,86 +1,15 @@
-function EJUpdateBill(column, value, indexRow, countRow, indexColumn, countColumn, data) {
-    var rowData = "";
-
-    if (column == "datetime") {
-	rowData += "<td>" + value.split(" ")[0] + "</td>";
-    } else if (column == "currency" || column == "category" || column == "scene" || column == "paymentmode") {
-	rowData += "<td>" + w3Lan[W3GetLanguage()][value] + "</td>";
-    } else if (column == "amount") {
-	if (indexRow == 0) {
-	    data["total"] = 0.0;
-	}
-	rowData += "<td style='text-align:right'>" + value + "</td>";
-	data["total"] += Number(value); // TODO, convert between different money required
-	if (indexRow + 1 >= countRow) {
-	    $("#uidBillTotalAmount").text(data["total"].toFixed(2).toString());
-	}
-    } else {
-	rowData += "<td>" + value + "</td>";
-    }
-
-    return rowData;
-}
-
-function EJUpdateDebt(column, value, indexRow, countRow, indexColumn, countColumn, data) {
-    var rowData = "";
-    if (column == "start" || column == "end") {
-	rowData += "<td>" + value.split(" ")[0] + "</td>";
-    } else if (column == "amount" || column == "balance") {
-	rowData += "<td style='text-align:right'>" + value + "</td>";
-    } else {
-	rowData += "<td>" + value + "</td>";
-    }
-
-    return rowData;
-}
-
-function EJUpdateFinanceEvent(column, value, indexRow, countRow, indexColumn, countColumn, data) {
-    var rowData = "";
-    if (column == "budget") {
-	rowData += "<td style='text-align:right'>" + value + "</td>";
-    } else if (column == "balance") {
-	var css = "color:green";
-	if (value < 0) {
-	    css = "color:red";
-	}
-
-	// Round to 0.00 format
-	var balance = parseFloat(value);
-	
-	rowData += "<td style='text-align:right;" + css + "'>" + balance.toFixed(2) + "</td>";
-    } else {
-	rowData += "<td>" + value + "</td>";
-    }
-
-    return rowData;
-}
-
-function EJUpdateIncome(column, value, indexRow, countRow, indexColumn, countColumn, data) {
-    var rowData = "";
-    if (column == "datetime") {
-	rowData += "<td>" + value.split(" ")[0] + "</td>";
-    } else if (column == "currency" || column == "category") {
-	rowData += "<td>" + w3Lan[W3GetLanguage()][value] + "</td>";
-    } else if (column == "amount") {
-	if (indexRow == 0) {
-	    data["total"] = 0.0;
-	}
-	rowData += "<td style='text-align:right'>" + value + "</td>";
-	data["total"] += Number(value); // TODO, convert between different money required
-	if (indexRow + 1 >= countRow) {
-	    $("#uidIncomeTotalAmount").text(data["total"].toFixed(2).toString());
-	}
-    } else {
-	rowData += "<td>" + value + "</td>";
-    }
-    
-    return rowData;
-}
-
-function EJGetFinaceReport(uid) {
+function EJGetFinanceReport(uid) {
     var request = W3CreateAPI(uid);
+    if (request == "") {
+	W3LogError("Failed to create finance report request");
+	return;
+    }
+
+    W3LogDebug("Get finance report: " + request);
+    
     $.get(request, function(data, status) {
-	var report = eval("(" + data + ")")[w3ApiResultData][0];
+	W3LogDebug(data);
+	var report = eval("(" + data + ")")[w3ApiResultData];
 	$("#uidFinanceReportIncomeValue").text(report["income"].toFixed(2).toString());
 	$("#uidFinanceReportDepositValue").text(report["deposit"].toFixed(2).toString());
 	$("#uidFinanceReportDebtValue").text(report["debt"].toFixed(2).toString());
@@ -92,6 +21,8 @@ function EJGetFinaceReport(uid) {
 	$("#uidFinanceReportConsumeYearValue").text(report["consumeyear"].toFixed(2).toString());
 	$("#uidFinanceReportBalanceYearValue").text(report["balanceyear"].toFixed(2).toString());
 
+	// TODO
+	
 	if (report["balanceyear"] >= 0) {
 	    $("#uidFinanceReportBalanceYearValue").css("color", "green");
 	} else {
@@ -216,42 +147,3 @@ function EJGetFinaceReport(uid) {
     });
 }
 
-function EJAddBill() {
-    $("#uidFinanceTabBillQueryPanel").css("display", "none");
-    $("#uidFinanceTabBillAddPanel").css("display", "block");
-}
-
-function EJAddDebt() {
-    $("#uidFinanceTabDebtQueryPanel").css("display", "none");
-    $("#uidFinanceTabDebtAddPanel").css("display", "block");
-}
-
-function EJAddIncome() {
-    $("#uidFinanceTabIncomeQueryPanel").css("display", "none");
-    $("#uidFinanceTabIncomeAddPanel").css("display", "block");
-}
-
-function EJAddFinanceEvent() {
-    $("#uidFinanceTabEventQueryPanel").css("display", "none");
-    $("#uidFinanceTabEventAddPanel").css("display", "block");
-}
-
-function EJCancelBillAdd() {
-    $("#uidFinanceTabBillQueryPanel").css("display", "block");
-    $("#uidFinanceTabBillAddPanel").css("display", "none");
-}
-
-function EJCancelDebtAdd() {
-    $("#uidFinanceTabDebtQueryPanel").css("display", "block");
-    $("#uidFinanceTabDebtAddPanel").css("display", "none");
-}
-
-function EJCancelIncomeAdd() {
-    $("#uidFinanceTabIncomeQueryPanel").css("display", "block");
-    $("#uidFinanceTabIncomeAddPanel").css("display", "none");
-}
-
-function EJCancelFinanceEventAdd() {
-    $("#uidFinanceTabEventQueryPanel").css("display", "block");
-    $("#uidFinanceTabEventAddPanel").css("display", "none");
-}

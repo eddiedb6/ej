@@ -12,7 +12,7 @@
         W3Const.w3PropCSS: {
             "border-left": "1px solid",
             "padding-left": "5px",
-            "float": "left",
+            "float": "left"
         }
     },
 

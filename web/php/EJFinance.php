@@ -12,19 +12,16 @@ function EJGetBill(&$filter) {
          "bill.Datetime as datetime, bill.Amount as amount, bill.Note as note," .
          "person.Name as owner," .
          "currency.SID as currency," .
-         "billscene.SID as scene," .
          "paymentmode.SID as paymentmode," .
          "billcategory.SID as category" .
          " from " .
-         "bill, currency, billscene, paymentmode, billcategory, person" .
+         "bill, currency, paymentmode, billcategory, person" .
          " where " .
          "bill.Datetime >= '" . $filter[1] . "' and bill.Datetime <= '" . $filter[2] . "'" .
          " and " .
          "bill.PID = person.ID" . 
          " and " .
          "bill.Currency = currency.ID" .
-         " and " .
-         "bill.Scene = billscene.ID" .
          " and " .
          "bill.PaymentMode = paymentmode.ID" .
          " and " .
@@ -37,12 +34,12 @@ function EJGetBill(&$filter) {
         $columns = $w3API["aidBill"][w3ApiResult][w3ApiResultData];
         $result .= "{";
         foreach ($columns as $value) {
-            $result .= W3MakeString($value[1]) . ":" . W3MakeString($row[$value[1]]) . ",";
+            $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($row[$value[w3ApiDataValue]]) . ",";
         }
         $result = rtrim($result, ",") . "},";
     });
     $result = rtrim($result, ",") . "]}";
-    
+
     return $result;
 }
 
@@ -67,7 +64,7 @@ function EJGetDebt(&$filter) {
         $columns = $w3API["aidDebt"][w3ApiResult][w3ApiResultData];
         $result .= "{";
         foreach ($columns as $value) {
-            $result .= W3MakeString($value[1]) . ":" . W3MakeString($row[$value[1]]) . ",";
+            $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($row[$value[w3ApiDataValue]]) . ",";
         }
         $result = rtrim($result, ",") . "},";
     });
@@ -110,15 +107,15 @@ function EJGetFinanceEvent(&$filter) {
 
         $budget = "";
         foreach ($columns as $value) {
-            if ($value[1] == "budget") {
+            if ($value[w3ApiDataValue] == "budget") {
                 $budget = $row["budget"];
             }
 
-            if ($value[1] == "balance") {
-                $balance = floatval($budget) - floatval($amount);
-                $result .= W3MakeString($value[1]) . ":" . W3MakeString(strval($balance)) . ",";
+            if ($value[w3ApiDataValue] == "balance") {
+                $balance = sprintf("%01.2f", floatval($budget) - floatval($amount));
+                $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($balance) . ",";
             } else {
-                $result .= W3MakeString($value[1]) . ":" . W3MakeString($row[$value[1]]) . ",";
+                $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($row[$value[w3ApiDataValue]]) . ",";
             }
         }
 
@@ -160,7 +157,7 @@ function EJGetIncome(&$filter) {
         $columns = $w3API["aidIncome"][w3ApiResult][w3ApiResultData];
         $result .= "{";
         foreach ($columns as $value) {
-            $result .= W3MakeString($value[1]) . ":" . W3MakeString($row[$value[1]]) . ",";
+            $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($row[$value[w3ApiDataValue]]) . ",";
         }
         $result = rtrim($result, ",") . "},";
     });
@@ -344,11 +341,6 @@ function EJCalculateFinanceReport($year, $month, &$reports) {
     $reports["category"] = $reports["percentage"];
     $reports["categoryyear"] = $reports["percentageyear"];
 
-    # scene
-    EJCalculatePercentageReport("billscene", "Scene", $year, $month, $reports);
-    $reports["scene"] = $reports["percentage"];
-    $reports["sceneyear"] = $reports["percentageyear"];
-
     # paymentmode
     EJCalculatePercentageReport("paymentmode", "PaymentMode", $year, $month, $reports);
     $reports["paymentmode"] = $reports["percentage"];
@@ -388,7 +380,7 @@ function EJGetFinanceReport(&$filter) {
     
     EJCalculateFinanceReport($year, $month, $report);
     
-    $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[{";
+    $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ": {";
     $result .= "income:" . strval($report["income"]) . ",";
     $result .= "deposit:" . strval($report["deposit"]) . ",";
     $result .= "debt:" . strval($report["debt"]) . ",";
@@ -405,7 +397,7 @@ function EJGetFinanceReport(&$filter) {
     $result .= "sceneyear:" . W3MakeString($report["sceneyear"], true) . ",";
     $result .= "paymentmode:" . W3MakeString($report["paymentmode"], true) . ",";
     $result .= "paymentmodeyear:" . W3MakeString($report["paymentmodeyear"], true);
-    $result .= "}]}";
+    $result .= "}}";
     
     return $result;
 }
