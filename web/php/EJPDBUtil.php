@@ -161,7 +161,7 @@ function EJInsertDebt(&$debt) {
                     $debt[3],
                     $debt[4],
                     W3MakeString($debt[5], true),
-                    1); # TODO, handle FID
+                    1); # [ED] PENDING: Handle FID
     $sql = "insert into debt (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute debt insert SQL failed");
@@ -193,7 +193,7 @@ function EJInsertFinanceEvent(&$event) {
     $values = array(W3MakeString($event[1], true),
                     $event[2],
                     W3MakeString($event[3], true),
-                    1); # TODO, handle FID
+                    1); # [ED] PENDING: Handle FID
     $sql = "insert into financeevent (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute finance event insert SQL failed");

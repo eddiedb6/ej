@@ -212,7 +212,9 @@
             "uidColumnDatetime"
         ],
         W3Const.w3PropFunc: {
-            W3Const.w3FuncCreator: "W3FormatDatetime(W3PlaceHolder_1, YYYY-MM-DD)"
+            W3Const.w3FuncProcessor: [
+                "W3FormatDatetime(w3PlaceHolder_1, YYYY-MM-DD)"
+            ]
         }
     },
     "uidTableHeaderAmount": {
@@ -260,7 +262,9 @@
             "uidColumnStart"
         ],
         W3Const.w3PropFunc: {
-            W3Const.w3FuncCreator: "W3FormatDatetime(W3PlaceHolder_1, YYYY-MM-DD)"
+            W3Const.w3FuncProcessor: [
+                "W3FormatDatetime(w3PlaceHolder_1, YYYY-MM-DD)"
+            ]
         }
     },
     "uidTableHeaderEnd": {
@@ -269,7 +273,9 @@
             "uidColumnEnd"
         ],
         W3Const.w3PropFunc: {
-            W3Const.w3FuncCreator: "W3FormatDatetime(W3PlaceHolder_1, YYYY-MM-DD)"
+            W3Const.w3FuncProcessor: [
+                "W3FormatDatetime(w3PlaceHolder_1, YYYY-MM-DD)"
+            ]
         }
     },
     "uidTableHeaderBalance": {

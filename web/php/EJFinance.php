@@ -27,7 +27,7 @@ function EJGetBill(&$filter) {
          " and " .
          "bill.Category = billcategory.ID" .
          " and " .
-         "bill.PID in (select person.ID from person where person.FID=1)" . # TODO, handle FID
+         "bill.PID in (select person.ID from person where person.FID=1)" . # [ED] PENDING: Handle FID
          " order by bill.Datetime asc";
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
     EJReadTable($sql, function ($row) use (&$result, &$w3API) {
@@ -56,7 +56,7 @@ function EJGetDebt(&$filter) {
          "debt.Amount as amount, debt.Balance as balance, debt.Note as note" .
          " from " .
          "debt" .
-         " where FID=1 and " . # TODO, handle FID
+         " where FID=1 and " . # [ED] PENDING: Handle FID
          "(debt.Start <= '" . $filter[2] . "' and debt.End >= '" . $filter[1] . "')" .
          " order by debt.Start asc";
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
@@ -87,7 +87,7 @@ function EJGetFinanceEvent(&$filter) {
          "financeevent.Budget as budget, " .
          "financeevent.Note as note " .
          "from financeevent " .
-         "where FID=1"; # TODO, handle different family
+         "where FID=1"; # [ED] PENDING: Handle FID
     if ($filter[1] != "") {
         $sql .= " and financeevent.Name like " . W3MakeString($filter[1], true);
     }
@@ -150,7 +150,7 @@ function EJGetIncome(&$filter) {
          " and " .
          "income.Category = incomecategory.ID" .
          " and " .
-         "income.PID in (select person.ID from person where person.FID=1)" . # TODO, handle FID
+         "income.PID in (select person.ID from person where person.FID=1)" . # [ED] PENDING: Handle FID
          " order by income.Datetime asc";
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
     EJReadTable($sql, function ($row) use (&$result, &$w3API) {
@@ -241,7 +241,7 @@ function EJCalculateDebtReport($year, $month, &$reports, $isLastMonth = true) {
          "debt.End >= " . W3MakeDateString($year, $month, 1, true);
     $totalMonthDebt = 0.0;
     EJReadTable($sql, function ($row) use (&$totalMonthDebt) {
-        $totalMonthDebt = floatval($row["sum(debt.Amount)"]); # TODO, need to consider balance of debt
+        $totalMonthDebt = floatval($row["sum(debt.Amount)"]); # [ED] PENDING: Need to consider balance of debt
     });
 
     if ($isLastMonth) {
@@ -276,7 +276,7 @@ function EJCalculateFinanceReport($year, $month, &$reports) {
          " and " .
          "income.Datetime < " . W3MakeDateString($year, $month, 1, true) .
          " and " .
-         "income.PID in (select person.ID from person where person.FID=1)"; # TODO, handle FID
+         "income.PID in (select person.ID from person where person.FID=1)"; # [ED] PENDING: Handle FID
     $totalMonthIncome = 0.0;
     EJReadTable($sql, function ($row) use (&$totalMonthIncome) {
         $totalMonthIncome = floatval($row["sum(income.Amount)"]);
@@ -288,7 +288,7 @@ function EJCalculateFinanceReport($year, $month, &$reports) {
          " and " .
          "income.Datetime < " . W3MakeDateString($year, $month, 1, true) .
          " and " .
-         "income.PID in (select person.ID from person where person.FID=1)"; # TODO, handle FID
+         "income.PID in (select person.ID from person where person.FID=1)"; # [ED] PENDING: Handle FID
     $totalYearIncome = 0.0;
     EJReadTable($sql, function ($row) use (&$totalYearIncome) {
         $totalYearIncome = floatval($row["sum(income.Amount)"]);

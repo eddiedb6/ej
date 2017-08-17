@@ -21,8 +21,6 @@ function EJGetFinanceReport(uid) {
 	$("#uidFinanceReportConsumeYearValue").text(report["consumeyear"].toFixed(2).toString());
 	$("#uidFinanceReportBalanceYearValue").text(report["balanceyear"].toFixed(2).toString());
 
-	// TODO
-	
 	if (report["balanceyear"] >= 0) {
 	    $("#uidFinanceReportBalanceYearValue").css("color", "green");
 	} else {
@@ -38,20 +36,20 @@ function EJGetFinanceReport(uid) {
 	var separater = "_";
 	
 	var textCategory = [
-	    w3Lan[W3GetLanguage()]["sidTableBillcategory1"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory2"],
-	    w3Lan[W3GetLanguage()]["sidTableBillcategory3"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory4"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory6"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory7"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory8"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory9"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory10"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory11"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory12"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory13"],
-            w3Lan[W3GetLanguage()]["sidTableBillcategory17"],
-            w3Lan[W3GetLanguage()]["sidOther"]
+	    W3GetStringValue("sidTableBillCategory1"),
+            W3GetStringValue("sidTableBillCategory2"),
+	    W3GetStringValue("sidTableBillCategory3"),
+            W3GetStringValue("sidTableBillCategory4"),
+            W3GetStringValue("sidTableBillCategory6"),
+            W3GetStringValue("sidTableBillCategory7"),
+            W3GetStringValue("sidTableBillCategory8"),
+            W3GetStringValue("sidTableBillCategory9"),
+            W3GetStringValue("sidTableBillCategory10"),
+            W3GetStringValue("sidTableBillCategory11"),
+            W3GetStringValue("sidTableBillCategory12"),
+            W3GetStringValue("sidTableBillCategory13"),
+            W3GetStringValue("sidTableBillCategory17"),
+            W3GetStringValue("sidOther")
 	];
 
 	// Draw category
@@ -74,55 +72,12 @@ function EJGetFinanceReport(uid) {
 	$("#uidFinanceCategoryYearReportPanel").append(W3CreateCanvas("uidFinanceCategoryYearReportCanvas"));
 	W3DrawPercentageReport("uidFinanceCategoryYearReportCanvas", dataCategory, textCategory, 5);
 
-	var textScene = [
-	    w3Lan[W3GetLanguage()]["sidTableBillscene1"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene2"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene3"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene4"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene5"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene6"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene7"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene8"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene9"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene10"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene11"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene12"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene13"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene14"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene15"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene16"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene17"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene18"],
-            w3Lan[W3GetLanguage()]["sidTableBillscene19"],
-            w3Lan[W3GetLanguage()]["sidOther"]
-	];
-
-	// Draw scene
-	var dataScene = [];
-	var scenePercentage = report["scene"].split(separater);
-	for (var i = 0; i < scenePercentage.length; ++i) {
-	    dataScene.push((parseInt(scenePercentage[i]) / 10000).toFixed(4))
-	}
-    	$("#uidFinanceSceneReportPanel").empty();
-	$("#uidFinanceSceneReportPanel").append(W3CreateCanvas("uidFinanceSceneReportCanvas"));
-	W3DrawPercentageReport("uidFinanceSceneReportCanvas", dataScene, textScene, 5);
-
-	// Draw scene year
-	dataScene = [];
-	scenePercentage = report["sceneyear"].split(separater);
-	for (var i = 0; i < scenePercentage.length; ++i) {
-	    dataScene.push((parseInt(scenePercentage[i]) / 10000).toFixed(4))
-	}
-    	$("#uidFinanceSceneYearReportPanel").empty();
-	$("#uidFinanceSceneYearReportPanel").append(W3CreateCanvas("uidFinanceSceneYearReportCanvas"));
-	W3DrawPercentageReport("uidFinanceSceneYearReportCanvas", dataScene, textScene, 5);
-
 	var textPayment = [
-	    w3Lan[W3GetLanguage()]["sidTablePaymentmode1"],
-            w3Lan[W3GetLanguage()]["sidTablePaymentmode2"],
-	    w3Lan[W3GetLanguage()]["sidTablePaymentmode3"],
-            w3Lan[W3GetLanguage()]["sidTablePaymentmode4"],
-            w3Lan[W3GetLanguage()]["sidOther"]
+	    W3GetStringValue("sidTablePaymentMode1"),
+            W3GetStringValue("sidTablePaymentMode2"),
+	    W3GetStringValue("sidTablePaymentMode3"),
+            W3GetStringValue("sidTablePaymentMode4"),
+            W3GetStringValue("sidOther")
 	];
 
 	// Draw paymentmode 
