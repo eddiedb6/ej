@@ -194,18 +194,6 @@
         W3Const.w3PropClass: "cidLRPadding",
         W3Const.w3PropString: "sidColumnBudget"
     },
-    "uidTableHeaderNull": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-            "uidNullLabel"
-        ]
-    },
-    "uidTableHeaderOwner": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-            "uidColumnOwner"
-        ]
-    },
     "uidTableHeaderDatetime": {
         W3Const.w3PropType: W3Const.w3TypeTableHeader,
         W3Const.w3PropSubUI: [
@@ -225,36 +213,6 @@
         W3Const.w3PropCSS: {
             "text-align": "right"
         }
-    },
-    "uidTableHeaderCurrency": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-            "uidColumnCurrency"
-        ]
-    },
-    "uidTableHeaderCategory": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-            "uidColumnCategory"
-        ]
-    },
-    "uidTableHeaderPayment": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-            "uidColumnPayment"
-        ]
-    },
-    "uidTableHeaderNote": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-            "uidColumnNote"
-        ]
-    },
-    "uidTableHeaderEvent": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-            "uidColumnEvent"
-        ]
     },
     "uidTableHeaderStart": {
         W3Const.w3PropType: W3Const.w3TypeTableHeader,
@@ -285,6 +243,11 @@
         ],
         W3Const.w3PropCSS: {
             "text-align": "right"
+        },
+        W3Const.w3PropFunc: {
+            W3Const.w3FuncProcessor: [
+                "W3FormatCurrencyColor(w3PlaceHolder_1)"
+            ]
         }
     },
     "uidTableHeaderBudget": {
@@ -295,17 +258,5 @@
         W3Const.w3PropCSS: {
             "text-align": "right"
         }
-    },
-    "uidTableHeaderMonthReport": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-            "uidColumnMonthReport"
-        ]
-    },
-    "uidTableHeaderYearReport": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-            "uidColumnYearReport"
-        ]
     }
 }

@@ -34,12 +34,8 @@
     "uidDebtFilterGetButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidGet",
-        W3Const.w3PropEvent: {
-            W3Const.w3EventClick: [
-                "W3UpdateTableByAPI('uidDebtFilterGetButton', 'uidDebtTable')"
-            ]
-        },
-        W3Const.w3PropApi: {
+        W3Const.w3PropTriggerApi: {
+            W3Const.w3TriggerEvent: W3Const.w3EventClick,
             W3Const.w3ApiID: "aidDebt",
             W3Const.w3ApiParams: [
             {
@@ -67,41 +63,39 @@
     "uidDebtTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
-            ["uidTableHeaderStart", "uidTableHeaderEnd", "uidTableHeaderAmount", "uidTableHeaderBalance", "uidTableHeaderNote"]
+            ["uidTableHeaderStart", "uidTableHeaderEnd", "uidTableHeaderAmount", "uidTableHeaderBalance", "uidColumnNote"]
         ],
         W3Const.w3PropCSS: {
             "border": "1px solid"
         },
-        W3Const.w3PropApi: {
+        W3Const.w3PropBindingApi: {
             W3Const.w3ApiID: "aidDebt",
-            W3Const.w3ApiResult: {
-                W3Const.w3ApiResultData: [
-                {
-                    # Column 1 map to API result field "start"
-                    W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                    W3Const.w3ApiDataValue: "start"
-                },
-                {
-                    # Column 2 map to API result field "end"
-                    W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                    W3Const.w3ApiDataValue: "end"
-                },
-                {
-                    # Column 3 map to API result field "amount"
-                    W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
-                    W3Const.w3ApiDataValue: "amount"
-                },
-                {
-                    # Column 4 map to API result field "balance"
-                    W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
-                    W3Const.w3ApiDataValue: "balance"
-                },
-                {
-                    # Column 5 map to API result field "note"
-                    W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                    W3Const.w3ApiDataValue: "note"
-                }]
-            }
+            W3Const.w3BindingRow: [
+            {
+                # Column 1 map to API result field "start"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "start"
+            },
+            {
+                # Column 2 map to API result field "end"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "end"
+            },
+            {
+                # Column 3 map to API result field "amount"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "amount"
+            },
+            {
+                # Column 4 map to API result field "balance"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "balance"
+            },
+            {
+                # Column 5 map to API result field "note"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "note"
+            }]
         }
     },
 
@@ -137,7 +131,8 @@
     "uidDebtAddSubmitButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidSubmit",
-        W3Const.w3PropApi: {
+        W3Const.w3PropTriggerApi: {
+            W3Const.w3TriggerEvent: W3Const.w3EventClick,
             W3Const.w3ApiID: "aidAddDebt",
             W3Const.w3ApiParams: [
             {
@@ -160,11 +155,6 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidDebtAddNote"
             }]
-        },
-        W3Const.w3PropEvent: {
-            W3Const.w3EventClick: [
-                "W3Submit('uidDebtAddSubmitButton')"
-            ]
         },
         W3Const.w3PropCSS: {
             "float": "right"

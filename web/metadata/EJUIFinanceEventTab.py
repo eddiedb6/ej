@@ -56,7 +56,8 @@
     "uidFinanceEventAddSubmitButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidSubmit",
-        W3Const.w3PropApi: {
+        W3Const.w3PropTriggerApi: {
+            W3Const.w3TriggerEvent: W3Const.w3EventClick,
             W3Const.w3ApiID: "aidAddFinanceEvent",
             W3Const.w3ApiParams: [
             {
@@ -71,11 +72,6 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceEventAddNote"
             }]
-        },
-        W3Const.w3PropEvent: {
-            W3Const.w3EventClick: [
-                "W3Submit('uidFinanceEventAddSubmitButton')"
-            ]
         }
     },
     "uidFinanceEventAddCancelButton": {
@@ -100,36 +96,34 @@
     "uidFinanceEventTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
-            ["uidTableHeaderEvent", "uidTableHeaderBudget", "uidTableHeaderBalance", "uidTableHeaderNote"]
+            ["uidColumnEvent", "uidTableHeaderBudget", "uidTableHeaderBalance", "uidColumnNote"]
         ],
         W3Const.w3PropCSS: {
             "border": "1px solid"
         },
-        W3Const.w3PropApi: {
-            W3Const.w3ApiID: "aidEvent",
-            W3Const.w3ApiResult: {
-                W3Const.w3ApiResultData: [
-                {
-                    # Column 1 map to API result field "name"
-                    W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                    W3Const.w3ApiDataValue: "name"
-                },
-                {
-                    # Column 2 map to API result field "budget"
-                    W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
-                    W3Const.w3ApiDataValue: "budget"
-                },
-                {
-                    # Column 3 map to API result field "balance"
-                    W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
-                    W3Const.w3ApiDataValue: "balance"
-                },
-                {
-                    # Column 4 map to API result field "note"
-                    W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                    W3Const.w3ApiDataValue: "note"
-                }]
-            }
+        W3Const.w3PropBindingApi: {
+            W3Const.w3ApiID: "aidFinanceEvent",
+            W3Const.w3BindingRow: [
+            {
+                # Column 1 map to API result field "name"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "name"
+            },
+            {
+                # Column 2 map to API result field "budget"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "budget"
+            },
+            {
+                # Column 3 map to API result field "balance"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "balance"
+            },
+            {
+                # Column 4 map to API result field "note"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "note"
+            }]
         }
     },
     "uidFinanceEventFilterTable": {
@@ -145,18 +139,14 @@
     "uidFinanceEventGetButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidGet",
-        W3Const.w3PropApi: {
+        W3Const.w3PropTriggerApi: {
+            W3Const.w3TriggerEvent: W3Const.w3EventClick,
             W3Const.w3ApiID: "aidFinanceEvent",
             W3Const.w3ApiParams: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceEventNameText"
             }]
-        },
-        W3Const.w3PropEvent: {
-            W3Const.w3EventClick: [
-                "W3UpdateTableByAPI('uidFinanceEventGetButton', 'uidFinanceEventTable')"
-            ]
         },
         W3Const.w3PropCSS: {
             "float": "right"

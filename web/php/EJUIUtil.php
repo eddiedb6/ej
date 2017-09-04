@@ -10,10 +10,13 @@ function EJCreateOptionListFromDB($table, $keyColumn, $valueColumn, $isSID = tru
         if ($isSID) {
             $list .= "<option value='" .
                   $row[$keyColumn] . "'>" .
-                  $w3Lan[W3GetLanguage()][$row[$valueColumn]] .
+                  W3GetStringValue($row[$valueColumn]) .
                   "</option>";
         } else {
-            $list .= "<option value='" . $row[$keyColumn] . "'>" . $row[$valueColumn] . "</option>";
+            $list .= "<option value='" .
+                  $row[$keyColumn] . "'>" .
+                  $row[$valueColumn] .
+                  "</option>";
         }
     });
     
