@@ -2,6 +2,16 @@
 // Processor
 //
 
+function EJCalcBillTotalAmount(paramArray) {
+    var amount = paramArray[0];
+    var totalAmount = W3GetVariable(billTotalAmount);
+    
+    totalAmount += parseFloat(amount);
+    W3SetVariable(billTotalAmount, totalAmount);
+    
+    return paramArray;
+}
+
 function EJGenerateCategoryDrawFunc(paramArray) {
     var categoryString = paramArray[0];
     var drawFunc = "EJDrawCategoryReport(w3PlaceHolder_1, " + categoryString + ")";
