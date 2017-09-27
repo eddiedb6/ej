@@ -383,5 +383,31 @@
             ]
         },
         W3Const.w3ApiHandler: "EJAddFinanceEvent"
+    },
+
+    "aidExchangeRate": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "exchangerate",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+            W3Const.w3ApiDataValue: "currencyid"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "date"
+        }],
+        W3Const.w3ApiResult: {
+            W3Const.w3ApiResultStatus: [
+                W3Const.w3ApiResultSuccessful,
+                W3Const.w3ApiResultFailed
+            ],
+            W3Const.w3ApiResultData: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "rate"
+            }]
+        },
+        W3Const.w3ApiHandler: "EJGetExchangeRate"
     }
 }

@@ -26,10 +26,19 @@
             ["uidIncomeTotalPanel"]
         ]
     },
+    "uidIncomeTableHeaderAmount": {
+        W3Const.w3PropType: W3Const.w3TypeTableHeader,
+        W3Const.w3PropPrototype: "uidTableHeaderAmount",
+        W3Const.w3PropFunc: {
+            W3Const.w3FuncProcessor: [
+                "EJCalcIncomeTotalAmount(w3PlaceHolder_1)"
+            ]
+        }
+    },
     "uidIncomeTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
-            ["uidColumnOwner", "uidTableHeaderDatetime", "uidTableHeaderAmount", "uidColumnCurrency", "uidColumnCategory", "uidColumnNote"]
+            ["uidColumnOwner", "uidTableHeaderDatetime", "uidIncomeTableHeaderAmount", "uidColumnCurrency", "uidColumnCategory", "uidColumnNote"]
         ],
         W3Const.w3PropCSS: {
             "border": "1px solid"
@@ -81,7 +90,11 @@
     },
     "uidIncomeTotalAmount": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropPrototype: "uidTotalAmount"
+        W3Const.w3PropPrototype: "uidTotalAmount",
+        W3Const.w3PropBindingVar: {
+            W3Const.w3BindingVarName: "incomeTotalAmount",
+            W3Const.w3BindingFormat: "F2"
+        }
     },
 
     # Finance Page - income tab, query, filter    
@@ -113,6 +126,12 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidIncomeFilterToDatePicker"
             }]
+        },
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "W3SetVariable(incomeTotalAmount, 0)",
+                W3Const.w3PlaceHolder_1
+            ]
         }
     },
     "uidIncomeFilterAddButton": {

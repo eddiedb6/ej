@@ -2,14 +2,46 @@
 // Processor
 //
 
-function EJCalcBillTotalAmount(paramArray) {
-    var amount = paramArray[0];
-    var totalAmount = W3GetVariable(billTotalAmount);
-    
-    totalAmount += parseFloat(amount);
-    W3SetVariable(billTotalAmount, totalAmount);
-    
+function EJCalcCurrencyAmount(paramArray, varAmount) {
+    var amountWithCurrency = paramArray[0].split("|");
+    var amount = amountWithCurrency[0];
+    var currencyID = amountWithCurrency[1];
+    var datetime = amountWithCurrency[2];
+
+    // Remove currency and keep only amount
+    paramArray[0] = amount;
+
+    // Change to CNY if necessary
+    var amountCNY = amount;
+    var isToCalc = true;
+    if (currencyID != "1") {
+	var date = datetime.split(" ")[0];
+	var rate = EJGetExchangeRate(date, currencyID);
+	if (rate != 0) {
+	    amountCNY = amount * rate;
+	} else {
+	    // Mark that the exchange failed
+	    var css = paramArray[1];
+	    css["color"] = "gray";
+	    isToCalc = false;
+	}
+    }
+
+    if (isToCalc) {
+	var totalAmount = W3GetVariable(varAmount);
+	totalAmount += parseFloat(amountCNY);
+	W3SetVariable(varAmount, totalAmount);
+    }
+
     return paramArray;
+}
+
+function EJCalcBillTotalAmount(paramArray) {
+    return EJCalcCurrencyAmount(paramArray, billTotalAmount);
+}
+
+function EJCalcIncomeTotalAmount(paramArray) {
+    return EJCalcCurrencyAmount(paramArray, incomeTotalAmount);
 }
 
 function EJGenerateCategoryDrawFunc(paramArray) {
@@ -77,4 +109,44 @@ function EJDrawFinanceReport(uidCanvas, dataString, textArray) {
     }
 
     W3DrawPercentageReport(uidCanvas, dataArray, textArray, 5);
+}
+
+// Exchange Rate
+function EJGetExchangeRate(date, currency) {
+    var aid = "aidExchangeRate";
+    var apiDef = W3GetAPIDef(aid);
+    if (apiDef == null) {
+	return 0;
+    }
+    
+    var api = apiDef[w3ApiName];
+    api += "?";
+    api += apiDef[w3ApiParams][0][w3ApiDataValue] + "=" + currency;
+    api += "&";
+    api += apiDef[w3ApiParams][1][w3ApiDataValue] + "=" + date;
+
+    var rate = 0;
+
+    // Need sync but not async
+    W3LogDebug("Trigger API: " + api);
+    $.ajax({
+	type: "get",
+	url: api,
+	data: "",
+	async: false,
+	success: function(data) {
+	    W3LogDebug("data: " + data);
+
+	    var apiResult = eval("(" + data + ")");
+	    var resultStatus = apiResult[w3ApiResultStatus];
+	    var resultData = apiResult[w3ApiResultData];
+
+	    if (resultStatus != w3ApiResultFailed) {
+		W3LogDebug("TODL: " + resultData);
+		//rate = parseFloat(resultData);
+	    }
+	}
+    });
+
+    return rate;
 }
