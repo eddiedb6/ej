@@ -1,13 +1,13 @@
 {
     W3Const.w3UIBody: {
-        W3Const.w3PropDefaultPage: "uidPageFinance",
-        W3Const.w3PropDefaultErrorPage: "uidPageError",
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
             "uidHeader",
             "uidMain",
             "uidFooter"
-        ]
+        ],
+        W3Const.w3PropDefaultPage: "uidPageFinance",
+        W3Const.w3PropDefaultErrorPage: "uidPageError"
     },
     "uidHeader": {
         W3Const.w3PropType: W3Const.w3TypePanel,

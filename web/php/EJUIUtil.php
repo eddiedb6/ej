@@ -1,12 +1,9 @@
 <?php
 
 function EJCreateOptionListFromDB($table, $keyColumn, $valueColumn, $isSID = true) {
-    global $w3UI;
-    global $w3Lan;
-
     $list = "";
     $sql = "select " . $keyColumn . "," . $valueColumn . " from " . $table;
-    EJReadTable($sql, function ($row) use ($keyColumn, $valueColumn, $isSID, &$w3Lan, &$list) {
+    EJReadTable($sql, function ($row) use ($keyColumn, $valueColumn, $isSID, &$list) {
         if ($isSID) {
             $list .= "<option value='" .
                   $row[$keyColumn] . "'>" .

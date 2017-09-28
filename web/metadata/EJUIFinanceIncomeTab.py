@@ -130,7 +130,7 @@
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 "W3SetVariable(incomeTotalAmount, 0)",
-                W3Const.w3PlaceHolder_1
+                W3Const.w3PlaceHolder_1 # Reserve for API trigger
             ]
         }
     },
