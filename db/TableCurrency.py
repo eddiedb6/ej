@@ -31,7 +31,6 @@
         {"Name": "'MYR'", "SID": "'sidTableCurrency15'"},    # Malaysia Ringgit
         {"Name": "'PHP'", "SID": "'sidTableCurrency16'"},    # Philippines Peso
         {"Name": "'SGD'", "SID": "'sidTableCurrency17'"},    # Singapore Dollar
-        {"Name": "'MOP'", "SID": "'sidTableCurrency18'"},    # Macau Pataca
-        {"Name": "'LKR'", "SID": "'sidTableCurrency19'"}     # Sri Lanka Rupee
+        {"Name": "'MOP'", "SID": "'sidTableCurrency18'"}     # Macau Pataca
     ]
 }

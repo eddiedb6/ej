@@ -24,7 +24,6 @@
         "sidTableCurrency16": "PHP",    # Philippines Peso
         "sidTableCurrency17": "SGD",    # Singapore Dollar
         "sidTableCurrency18": "MOP",    # Macau Pataca
-        "sidTableCurrency19": "LKR",    # Sri Lanka Rupee
 
         "sidTableBillCategory1": "Diet", 
         "sidTableBillCategory2": "Dress", 

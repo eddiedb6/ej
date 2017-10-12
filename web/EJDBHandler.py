@@ -2,9 +2,11 @@ import os
 import sys
 
 thisDir = os.path.split(os.path.realpath(__file__))[0]
-
 pdbDir = os.path.join(thisDir, "../pdb")
+
 sys.path.append(pdbDir)
+sys.path.append(os.path.join(pdbDir, "schema"))
+
 import PDBConst
 from metadata import PDBConfig
 from schema import SchemaChecker

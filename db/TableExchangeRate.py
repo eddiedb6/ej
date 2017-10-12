@@ -11,7 +11,7 @@
     },
     {
         PDBConst.Name: "Rate",
-        PDBConst.Attributes: ["double(12,4)", "not null"]
+        PDBConst.Attributes: ["double(12,4)"]
     }],
     PDBConst.PrimaryKey: ["Datetime", "Currency"]
 }
