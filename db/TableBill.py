@@ -6,6 +6,10 @@
         PDBConst.Attributes: ["int", "not null", "auto_increment", "primary key"]
     },
     {
+        PDBConst.Name: "PID",
+        PDBConst.Attributes: ["int", "not null"]
+    },
+    {
         PDBConst.Name: "Datetime",
         PDBConst.Attributes: ["datetime", "not null"]
     },
