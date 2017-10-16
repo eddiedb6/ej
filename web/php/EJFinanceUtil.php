@@ -18,20 +18,14 @@ function EJGetExchangeRateImpl($date, $currency) {
     });
 
     if ($rate == NULL) {
-        // Exchange rate is not in db, need to get from internet now
-        $rate = EJUpdateExchangeRate($date, $currency);
+        W3LogWarning("Exchange rate not found for (" . $date . ", " . $currency . ")");
     }
 
     return $rate;
 }
 
-function EJUpdateExchangeRate($date, $currency) {
-    $result = NULL;
-    return $result;
-}
-
 function EJGetExchangeRateString($date, $currency) {
-    $rate = "1.0";
+    $rate = "100.0";
     if ($currency != "1") {
         $rate = EJGetExchangeRateImpl($date, $currency);
         if ($rate == NULL) {
@@ -50,7 +44,7 @@ function EJSumCurrency($sql) {
         $currencyID = $row["currency"];
 
         $rate = floatval(EJGetExchangeRateString($date, $currencyID));
-        $amount *= $rate;
+        $amount *= $rate / 100;
 
         $finalAmount += $amount;
     });

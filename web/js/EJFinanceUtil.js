@@ -8,7 +8,7 @@ function EJCalcCurrencyAmount(paramArray, varAmount) {
 
     if (rate != "0") {
 	var totalAmount = W3GetVariable(varAmount);
-	totalAmount += parseFloat(amount) * parseFloat(rate);
+	totalAmount += parseFloat(amount) * parseFloat(rate) / 100;
 	W3SetVariable(varAmount, totalAmount);
 
     } else {
