@@ -11,14 +11,20 @@ function EJGetExchangeRateImpl($date, $currency) {
          "exchangerate.Currency = " . $currency;
     
     $rate = NULL;
+    $isDateCurrencyRecorded = false;
     EJReadTable($sql, function ($row) use (&$rate) {
         if (sizeof($row) > 0) {
             $rate = $row["rate"];
+            $isDateCurrencyRecorded = true;
         }
     });
 
     if ($rate == NULL) {
         W3LogWarning("Exchange rate not found for (" . $date . ", " . $currency . ")");
+        if (!$isDateCurrencyRecorded) {
+            # Insert date and currency, and the rate will be updated by other script automatically later
+            EJInsertExchangeRate($date, $currency);
+        }
     }
 
     return $rate;

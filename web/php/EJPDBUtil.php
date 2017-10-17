@@ -237,4 +237,21 @@ function EJInsertIncome(&$income) {
     return true;
 }
 
+function EJInsertExchangeRate($date, $currency) {
+    global $ejConn;
+
+    if (!EJConnectDB()) {
+        W3LogWarning("No DB connection when insert exchange rate");
+        return false;
+    }
+
+    $sql = "insert into exchangerate (Datetime, Currency) values ('" . $date . "', " . $currency . ");";
+    if (!$ejConn->query($sql)) {
+        W3LogWarning("Execute exchange rate insert SQL failed");
+        return false;
+    }
+
+    return true;
+}
+
  ?>
