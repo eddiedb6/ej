@@ -431,9 +431,12 @@
             W3Const.w3ApiResultData: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
-                W3Const.w3ApiDataValue: "rate"
+                W3Const.w3ApiDataValue: "session"
             }]
         },
-        W3Const.w3ApiHandler: "EJLogin"
+        W3Const.w3ApiHandler: "EJLogin",
+        W3Const.w3ApiListener: [
+            "EJOnLogin(w3PlaceHolder_1, w3PlaceHolder_2)"
+        ]
     }
 }
