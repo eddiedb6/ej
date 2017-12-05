@@ -25,7 +25,7 @@
         W3Const.w3PropString: "sidTotalLabel",
         W3Const.w3PropClass: "cidLRPadding"
     },
-    "uidTotalAmount": {
+    "uidTotalAmountLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidTotalAmount",
         W3Const.w3PropClass: "cidLRPadding"
@@ -122,8 +122,16 @@
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidMonthLabel"
     },
+    "uidUsernameLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropString: "sidUsernameLabel"
+    },
+    "uidPasswordLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropString: "sidPasswordLabel"
+    },
 
-    # Common Table Header
+    # Common Table Column Label
     "uidColumnOwner": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidColumnOwner",
@@ -194,6 +202,8 @@
         W3Const.w3PropClass: "cidLRPadding",
         W3Const.w3PropString: "sidColumnBudget"
     },
+
+    # Common Table Header
     "uidTableHeaderDatetime": {
         W3Const.w3PropType: W3Const.w3TypeTableHeader,
         W3Const.w3PropSubUI: [

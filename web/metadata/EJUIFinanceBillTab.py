@@ -171,7 +171,7 @@
     },
     "uidBillTotalAmount": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropPrototype: "uidTotalAmount",
+        W3Const.w3PropPrototype: "uidTotalAmountLabel",
         W3Const.w3PropBindingVar: {
             W3Const.w3BindingVarName: "billTotalAmount",
             W3Const.w3BindingFormat: "F2"

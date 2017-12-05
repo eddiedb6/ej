@@ -6,7 +6,7 @@
             "uidMain",
             "uidFooter"
         ],
-        W3Const.w3PropDefaultPage: "uidPageFinance",
+        W3Const.w3PropDefaultPage: "uidPageLogin",
         W3Const.w3PropDefaultErrorPage: "uidPageError"
     },
     "uidHeader": {

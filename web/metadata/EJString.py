@@ -75,6 +75,8 @@
         "sidEventLabel": "Event:",
         "sidBudgetLabel": "Budget:",
         "sidMonthLabel": "Month:",
+        "sidUsernameLabel": "Username:",
+        "sidPasswordLabel": "Password:",
 
         # Common column
         "sidColumnDatetime": "Datetime",
@@ -106,6 +108,9 @@
         # Error Page
         "sidErrorContent": "I'm Error Page!",
 
+        # Login Page
+        "sidLogin": "Login",
+        
         # Finance Page
         "sidFinanceTabBill": "Bill",
         "sidFinanceTabIncome": "Income",
