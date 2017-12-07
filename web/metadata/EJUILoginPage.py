@@ -27,18 +27,10 @@
     "uidLoginButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidLogin",
-        W3Const.w3PropTriggerApi: {
-            W3Const.w3TriggerEvent: W3Const.w3EventClick,
-            W3Const.w3ApiID: "aidLogin",
-            W3Const.w3ApiParams: [
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidUsername"
-            },
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidPassword"
-            }]
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "EJLogin('uidUsername', 'uidPassword')"
+            ]
         }
     }
 }
