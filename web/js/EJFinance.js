@@ -39,22 +39,15 @@ function EJGetExchangeRate(date, currency) {
     var rate = 0;
 
     // Need sync but not async
-    W3LogDebug("Trigger API: " + api);
-    $.ajax({
-	type: "get",
-	url: api,
-	data: "",
-	async: false,
-	success: function(data) {
-	    W3LogDebug("data: " + data);
+    W3CallAPISync(api, function(data) {
+	W3LogDebug("data: " + data);
 
-	    var apiResult = eval("(" + data + ")");
-	    var resultStatus = apiResult[w3ApiResultStatus];
-	    var resultData = apiResult[w3ApiResultData];
+	var apiResult = eval("(" + data + ")");
+	var resultStatus = apiResult[w3ApiResultStatus];
+	var resultData = apiResult[w3ApiResultData];
 
-	    if (resultStatus != w3ApiResultFailed) {
-		rate = parseFloat(resultData);
-	    }
+	if (resultStatus != w3ApiResultFailed) {
+	    rate = parseFloat(resultData);
 	}
     });
 
