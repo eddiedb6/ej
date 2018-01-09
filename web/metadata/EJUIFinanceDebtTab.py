@@ -34,8 +34,8 @@
     "uidDebtFilterGetButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidGet",
-        W3Const.w3PropTriggerApi: {
-            W3Const.w3TriggerEvent: W3Const.w3EventClick,
+        W3Const.w3PropTriggerApi: [
+        {
             W3Const.w3ApiID: "aidDebt",
             W3Const.w3ApiParams: [
             {
@@ -46,6 +46,11 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidDebtFilterToDatePicker"
             }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
         }
     },
     "uidDebtFilterAddButton": {
@@ -131,8 +136,8 @@
     "uidDebtAddSubmitButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidSubmit",
-        W3Const.w3PropTriggerApi: {
-            W3Const.w3TriggerEvent: W3Const.w3EventClick,
+        W3Const.w3PropTriggerApi: [
+        {
             W3Const.w3ApiID: "aidAddDebt",
             W3Const.w3ApiParams: [
             {
@@ -155,6 +160,11 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidDebtAddNote"
             }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
         },
         W3Const.w3PropCSS: {
             "float": "right"

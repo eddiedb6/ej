@@ -75,25 +75,37 @@
     "uidNaviFinance": {
         W3Const.w3PropType: W3Const.w3TypeLink,
         W3Const.w3PropString: "sidNaviFinance",
-        W3Const.w3PropTriggerApi: {
+        W3Const.w3PropTriggerApi: [
+        {
             W3Const.w3ApiID: "aidPage",
             W3Const.w3ApiParams: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
                 W3Const.w3ApiDataValue: "uidPageFinance"
             }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
         }
     },
     "uidNaviDebug": {
         W3Const.w3PropType: W3Const.w3TypeLink,
         W3Const.w3PropString: "sidNaviDebug",
-        W3Const.w3PropTriggerApi: {
+        W3Const.w3PropTriggerApi: [
+        {
             W3Const.w3ApiID: "aidPage",
             W3Const.w3ApiParams: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
                 W3Const.w3ApiDataValue: "uidPageDebug"
             }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
         }
     },
 

@@ -40,8 +40,8 @@
     "uidBillAddSubmitButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidSubmit",
-        W3Const.w3PropTriggerApi: {
-            W3Const.w3TriggerEvent: W3Const.w3EventClick,
+        W3Const.w3PropTriggerApi: [
+        {
             W3Const.w3ApiID: "aidAddBill",
             W3Const.w3ApiParams: [
             {
@@ -76,6 +76,11 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidBillAddEvent"
             }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
         }
     },
     "uidBillAddCancelButton": {
@@ -252,8 +257,8 @@
     "uidBillFilterGetButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidGet",
-        W3Const.w3PropTriggerApi: {
-            W3Const.w3TriggerEvent: W3Const.w3EventClick,
+        W3Const.w3PropTriggerApi: [
+        {
             W3Const.w3ApiID: "aidBill",
             W3Const.w3ApiParams: [
             {
@@ -264,11 +269,11 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidBillFilterToDatePicker"
             }]
-        },
+        }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 "W3SetVariable(billTotalAmount, 0)",
-                W3Const.w3PlaceHolder_1 # Reserve for API trigger
+                W3Const.w3PlaceHolder_1 # Reserve for the first API in w3PropTrigger
             ]
         }
     },

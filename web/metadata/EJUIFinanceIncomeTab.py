@@ -114,8 +114,8 @@
     "uidIncomeFilterGetButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidGet",
-        W3Const.w3PropTriggerApi: {
-            W3Const.w3TriggerEvent: W3Const.w3EventClick,
+        W3Const.w3PropTriggerApi: [
+        {
             W3Const.w3ApiID: "aidIncome",
             W3Const.w3ApiParams: [
             {
@@ -126,7 +126,7 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidIncomeFilterToDatePicker"
             }]
-        },
+        }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 "W3SetVariable(incomeTotalAmount, 0)",
@@ -177,8 +177,8 @@
     "uidIncomeAddSubmitButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidSubmit",
-        W3Const.w3PropTriggerApi: {
-            W3Const.w3TriggerEvent: W3Const.w3EventClick,
+        W3Const.w3PropTriggerApi: [
+        {
             W3Const.w3ApiID: "aidAddIncome",
             W3Const.w3ApiParams: [
             {
@@ -205,6 +205,11 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidIncomeAddNote"
             }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
         },
         W3Const.w3PropCSS: {
             "float": "right"

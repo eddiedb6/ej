@@ -30,14 +30,19 @@
     "uidFinanceReportFilterGetButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidGet",
-        W3Const.w3PropTriggerApi: {
-            W3Const.w3TriggerEvent: W3Const.w3EventClick,
+        W3Const.w3PropTriggerApi: [
+        {
             W3Const.w3ApiID: "aidFinanceReport",
             W3Const.w3ApiParams: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceReportFilterDatePicker"
             }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
         }
     },
 
