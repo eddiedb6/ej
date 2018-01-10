@@ -78,6 +78,7 @@
         W3Const.w3PropTriggerApi: [
         {
             W3Const.w3ApiID: "aidPage",
+            W3Const.w3ApiCall: W3Const.w3ApiDirect,
             W3Const.w3ApiParams: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -96,6 +97,7 @@
         W3Const.w3PropTriggerApi: [
         {
             W3Const.w3ApiID: "aidPage",
+            W3Const.w3ApiCall: W3Const.w3ApiDirect,
             W3Const.w3ApiParams: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
