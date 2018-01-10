@@ -61,6 +61,10 @@
             W3Const.w3ApiID: "aidAddFinanceEvent",
             W3Const.w3ApiParams: [
             {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
+            },                                
+            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceEventAddName"
             },
@@ -106,9 +110,9 @@
         W3Const.w3PropCSS: {
             "border": "1px solid"
         },
-        W3Const.w3PropBindingApi: {
+        W3Const.w3PropSinkApi: {
             W3Const.w3ApiID: "aidFinanceEvent",
-            W3Const.w3BindingRow: [
+            W3Const.w3SinkRow: [
             {
                 # Column 1 map to API result field "name"
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -148,6 +152,10 @@
         {
             W3Const.w3ApiID: "aidFinanceEvent",
             W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
+            },                                
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceEventNameText"

@@ -5,6 +5,10 @@
         W3Const.w3ApiParams: [
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "from"
         },
         {
@@ -55,6 +59,10 @@
         W3Const.w3ApiParams: [
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        },            
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "from"
         },
         {
@@ -95,6 +103,10 @@
         W3Const.w3ElementType: W3Const.w3TypeApi,
         W3Const.w3ApiName: "income",
         W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "from"
@@ -141,6 +153,10 @@
         W3Const.w3ElementType: W3Const.w3TypeApi,
         W3Const.w3ApiName: "financereport",
         W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        },            
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "month"
@@ -217,6 +233,10 @@
         W3Const.w3ApiParams: [
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "name"
         }],
         W3Const.w3ApiResult: {
@@ -249,6 +269,10 @@
         W3Const.w3ElementType: W3Const.w3TypeApi,
         W3Const.w3ApiName: "addbill",
         W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "owner"
@@ -296,6 +320,10 @@
         W3Const.w3ApiParams: [
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "start"
         },
         {
@@ -327,6 +355,10 @@
         W3Const.w3ElementType: W3Const.w3TypeApi,
         W3Const.w3ApiName: "addincome",
         W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "owner"
@@ -364,6 +396,10 @@
         W3Const.w3ElementType: W3Const.w3TypeApi,
         W3Const.w3ApiName: "addfinanceevent",
         W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        },            
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "name"

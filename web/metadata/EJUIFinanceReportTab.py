@@ -35,6 +35,10 @@
             W3Const.w3ApiID: "aidFinanceReport",
             W3Const.w3ApiParams: [
             {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
+            },                                
+            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceReportFilterDatePicker"
             }]
@@ -62,9 +66,9 @@
             ["uidCategoryLabel",   "uidFinanceCategoryReportPanel",    "uidFinanceCategoryYearReportPanel"],
             ["uidPaymentLabel",    "uidFinancePaymentmodeReportPanel", "uidFinancePaymentmodeYearReportPanel"]
         ],
-        W3Const.w3PropBindingApi: {
+        W3Const.w3PropSinkApi: {
             W3Const.w3ApiID: "aidFinanceReport",
-            W3Const.w3BindingMatrix: [
+            W3Const.w3SinkMatrix: [
                 ## Row 1, income
                 [{
                     ## Column 1

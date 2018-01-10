@@ -43,9 +43,9 @@
         W3Const.w3PropCSS: {
             "border": "1px solid"
         },
-        W3Const.w3PropBindingApi: {
+        W3Const.w3PropSinkApi: {
             W3Const.w3ApiID: "aidIncome",
-            W3Const.w3BindingRow: [
+            W3Const.w3SinkRow: [
             {
                 # Column 1 map to API result field "owner"
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -119,6 +119,10 @@
             W3Const.w3ApiID: "aidIncome",
             W3Const.w3ApiParams: [
             {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
+            },                                
+            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidIncomeFilterFromDatePicker"
             },
@@ -181,6 +185,10 @@
         {
             W3Const.w3ApiID: "aidAddIncome",
             W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
+            },                                
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidIncomeAddOwner"
