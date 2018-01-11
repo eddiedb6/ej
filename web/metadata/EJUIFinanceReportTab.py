@@ -35,12 +35,12 @@
             W3Const.w3ApiID: "aidFinanceReport",
             W3Const.w3ApiParams: [
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
-            },                                
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceReportFilterDatePicker"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
             }]
         }],
         W3Const.w3PropEvent: {

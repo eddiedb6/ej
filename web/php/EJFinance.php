@@ -1,7 +1,8 @@
 <?php
 
 function EJGetBill(&$filter) {
-    if (!isset($filter) or sizeof($filter) != 3) {
+    $paramCount = W3GetAPIParamCount("aidBill");
+    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
         W3LogError("Get bill filter is not correct: " . var_dump($filter));
         return W3CreateFailedResult();
     }
@@ -49,7 +50,8 @@ function EJGetBill(&$filter) {
 }
 
 function EJGetDebt(&$filter) {
-    if (!isset($filter) or sizeof($filter) != 3) {
+    $paramCount = W3GetAPIParamCount("aidDebt");
+    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
         W3LogError("Get debt filter is not correct: " . var_dump($filter));
         return W3CreateFailedResult();
     }
@@ -78,7 +80,8 @@ function EJGetDebt(&$filter) {
 }
 
 function EJGetFinanceEvent(&$filter) {
-    if (!isset($filter) or sizeof($filter) != 2) {
+    $paramCount = W3GetAPIParamCount("aidFinanceEvent");
+    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
         W3LogError("Get finance event filter is not correct: " . var_dump($filter));
         return W3CreateFailedResult();
     }
@@ -125,7 +128,8 @@ function EJGetFinanceEvent(&$filter) {
 }
 
 function EJGetIncome(&$filter) {
-    if (!isset($filter) or sizeof($filter) != 3) {
+    $paramCount = W3GetAPIParamCount("aidIncome");
+    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
         W3LogError("Get income filter is not correct: " . var_dump($filter));
         return W3CreateFailedResult();
     }
@@ -170,7 +174,8 @@ function EJGetIncome(&$filter) {
 }
 
 function EJGetFinanceReport(&$filter) {
-    if (!isset($filter) or sizeof($filter) != 2) {
+    $paramCount = W3GetAPIParamCount("aidFinanceReport");
+    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
         W3LogError("Get finance report filter is not correct: " . var_dump($filter));
         return W3CreateFailedResult();
     }
@@ -268,24 +273,6 @@ function EJAddIncome(&$parameters) {
     }
 
     return W3CreateFailedResult();
-}
-
-function EJGetExchangeRate(&$filter) {
-    if (!isset($filter) or sizeof($filter) != 3) {
-        W3LogError("Get exchange rate filter is not correct: " . var_dump($filter));
-        return W3CreateFailedResult();
-    }
- 
-    $result = NULL;
-    $rate = EJGetExchangeRateImpl($filter[2], $filter[1]);
-    if ($rate != NULL) {
-        $result = "{" . W3CreateSuccessfulResult(false) . "," .
-                W3MakeString(w3ApiResultData) . ":" . $rate . "}";
-    } else {
-        $result = "{" . W3CreateFailedResult(false) . "}";
-    }
-
-    return $result;
 }
 
  ?>

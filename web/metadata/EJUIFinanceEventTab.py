@@ -61,10 +61,6 @@
             W3Const.w3ApiID: "aidAddFinanceEvent",
             W3Const.w3ApiParams: [
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
-            },                                
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceEventAddName"
             },
@@ -75,6 +71,10 @@
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceEventAddNote"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
             }]
         }],
         W3Const.w3PropEvent: {
@@ -153,12 +153,12 @@
             W3Const.w3ApiID: "aidFinanceEvent",
             W3Const.w3ApiParams: [
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
-            },                                
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidFinanceEventNameText"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
             }]
         }],
         W3Const.w3PropEvent: {

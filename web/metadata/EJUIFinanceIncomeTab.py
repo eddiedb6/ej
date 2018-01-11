@@ -119,16 +119,16 @@
             W3Const.w3ApiID: "aidIncome",
             W3Const.w3ApiParams: [
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
-            },                                
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidIncomeFilterFromDatePicker"
             },
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidIncomeFilterToDatePicker"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
             }]
         }],
         W3Const.w3PropEvent: {
@@ -186,10 +186,6 @@
             W3Const.w3ApiID: "aidAddIncome",
             W3Const.w3ApiParams: [
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
-            },                                
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidIncomeAddOwner"
             },
@@ -212,7 +208,11 @@
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidIncomeAddNote"
-            }]
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
+            }]                                
         }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [

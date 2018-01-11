@@ -81,10 +81,6 @@
             W3Const.w3ApiCall: W3Const.w3ApiDirect,
             W3Const.w3ApiParams: [
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
-            },                
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
                 W3Const.w3ApiDataValue: "uidPageFinance"
             }]
@@ -103,10 +99,6 @@
             W3Const.w3ApiID: "aidPage",
             W3Const.w3ApiCall: W3Const.w3ApiDirect,
             W3Const.w3ApiParams: [
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
-            },                
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
                 W3Const.w3ApiDataValue: "uidPageDebug"

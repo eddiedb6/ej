@@ -45,10 +45,6 @@
             W3Const.w3ApiID: "aidAddBill",
             W3Const.w3ApiParams: [
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
-            },                                
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidBillAddOwner"
             },
@@ -79,7 +75,11 @@
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidBillAddEvent"
-            }]
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
+            }]                                
         }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
@@ -266,16 +266,16 @@
             W3Const.w3ApiID: "aidBill",
             W3Const.w3ApiParams: [
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
-            },                
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidBillFilterFromDatePicker"
             },
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
                 W3Const.w3ApiDataValue: "uidBillFilterToDatePicker"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: "session"
             }]
         }],
         W3Const.w3PropEvent: {
