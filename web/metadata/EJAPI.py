@@ -16,10 +16,6 @@
             W3Const.w3ApiDataValue: "session"
         }],
         W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ],
             W3Const.w3ApiResultData: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -70,10 +66,6 @@
             W3Const.w3ApiDataValue: "session"
         }],            
         W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ],
             W3Const.w3ApiResultData: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -116,10 +108,6 @@
             W3Const.w3ApiDataValue: "session"
         }],
         W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ],
             W3Const.w3ApiResultData: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -162,10 +150,6 @@
             W3Const.w3ApiDataValue: "session"
         }],            
         W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ],
             W3Const.w3ApiResultData: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
@@ -240,10 +224,6 @@
             W3Const.w3ApiDataValue: "session"
         }],
         W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ],
             W3Const.w3ApiResultData: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -305,12 +285,6 @@
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "session"
         }],
-        W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ]
-        },
         W3Const.w3ApiHandler: "EJAddBill"
     },
 
@@ -342,12 +316,6 @@
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "session"
         }],
-        W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ]
-        },
         W3Const.w3ApiHandler: "EJAddDebt"
     },
 
@@ -383,12 +351,6 @@
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "session"
         }],
-        W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ]
-        },
         W3Const.w3ApiHandler: "EJAddIncome"
     },
 
@@ -412,12 +374,6 @@
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "session"
         }],            
-        W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ]
-        },
         W3Const.w3ApiHandler: "EJAddFinanceEvent"
     },
 
@@ -434,10 +390,6 @@
             W3Const.w3ApiDataValue: "password"
         }],
         W3Const.w3ApiResult: {
-            W3Const.w3ApiResultStatus: [
-                W3Const.w3ApiResultSuccessful,
-                W3Const.w3ApiResultFailed
-            ],
             W3Const.w3ApiResultData: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,

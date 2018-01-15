@@ -1,13 +1,35 @@
 <?php
 
 function EJLogin(&$credential) {
-    if (!isset($credential) or sizeof($credential) != 3) {
-        W3LogError("Get credential is not correct: " . var_dump($credential));
+    if (!EJIsAPIParamValid($credential, "aidLogin")) {
         return W3CreateFailedResult();
     }
 
-    # [TODO] generate real session
-    $session = $credential[1] . ":" . $credential[2];
+    $username = $credential[W3GetAPIParamIndex("aidLogin", "username") + 1];
+    $password = $credential[W3GetAPIParamIndex("aidLogin", "password") + 1];
+
+    $isLogin = false;
+    $sql = "select " .
+         "authentication.Authentication as authentication" .
+         " from " .
+         "authentication, person" .
+         " where " .
+         "authentication.PID=person.ID" .
+         " and " .
+         "person.Name=" . W3MakeString($username, true) . ";";
+    EJReadTable($sql, function($row) use (&$isLogin, $password) {
+        if ($row["authentication"] == $password) {
+            $isLogin = true;
+        }
+    });
+
+    if (!$isLogin) {
+        return W3CreateFailedResult();
+    }
+
+    unset($_SESSION['session']);
+    $session = EJGenerateSession();
+    $_SESSION['session'] = $session;
     
     $apiDef = W3GetAPIDef("aidLogin");
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":{";
@@ -15,6 +37,26 @@ function EJLogin(&$credential) {
     $result .= W3MakeString($session) . "}}";
 
     return $result;
+}
+
+function EJIsLogin($session) {
+    if (array_key_exists('session', $_SESSION) and $session == $_SESSION['session']) {
+        return true;
+    }
+    
+    return false;
+}
+
+function EJGenerateSession() {
+    $charArry = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    $len = 32;
+
+    $session = "";
+    for ($i = $len; $i > 0; $i--) {
+        $session .= $charArry[mt_rand(0, strlen($charArry) - 1)];
+    }
+
+    return $session;
 }
 
  ?>

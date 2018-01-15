@@ -1,14 +1,17 @@
 <?php
 
 function EJGetBill(&$filter) {
-    $paramCount = W3GetAPIParamCount("aidBill");
-    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
-        W3LogError("Get bill filter is not correct: " . var_dump($filter));
+    if (!EJIsAPIParamValid($filter, "aidBill")) {
         return W3CreateFailedResult();
     }
 
+    $session = $filter[W3GetAPIParamIndex("aidBill", "session") + 1];
     $startDate = $filter[W3GetAPIParamIndex("aidBill", "from") + 1];
     $endDate = $filter[W3GetAPIParamIndex("aidBill", "to") + 1];
+
+    if (!EJIsLogin($session)) {
+        return W3CreateAuthenticationResult();
+    }
 
     $sql = "select " .
          "bill.Datetime as datetime, bill.Amount as amount, bill.Currency as currencyID, bill.Note as note," .
@@ -53,14 +56,17 @@ function EJGetBill(&$filter) {
 }
 
 function EJGetDebt(&$filter) {
-    $paramCount = W3GetAPIParamCount("aidDebt");
-    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
-        W3LogError("Get debt filter is not correct: " . var_dump($filter));
+    if (!EJIsAPIParamValid($filter, "aidDebt")) {
         return W3CreateFailedResult();
     }
 
+    $session = $filter[W3GetAPIParamIndex("aidDebt", "session") + 1];
     $startDate = $filter[W3GetAPIParamIndex("aidDebt", "from") + 1];
     $endDate = $filter[W3GetAPIParamIndex("aidDebt", "to") + 1];
+
+    if (!EJIsLogin($session)) {
+        return W3CreateAuthenticationResult();
+    }
 
     $sql = "select " .
          "debt.Start as start, debt.End as end, " .
@@ -86,13 +92,16 @@ function EJGetDebt(&$filter) {
 }
 
 function EJGetFinanceEvent(&$filter) {
-    $paramCount = W3GetAPIParamCount("aidFinanceEvent");
-    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
-        W3LogError("Get finance event filter is not correct: " . var_dump($filter));
+    if (!EJIsAPIParamValid($filter, "aidFinanceEvent")) {
         return W3CreateFailedResult();
     }
 
+    $session = $filter[W3GetAPIParamIndex("aidFinanceEvent", "session") + 1];
     $eventName = $filter[W3GetAPIParamIndex("aidFinanceEvent", "name") + 1];
+
+    if (!EJIsLogin($session)) {
+        return W3CreateAuthenticationResult();
+    }    
 
     $sql = "select " .
          "financeevent.ID as id, " .
@@ -136,15 +145,18 @@ function EJGetFinanceEvent(&$filter) {
 }
 
 function EJGetIncome(&$filter) {
-    $paramCount = W3GetAPIParamCount("aidIncome");
-    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
-        W3LogError("Get income filter is not correct: " . var_dump($filter));
+    if (!EJIsAPIParamValid($filter, "aidIncome")) {
         return W3CreateFailedResult();
     }
 
+    $session = $filter[W3GetAPIParamIndex("aidIncome", "session") + 1];
     $startDate = $filter[W3GetAPIParamIndex("aidIncome", "from") + 1];
     $endDate = $filter[W3GetAPIParamIndex("aidIncome", "to") + 1];
 
+    if (!EJIsLogin($session)) {
+        return W3CreateAuthenticationResult();
+    }
+    
     $sql = "select " .
          "income.Datetime as datetime, income.Amount as amount, income.Currency as currencyID, income.Note as note," .
          "person.Name as owner," .
@@ -185,13 +197,16 @@ function EJGetIncome(&$filter) {
 }
 
 function EJGetFinanceReport(&$filter) {
-    $paramCount = W3GetAPIParamCount("aidFinanceReport");
-    if (!isset($filter) or sizeof($filter) != $paramCount + 1) {
-        W3LogError("Get finance report filter is not correct: " . var_dump($filter));
+    if (!EJIsAPIParamValid($filter, "aidFinanceReport")) {
         return W3CreateFailedResult();
     }
 
+    $session = $filter[W3GetAPIParamIndex("aidFinanceReport", "session") + 1];
     $reportMonth = $filter[W3GetAPIParamIndex("aidFinanceReport", "month") + 1];
+
+    if (!EJIsLogin($session)) {
+        return W3CreateAuthenticationResult();
+    }
 
     $time = explode("-", $reportMonth);
     $year = intval($time[0]);
@@ -241,49 +256,61 @@ function EJGetFinanceReport(&$filter) {
 }
 
 function EJAddBill(&$parameters) {
-    if (isset($parameters)) {
+    if (EJIsAPIParamValid($parameters, "aidAddBill")) {
+        $session = $parameters[W3GetAPIParamIndex("aidAddBill", "session") + 1];
+        if (!EJIsLogin($session)) {
+            return W3CreateAuthenticationResult();
+        }
+        
         if (EJInsertBill($parameters)) {
             return W3CreateSuccessfulResult();
         }
-    } else {
-        W3LogError("Add bill parameters is not correct: " . var_dump($parameters));
     }
 
-    return W3CreateFailedResult();
+    return W3CreateFailedResult();    
 }
 
 function EJAddDebt(&$parameters) {
-    if (isset($parameters)) {
+    if (EJIsAPIParamValid($parameters, "aidAddDebt")) {
+        $session = $parameters[W3GetAPIParamIndex("aidAddDebt", "session") + 1];
+        if (!EJIsLogin($session)) {
+            return W3CreateAuthenticationResult();
+        }
+
         if (EJInsertDebt($parameters)) {
             return W3CreateSuccessfulResult();
         }
-    } else {
-        W3LogError("Add debt parameters is not correct: " . var_dump($parameters));
-    }
+    } 
 
     return W3CreateFailedResult();
 }
 
 function EJAddFinanceEvent(&$parameters) {
-    if (isset($parameters)) {
+    if (EJIsAPIParamValid($parameters, "aidAddFinanceEvent")) {
+        $session = $parameters[W3GetAPIParamIndex("aidAddFinanceEvent", "session") + 1];
+        if (!EJIsLogin($session)) {
+            return W3CreateAuthenticationResult();
+        }
+        
         if (EJInsertFinanceEvent($parameters)) {
             return W3CreateSuccessfulResult();
         }
-    } else {
-        W3LogError("Add finance event parameters is not correct: " . var_dump($parameters));
     }
 
     return W3CreateFailedResult();
 }
 
 function EJAddIncome(&$parameters) {
-    if (isset($parameters)) {
+    if (EJIsAPIParamValid($parameters, "aidAddIncome")) {
+        $session = $parameters[W3GetAPIParamIndex("aidAddIncome", "session") + 1];
+        if (!EJIsLogin($session)) {
+            return W3CreateAuthenticationResult();
+        }
+
         if (EJInsertIncome($parameters)) {
             return W3CreateSuccessfulResult();
         }
-    } else {
-        W3LogError("Add income parameters is not correct: " . var_dump($parameters));
-    }
+    } 
 
     return W3CreateFailedResult();
 }

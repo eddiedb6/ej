@@ -24,6 +24,8 @@ function EJLogin(uidUsername, uidPassword) {
 	W3LogInfo("Get session: " + session);
 	W3LogInfo("Login successfully");
 
+	W3SetVariable("session", session);
+
 	// Redirect to finance page
 	var pageRequest = W3CreateAPI("aidPage", "uidPageFinance");
 	if (pageRequest == "") {

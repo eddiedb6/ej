@@ -7,7 +7,8 @@
             "uidFooter"
         ],
         W3Const.w3PropDefaultPage: "uidPageLogin",
-        W3Const.w3PropDefaultErrorPage: "uidPageError"
+        W3Const.w3PropDefaultErrorPage: "uidPageError",
+        W3Const.w3PropDefaultAuthenticationPage: "uidPageLogin"
     },
     "uidHeader": {
         W3Const.w3PropType: W3Const.w3TypePanel,

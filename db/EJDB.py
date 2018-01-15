@@ -18,7 +18,8 @@
             ImportFile("TableFinanceEvent.py"),
             ImportFile("TableMapBillFinanceEvent.py"),
             ImportFile("TableDebt.py"),
-            ImportFile("TableExchangeRate.py")
+            ImportFile("TableExchangeRate.py"),
+            ImportFile("TableAuthentication.py")
         ]
     }
     
