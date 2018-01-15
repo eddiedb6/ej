@@ -7,6 +7,9 @@ function EJGetBill(&$filter) {
         return W3CreateFailedResult();
     }
 
+    $startDate = $filter[W3GetAPIParamIndex("aidBill", "from") + 1];
+    $endDate = $filter[W3GetAPIParamIndex("aidBill", "to") + 1];
+
     $sql = "select " .
          "bill.Datetime as datetime, bill.Amount as amount, bill.Currency as currencyID, bill.Note as note," .
          "person.Name as owner," .
@@ -16,7 +19,7 @@ function EJGetBill(&$filter) {
          " from " .
          "bill, currency, paymentmode, billcategory, person" .
          " where " .
-         "bill.Datetime >= '" . $filter[1] . "' and bill.Datetime <= '" . $filter[2] . "'" .
+         "bill.Datetime >= '" . $startDate . "' and bill.Datetime <= '" . $endDate . "'" .
          " and " .
          "bill.PID = person.ID" . 
          " and " .
@@ -56,13 +59,16 @@ function EJGetDebt(&$filter) {
         return W3CreateFailedResult();
     }
 
+    $startDate = $filter[W3GetAPIParamIndex("aidDebt", "from") + 1];
+    $endDate = $filter[W3GetAPIParamIndex("aidDebt", "to") + 1];
+
     $sql = "select " .
          "debt.Start as start, debt.End as end, " .
          "debt.Amount as amount, debt.Balance as balance, debt.Note as note" .
          " from " .
          "debt" .
          " where FID=1 and " . # [ED] PENDING: Handle FID
-         "(debt.Start <= '" . $filter[2] . "' and debt.End >= '" . $filter[1] . "')" .
+         "(debt.Start <= '" . $endDate . "' and debt.End >= '" . $startDate . "')" .
          " order by debt.Start asc";
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
     EJReadTable($sql, function ($row) use (&$result) {
@@ -86,6 +92,8 @@ function EJGetFinanceEvent(&$filter) {
         return W3CreateFailedResult();
     }
 
+    $eventName = $filter[W3GetAPIParamIndex("aidFinanceEvent", "name") + 1];
+
     $sql = "select " .
          "financeevent.ID as id, " .
          "financeevent.Name as name, " .
@@ -93,8 +101,8 @@ function EJGetFinanceEvent(&$filter) {
          "financeevent.Note as note " .
          "from financeevent " .
          "where FID=1"; # [ED] PENDING: Handle FID
-    if ($filter[1] != "") {
-        $sql .= " and financeevent.Name like " . W3MakeString($filter[1], true);
+    if ($eventName != "") {
+        $sql .= " and financeevent.Name like " . W3MakeString($eventName, true);
     }
     $sql .= " order by financeevent.Name asc";
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
@@ -134,6 +142,9 @@ function EJGetIncome(&$filter) {
         return W3CreateFailedResult();
     }
 
+    $startDate = $filter[W3GetAPIParamIndex("aidIncome", "from") + 1];
+    $endDate = $filter[W3GetAPIParamIndex("aidIncome", "to") + 1];
+
     $sql = "select " .
          "income.Datetime as datetime, income.Amount as amount, income.Currency as currencyID, income.Note as note," .
          "person.Name as owner," .
@@ -142,7 +153,7 @@ function EJGetIncome(&$filter) {
          " from " .
          "income, currency, incomecategory, person" .
          " where " .
-         "income.Datetime >= '" . $filter[1] . "' and income.Datetime <= '" . $filter[2] . "'" .
+         "income.Datetime >= '" . $startDate . "' and income.Datetime <= '" . $endDate . "'" .
          " and " .
          "income.PID = person.ID" . 
          " and " .
@@ -180,7 +191,9 @@ function EJGetFinanceReport(&$filter) {
         return W3CreateFailedResult();
     }
 
-    $time = explode("-", $filter[1]);
+    $reportMonth = $filter[W3GetAPIParamIndex("aidFinanceReport", "month") + 1];
+
+    $time = explode("-", $reportMonth);
     $year = intval($time[0]);
     $month = intval($time[1]);
 
