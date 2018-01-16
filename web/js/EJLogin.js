@@ -9,8 +9,9 @@ function EJLogin(uidUsername, uidPassword) {
     }
 
     W3CallAPIAsync(loginRequest, function(data, status) {
-	W3LogDebug(data);
-	W3LogDebug(status);
+	if (!W3OnAPICallback(data, status)) {
+	    return;
+	}
 	
 	var result = eval("(" + data + ")");
 	if (result[w3ApiResultStatus] != w3ApiResultSuccessful) {
@@ -24,7 +25,7 @@ function EJLogin(uidUsername, uidPassword) {
 	W3LogInfo("Get session: " + session);
 	W3LogInfo("Login successfully");
 
-	W3SetVariable("session", session);
+	W3SetVariable(w3Session, session);
 
 	// Redirect to finance page
 	var pageRequest = W3CreateAPI("aidPage", "uidPageFinance");
@@ -32,6 +33,6 @@ function EJLogin(uidUsername, uidPassword) {
 	    alert("Create page request failed!");
 	    return;
 	}
-	location.href = pageRequest;
+	W3CallAPI(pageRequest);
     });
 }

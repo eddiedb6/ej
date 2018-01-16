@@ -27,9 +27,9 @@ function EJLogin(&$credential) {
         return W3CreateFailedResult();
     }
 
-    unset($_SESSION['session']);
+    unset($_SESSION[w3Session]);
     $session = EJGenerateSession();
-    $_SESSION['session'] = $session;
+    $_SESSION[w3Session] = $session;
     
     $apiDef = W3GetAPIDef("aidLogin");
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":{";

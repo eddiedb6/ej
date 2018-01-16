@@ -78,7 +78,7 @@
             },
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
+                W3Const.w3ApiDataValue: W3Const.w3Session
             }]                                
         }],
         W3Const.w3PropEvent: {
@@ -275,7 +275,7 @@
             },
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: "session"
+                W3Const.w3ApiDataValue: W3Const.w3Session
             }]
         }],
         W3Const.w3PropEvent: {
