@@ -55,6 +55,8 @@
         W3Const.w3PropSubUI: [
             "uidNaviFinance",
             "uidLineBreak",
+            "uidNaviNotes",
+            "uidLineBreak",
             "uidNaviDebug",
             "uidLineBreak"
         ],
@@ -84,6 +86,25 @@
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
                 W3Const.w3ApiDataValue: "uidPageFinance"
+            }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
+        }
+    },
+    "uidNaviNotes": {
+        W3Const.w3PropType: W3Const.w3TypeLink,
+        W3Const.w3PropString: "sidNaviNotes",
+        W3Const.w3PropTriggerApi: [
+        {
+            W3Const.w3ApiID: "aidPage",
+            W3Const.w3ApiCall: W3Const.w3ApiDirect,
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "uidPageNotes"
             }]
         }],
         W3Const.w3PropEvent: {

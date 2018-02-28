@@ -100,6 +100,7 @@
 
         # Navigation
         "sidNaviFinance": "Finance",
+        "sidNaviNotes": "Notes",
         "sidNaviDebug": "Debug",
 
         # Debug Page
