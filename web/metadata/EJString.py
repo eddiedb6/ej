@@ -43,6 +43,13 @@
         "sidTableIncomeCategory2": "Lucky Money",
         "sidTableIncomeCategory3": "Bonus", 
         "sidTableIncomeCategory4": "Annual Bonus",
+
+        "sidTableNoteTag1": "Language",
+        "sidTableNoteTag2": "Linux",
+        "sidTableNoteTag3": "Windows",
+        "sidTableNoteTag4": "LAMP",
+        "sidTableNoteTag80": "Life",
+        "sidTableNoteTag90": "Travel",
         
         # Common 
         "sidButtonBack": "Back",
@@ -100,7 +107,7 @@
 
         # Navigation
         "sidNaviFinance": "Finance",
-        "sidNaviNotes": "Notes",
+        "sidNaviNote": "Note",
         "sidNaviDebug": "Debug",
 
         # Debug Page

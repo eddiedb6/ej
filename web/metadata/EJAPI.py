@@ -1,4 +1,6 @@
 {
+    ### Finance ###
+    
     "aidBill": {
         W3Const.w3ElementType: W3Const.w3TypeApi,
         W3Const.w3ApiName: "bill",
@@ -376,6 +378,77 @@
         }],            
         W3Const.w3ApiHandler: "EJAddFinanceEvent"
     },
+
+    ### Note ###
+
+    "aidNote": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "note",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "title"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        }],
+        W3Const.w3ApiResult: {
+            W3Const.w3ApiResultData: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "note"
+            }]
+        },
+        W3Const.w3ApiHandler: "EJGetNote"
+    },
+
+    "aidNoteTitle": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "notetitle",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+            W3Const.w3ApiDataValue: "tag"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        }],
+        W3Const.w3ApiResult: {
+            W3Const.w3ApiResultData: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "title"
+            }]
+        },
+        W3Const.w3ApiHandler: "EJGetNoteTitle"
+    },
+
+    "aidSetNote": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "setnote",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "title"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+            W3Const.w3ApiDataValue: "tag"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "note"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        }],
+        W3Const.w3ApiHandler: "EJSetNote"
+    },
+
+    ### Others ###
 
     "aidLogin": {
         W3Const.w3ElementType: W3Const.w3TypeApi,
