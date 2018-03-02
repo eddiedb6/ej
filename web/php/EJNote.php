@@ -25,7 +25,7 @@ function EJCreateNoteTab() {
             w3PropSubUI => array("uidDebugContent")
         );
 
-        array_push($uiDef, array($uiLabel, $uiPanel));
+        array_push($uiDef[w3PropSubUI], array($uiLabel, $uiPanel));
     });
 
     return W3CreateUI($uid, $uiDef);
