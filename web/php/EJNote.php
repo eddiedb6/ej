@@ -1,5 +1,13 @@
 <?php
 
+function EJCreateNoteUIFromTag($tag) {
+    $sql = "select Title, Note from note where Tag='" . $tag ."'";
+    EJReadTable($sql, function ($row) use (&$uiDef, $uid) {
+    });
+
+    return array();
+}
+
 function EJCreateNoteTab() {
     $uid = "uidNoteTab";
     $uiDef = array(
@@ -12,7 +20,7 @@ function EJCreateNoteTab() {
         w3PropSubUI => array()
     );
     
-    $sql = "select SID from notetag";
+    $sql = "select ID, SID from notetag";
     EJReadTable($sql, function ($row) use (&$uiDef, $uid) {
         $uiLabel = array(
             w3PropType => w3TypeLabel,
@@ -22,7 +30,7 @@ function EJCreateNoteTab() {
 
         $uiPanel = array (
             w3PropType => w3TypePanel,
-            w3PropSubUI => array("uidDebugContent")
+            w3PropSubUI => EJCreateNoteUIFromTag($row["ID"])
         );
 
         array_push($uiDef[w3PropSubUI], array($uiLabel, $uiPanel));
