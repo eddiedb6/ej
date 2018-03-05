@@ -2,8 +2,12 @@
     PDBConst.Name: "note",
     PDBConst.Columns: [
     {
+        PDBConst.Name: "ID",
+        PDBConst.Attributes: ["int", "not null", "auto_increment", "primary key"]
+    },
+    {
         PDBConst.Name: "Title",
-        PDBConst.Attributes: ["varchar(255)", "not null", "primary key"]
+        PDBConst.Attributes: ["varchar(255)", "not null"]
     },
     {
         PDBConst.Name: "Tag",
