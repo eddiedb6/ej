@@ -28,7 +28,7 @@ function EJCreateNoteTab() {
         array_push($uiDef[w3PropSubUI], array($uiLabel, $uiPanel));
     });
 
-    return W3CreateUI($uid, $uiDef);
+    return W3CreateDynamicUI($uid, $uiDef);
 }
 
 function EJSetNote() {
