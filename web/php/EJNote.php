@@ -1,36 +1,63 @@
 <?php
 
-function EJCreateNoteUIFromTag($tag) {
-    $uiListDef = array (
-        w3PropType => w3TypeTable,
-        w3PropSubUI => array (
-            array ()
-        )
+function EJCreateNoteUIFromTag($idTag) {
+    $uiNoteListPanelDef = array (
+        w3PropType => w3TypePanel,
+        w3PropID => "uidNoteListPanel" . $idTag,
+        w3PropSubUI => array ()
     );
     
-    $sql = "select ID, Title, Modified from note where Tag='" . $tag ."' order by Modified desc" ;
-    EJReadTable($sql, function ($row) use (&$uiListDef) {
+    $sql = "select ID, Title, Modified from note where Tag='" . $idTag ."' order by Modified desc";
+    EJReadTable($sql, function ($row) use ($idTag, &$uiNoteListPanelDef) {
         $uiLink = array (
             w3PropType => w3TypeLink,
             w3PropString => $row["Title"],
             w3PropEvent => array (
                 w3EventClick => array (
-                    "EJOnNoteClicked('" . $row["ID"] . "')"
+                    "EJOnNoteClicked('" . $idTag . "','" . $row["ID"] . "')"
                 )
             )
         );
-        array_push($uiListDef[w3PropSubUI], array ($uiLink));
+        $uiLinkPanel = array (
+            w3PropType => w3TypePanel,
+            w3PropSubUI => array ($uiLink)
+        );
+
+        array_push($uiNoteListPanelDef[w3PropSubUI], $uiLinkPanel);
     });
 
-    $uiPanelDef = array (
+    $uiNoteContentPanelDef = array (
         w3PropType => w3TypePanel,
-        w3PropID => "uidNoteDisplayPanel" . strval($tag),
+        w3PropID => "uidNoteContentPanel" . $idTag,
         w3PropSubUI => array (
-            "uidButtonBack"
+            array (
+                w3PropType => w3TypePanel,
+                w3PropID => "uidNoteContentTitle" . $idTag,
+                w3PropCSS => array (
+                    "text-align" => "center"
+                ),
+                w3PropSubUI => array (
+                )
+            ),
+            array (
+                w3PropType => w3TypePanel,
+                w3PropID => "uidNoteContentBody" . $idTag,
+                w3PropSubUI => array (
+                )
+            )
         )
     );
 
-    return array($uiListDef, $uiPanelDef);
+    $uiTableDef = array (
+        w3PropType => w3TypeTable,
+        w3PropID => "uidNoteContentTable" . $idTag,
+        w3PropSubUI => array (
+            array (),
+            array ($uiNoteListPanelDef, $uiNoteContentPanelDef)
+        )
+    );
+
+    return array ($uiTableDef);
 }
 
 function EJCreateNoteTab() {
@@ -56,7 +83,7 @@ function EJCreateNoteTab() {
 
         $uiPanel = array (
             w3PropType => w3TypePanel,
-            w3PropID => $uid . "Panel" . $row["ID"],
+            w3PropID => $uid . "ContentPanel" . $row["ID"],
             w3PropSubUI => EJCreateNoteUIFromTag($row["ID"])
         );
 
