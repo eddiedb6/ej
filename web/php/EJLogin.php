@@ -40,7 +40,7 @@ function EJLogin(&$credential) {
 }
 
 function EJIsLogin($session) {
-    if (array_key_exists('session', $_SESSION) and $session == $_SESSION['session']) {
+    if (array_key_exists(w3Session, $_SESSION) and $session == $_SESSION[w3Session]) {
         return true;
     }
     

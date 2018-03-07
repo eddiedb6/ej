@@ -126,7 +126,7 @@ function EJGetNote(&$filter) {
             $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($resultForColumn) . ",";
         }
     });
-    $result = rtrim($result, ",") . "}";
+    $result = rtrim($result, ",") . "}}";
 
     return $result;
 }
