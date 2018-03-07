@@ -386,30 +386,8 @@
         W3Const.w3ApiName: "note",
         W3Const.w3ApiParams: [
         {
-            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "title"
-        },
-        {
-            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
-        }],
-        W3Const.w3ApiResult: {
-            W3Const.w3ApiResultData: [
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                W3Const.w3ApiDataValue: "note"
-            }]
-        },
-        W3Const.w3ApiHandler: "EJGetNote"
-    },
-
-    "aidNoteTitle": {
-        W3Const.w3ElementType: W3Const.w3TypeApi,
-        W3Const.w3ApiName: "notetitle",
-        W3Const.w3ApiParams: [
-        {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
-            W3Const.w3ApiDataValue: "tag"
+            W3Const.w3ApiDataValue: "id"
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -420,14 +398,22 @@
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
                 W3Const.w3ApiDataValue: "title"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "tag"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "note"
             }]
         },
-        W3Const.w3ApiHandler: "EJGetNoteTitle"
+        W3Const.w3ApiHandler: "EJGetNote"
     },
 
-    "aidSetNote": {
+    "aidAddNote": {
         W3Const.w3ElementType: W3Const.w3TypeApi,
-        W3Const.w3ApiName: "setnote",
+        W3Const.w3ApiName: "addnote",
         W3Const.w3ApiParams: [
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -445,7 +431,30 @@
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "session"
         }],
-        W3Const.w3ApiHandler: "EJSetNote"
+        W3Const.w3ApiHandler: "EJAddNote"
+    },
+
+    "aidUpdateNote": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "updatenote",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+            W3Const.w3ApiDataValue: "id"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "title"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "note"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        }],
+        W3Const.w3ApiHandler: "EJUpdateNote"
     },
 
     ### Others ###
