@@ -20,6 +20,8 @@
             "uidNoteAddButton"
         ],
         W3Const.w3PropCSS: {
+            "clear": "both",
+            "padding-top": "5px",
             "float": "right"
         }
     },
