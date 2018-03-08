@@ -89,8 +89,16 @@
             "border-right": "1px solid"
         },
         W3Const.w3PropSubUI: [
-            "uidNoteListLabel",
-            "uidNoteListTable"
+            "uidNoteListLayout"
+        ]
+    },
+
+    "uidNoteListLayout": {
+        W3Const.w3PropType: W3Const.w3TypeTable,
+        W3Const.w3PropSubUI: [
+            [],
+            ["uidNoteListLabel"],
+            ["uidNoteListTable"]
         ]
     },
 
@@ -170,11 +178,22 @@
         W3Const.w3PropType: W3Const.w3TypePanel
     },
     
-    "uidNoteContentEditorPanel": {
+    "uidNoteContentEditPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropCSS: {
             "display": "none"
         },
+        W3Const.w3PropSubUI: [
+            "uidNoteContentEditor"
+        ]
+    },
+
+    "uidNoteContentEditor": {
+        W3Const.w3PropType: W3Const.w3TypeTextEditor,
+        W3Const.w3PropAttr: {
+            "rows": "5",
+            "cols": "47"
+        }
     },
 
     # Note - add
@@ -219,7 +238,7 @@
         W3Const.w3PropString: "sidEdit",
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
-                #"EJEditCurrentNote()"
+                "EJEditCurrentNote()"
             ]
         }
     }

@@ -1,14 +1,17 @@
 function EJHideNoteID(paramArray) {
-    return [paramArray[0], {"display": "none", }];
+    return [paramArray[0], {"display": "none", }, paramArray[2]];
 }
 
 function EJCreateNoteLink(paramArray) {
-    var idNote = 1;
-    var uiHTML = "<a onclick='EJOnNoteClicked(" + idNote + ")' href='javascript:' void(0);=''>" + paramArray[0] + "</a>"
-    return [uiHTML, paramArray[1]];
+    var rowIndex = paramArray[2][0];
+    var columnIndex = paramArray[2][1];
+    var uidCell = "uidNoteListTable" + String(rowIndex) + String(columnIndex - 1);
+    var uiHTML = "<a onclick=\"EJOnNoteClicked('" + uidCell + "')\" href='javascript:' void(0);=''>" + paramArray[0] + "</a>"
+    return [uiHTML, paramArray[1], paramArray[2]];
 }
 
-function EJOnNoteClicked(idNote) {
+function EJOnNoteClicked(uidCell) {
+    var idNote = W3GetUIText(uidCell)
     var session = W3GetSession();
     var noteRequest = W3CreateAPI("aidNote", idNote, session);
     if (noteRequest == "") {
@@ -35,6 +38,6 @@ function EJOnNoteClicked(idNote) {
 }
 
 function EJEditCurrentNote() {
-    W3HideUI("uidNoteContentBody1");
-    W3DisplayUI("uidNoteContentEditor1");
+    W3HideUI("uidNoteContentBodyPanel");
+    W3DisplayUI("uidNoteContentEditPanel");
 }
