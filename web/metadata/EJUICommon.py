@@ -40,82 +40,82 @@
     },
     "uidDatetimeLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidDatetimeLabel"
     },
     "uidAmountLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidAmountLabel"
     },
     "uidCurrencyLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidCurrencyLabel"
     },
     "uidCategoryLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidCategoryLabel"
     },
     "uidPaymentLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidPaymentLabel"
     },
     "uidNoteLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidNoteLabel"
     },
     "uidOwnerLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidOwnerLabel"
     },
     "uidIncomeLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidIncomeLabel"
     },
     "uidDepositLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidDepositLabel"
     },
     "uidDebtLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidDebtLabel"
     },
     "uidBalanceLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidBalanceLabel"
     },
     "uidConsumeLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidConsumeLabel"
     },
     "uidStartLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidStartLabel"
     },
     "uidEndLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidEndLabel"
     },
     "uidEventLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidEventLabel"
     },
     "uidBudgetLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidBudgetLabel"
     },
     "uidMonthLabel": {

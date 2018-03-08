@@ -55,6 +55,7 @@
         "sidButtonBack": "Back",
         "sidGet": "Get",
         "sidAdd": "Add",
+        "sidEdit": "Edit",
         "sidSubmit": "Submit",
         "sidCancel": "Cancel",
         "sidTotalAmount": "0",
@@ -124,6 +125,9 @@
         "sidFinanceTabIncome": "Income",
         "sidFinanceTabDebt": "Debt",
         "sidFinanceTabReport": "Report",
-        "sidFinanceTabEvent": "Event"
+        "sidFinanceTabEvent": "Event",
+
+        # Note Page
+        "sidNoteTagLabel": "Tag:"
     }
 }

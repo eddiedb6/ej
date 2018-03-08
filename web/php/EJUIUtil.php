@@ -40,4 +40,8 @@ function EJCreateOwnerCombo() {
     return EJCreateOptionListFromDB("person", "ID", "Name", false);
 }
 
+function EJCreateNoteTagCombo() {
+    return EJCreateOptionListFromDB("notetag", "ID", "SID");
+}
+
  ?>

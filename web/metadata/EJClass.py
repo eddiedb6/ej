@@ -16,7 +16,7 @@
         }
     },
 
-    "cidRightLable": {
+    "cidRightLabel": {
         W3Const.w3ElementType: W3Const.w3TypeClass,
         W3Const.w3PropCSS: {
             "float": "right"

@@ -187,12 +187,12 @@
     "uidFinanceReportCanvasPlaceHolder": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidNull",
-        W3Const.w3PropClass: "cidRightLable"
+        W3Const.w3PropClass: "cidRightLabel"
     },
     "uidFinanceReportIncomeValue": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidNull",
-        W3Const.w3PropClass: "cidRightLable",
+        W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropFunc: {
             W3Const.w3FuncProcessor: [
                 "W3FormatCurrency(w3PlaceHolder_1)"

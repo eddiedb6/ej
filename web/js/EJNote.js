@@ -1,5 +1,15 @@
-function EJOnNoteClicked(idTag, idNote) {
-    var session = W3GetVariable(eval(w3Session));
+function EJHideNoteID(paramArray) {
+    return [paramArray[0], {"display": "none", }];
+}
+
+function EJCreateNoteLink(paramArray) {
+    var idNote = 1;
+    var uiHTML = "<a onclick='EJOnNoteClicked(" + idNote + ")' href='javascript:' void(0);=''>" + paramArray[0] + "</a>"
+    return [uiHTML, paramArray[1]];
+}
+
+function EJOnNoteClicked(idNote) {
+    var session = W3GetSession();
     var noteRequest = W3CreateAPI("aidNote", idNote, session);
     if (noteRequest == "") {
 	alert("Failed to create note request");
@@ -19,7 +29,12 @@ function EJOnNoteClicked(idTag, idNote) {
 	var tag = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][1][w3ApiDataValue]];
 	var note = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][2][w3ApiDataValue]];
 
-	$("#uidNoteContentTitle" + idTag).html("<b>" + title + "</b>");
-	$("#uidNoteContentBody" + idTag).html("<b>" + note + "</b>");
+	$("#uidNoteContentTitlePanel").html("<b>" + title + "</b>");
+	$("#uidNoteContentBodyPanel").html("<p>" + note + "</p>");
     });
+}
+
+function EJEditCurrentNote() {
+    W3HideUI("uidNoteContentBody1");
+    W3DisplayUI("uidNoteContentEditor1");
 }
