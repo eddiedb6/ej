@@ -35,9 +35,15 @@ function EJOnNoteClicked(uidCell) {
 	$("#uidNoteContentTitlePanel").html("<b>" + title + "</b>");
 	$("#uidNoteContentBodyPanel").html("<p>" + note + "</p>");
     });
+
+    W3HideUI("uidNoteContentEditPanel");
+    W3DisplayUI("uidNoteContentBodyPanel");
 }
 
 function EJEditCurrentNote() {
     W3HideUI("uidNoteContentBodyPanel");
     W3DisplayUI("uidNoteContentEditPanel");
+
+    var note = $("#uidNoteContentBodyPanel").html();
+    $("#uidNoteContentEditor").jqteVal(note);
 }
