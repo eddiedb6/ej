@@ -189,11 +189,7 @@
     },
 
     "uidNoteContentEditor": {
-        W3Const.w3PropType: W3Const.w3TypeTextEditor,
-        W3Const.w3PropAttr: {
-            "rows": "5",
-            "cols": "47"
-        }
+        W3Const.w3PropType: W3Const.w3TypeTextEditor
     },
 
     # Note - add
