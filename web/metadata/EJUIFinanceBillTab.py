@@ -183,6 +183,7 @@
         W3Const.w3PropPrototype: "uidTotalAmountLabel",
         W3Const.w3PropBindingVar: {
             W3Const.w3BindingVarName: "billTotalAmount",
+            W3Const.w3BindingType: W3Const.w3BindingUIDisplay,
             W3Const.w3BindingFormat: "F2"
         }
     },
