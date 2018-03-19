@@ -26,7 +26,7 @@ function EJLogin(uidUsername, uidPassword) {
 	// Redirect to finance page
 	var pageRequest = W3CreateAPI("aidPage", "uidPageFinance");
 	if (pageRequest == "") {
-	    alert("Create page request failed!");
+	    alert("Create finance page request failed!");
 	    return;
 	}
 	W3CallAPI(pageRequest);

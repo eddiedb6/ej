@@ -2,13 +2,24 @@
     "uidPageNote": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
-            "uidNoteTagPanel",
             "uidNotePanel",
+            "uidNoteAddPanel",
+            "uidNoteEditPanel"
+        ]
+    },
+
+    # Note
+    
+    "uidNotePanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidNoteTagPanel",
+            "uidNoteDisplayPanel",
             "uidNoteOperationPanel"
         ]
     },
 
-    # Tag
+    # Note - Tag
     
     "uidNoteTagPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
@@ -62,17 +73,7 @@
         }
     },
 
-    # Note 
-    
-    "uidNotePanel": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropSubUI: [
-            "uidNoteDisplayPanel",
-            "uidNoteAddPanel"
-        ]
-    },
-
-    # Note - display and edit
+    # Note - Display
     
     "uidNoteDisplayPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
@@ -114,22 +115,33 @@
     "uidNoteListTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
-            ["uidNoteListTableHeaderID", "uidNoteListTableHeaderTitle"]
+            ["uidNoteListTableHeaderSelectMark", "uidNoteListTableHeaderID", "uidNoteListTableHeaderTitle"]
         ],
         W3Const.w3PropSinkApi: {
             W3Const.w3ApiID: "aidNoteTitle",
             W3Const.w3SinkRow: [
             {
-                # Column 1 map to API result field "id"
+                # Column 2 map to API result field "id"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNone,
+                W3Const.w3ApiDataValue: ""
+            },
+            {
+                # Column 2 map to API result field "id"
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
                 W3Const.w3ApiDataValue: "id"
             },
             {
-                # Column 2 map to API result field "title"
+                # Column 3 map to API result field "title"
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
                 W3Const.w3ApiDataValue: "title"
             }]
         }
+    },
+
+    "uidNoteListTableHeaderSelectMark": {
+        W3Const.w3PropType: W3Const.w3TypeTableHeader,
+        W3Const.w3PropSubUI: [
+        ]
     },
 
     "uidNoteListTableHeaderID": {
@@ -162,8 +174,7 @@
         },
         W3Const.w3PropSubUI: [
             "uidNoteContentTitlePanel",
-            "uidNoteContentBodyPanel",
-            "uidNoteContentEditPanel"
+            "uidNoteContentBodyPanel"
         ]
     },
 
@@ -171,6 +182,16 @@
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropCSS: {
             "text-align": "center"
+        },
+        W3Const.w3PropSubUI: [
+            "uidNoteContentTitleLabel"
+        ]
+    },
+
+    "uidNoteContentTitleLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropCSS: {
+            "font-weight": "bold"
         }
     },
     
@@ -178,36 +199,7 @@
         W3Const.w3PropType: W3Const.w3TypePanel
     },
     
-    "uidNoteContentEditPanel": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropCSS: {
-            "display": "none"
-        },
-        W3Const.w3PropSubUI: [
-            "uidNoteContentEditor"
-        ]
-    },
-
-    "uidNoteContentEditor": {
-        W3Const.w3PropType: W3Const.w3TypeTextEditor,
-        W3Const.w3PropAttr: {
-            "rows": "5",
-            "cols": "47"
-        }
-    },
-
-    # Note - add
-    
-    "uidNoteAddPanel": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropSubUI: [
-        ],
-        W3Const.w3PropCSS: {
-            "display": "none"
-        }
-    },
-
-    # Operation
+    # Note - Operation
     
     "uidNoteOperationPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
@@ -227,8 +219,8 @@
         W3Const.w3PropString: "sidAdd",
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
-                #"W3HideUI('uidFinanceTabBillQueryPanel')",
-                #"W3DisplayUI('uidFinanceTabBillAddPanel')"
+                "W3HideUI('uidNotePanel')",
+                "W3DisplayUI('uidNoteAddPanel')"
             ]
         }
     },
@@ -236,9 +228,107 @@
     "uidNoteEditButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidEdit",
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        },
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
-                "EJEditCurrentNote()"
+                "EJEditNote()",
+                "W3HideUI('uidNotePanel')",
+                "W3DisplayUI('uidNoteEditPanel')"
+            ]
+        }
+    },
+
+    # Add
+    
+    "uidNoteAddPanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidNoteAddCancelButton"
+        ],
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+
+    "uidNoteAddCancelButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidCancel",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "W3HideUI('uidNoteAddPanel')",
+                "W3DisplayUI('uidNotePanel')"
+            ]
+        }
+    },
+
+    # Edit
+
+    "uidNoteEditPanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropCSS: {
+            "display": "none"
+        },
+        W3Const.w3PropSubUI: [
+            "uidNoteEditTitlePanel",
+            "uidNoteEditor",
+            "uidNoteEditOperationPanel"
+        ]
+    },
+
+    "uidNoteEditTitlePanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropCSS: {
+            "text-align": "center"
+        },
+        W3Const.w3PropSubUI: [
+            "uidNoteEditTitle"
+        ]
+    },
+
+    "uidNoteEditTitle": {
+        W3Const.w3PropType: W3Const.w3TypeText
+    },
+
+    "uidNoteEditor": {
+        W3Const.w3PropType: W3Const.w3TypeTextEditor,
+        W3Const.w3PropAttr: {
+            "rows": "32",
+            "cols": "80"
+        }
+    },
+
+    "uidNoteEditOperationPanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidNoteEditSaveButton",
+            "uidNoteEditCancelButton"
+        ],
+        W3Const.w3PropCSS: {
+            "clear": "both",
+            "padding-top": "5px",
+            "float": "right"
+        }
+    },
+
+    "uidNoteEditCancelButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidCancel",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "W3HideUI('uidNoteEditPanel')",
+                "W3DisplayUI('uidNotePanel')"
+            ]
+        }
+    },
+
+    "uidNoteEditSaveButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidSave",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "EJSaveNote()"
             ]
         }
     }

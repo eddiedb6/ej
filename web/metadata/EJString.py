@@ -58,6 +58,7 @@
         "sidEdit": "Edit",
         "sidSubmit": "Submit",
         "sidCancel": "Cancel",
+        "sidSave": "Save",
         "sidTotalAmount": "0",
         "sidNull": "-",
         "sidOther": "Other",
