@@ -254,4 +254,40 @@ function EJInsertExchangeRate($date, $currency) {
     return true;
 }
 
+function EJInsertNote(&$note) {
+    global $ejConn;
+
+    if (!EJConnectDB()) {
+        W3LogWarning("No DB connection when insert note");
+        return false;
+    }
+
+    # First insert note
+    
+    $columns = array ("Title", "Tag", "Note", "Modified");
+    $size = sizeof($columns);
+
+    if (sizeof($note) - 1 != $size) {
+        W3LogError("No enough fields for note insert: require " .
+                   strval($size - 1) .
+                   " but actual is " .
+                   strval(sizeof($note) - 2));
+        return false;
+    }
+
+    $datetime = '2018-03-20';
+    $values = array(W3MakeString($note[W3GetAPIParamIndex("aidAddNote", "title") + 1], true),
+                    $note[W3GetAPIParamIndex("aidAddNote", "tag") + 1],
+                    W3MakeString($note[W3GetAPIParamIndex("aidAddNote", "note") + 1], true),
+                    W3MakeString($datetime, true));
+    $sql = "insert into note (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
+
+    if (!$ejConn->query($sql)) {
+        W3LogWarning("Execute note insert SQL failed");
+        return false;
+    }
+
+    return true;
+}
+
  ?>

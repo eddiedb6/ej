@@ -129,6 +129,7 @@
         "sidFinanceTabEvent": "Event",
 
         # Note Page
-        "sidNoteTagLabel": "Tag:"
+        "sidNoteTagLabel": "Tag:",
+        "sidNoteTitleLabel": "Title:"
     }
 }

@@ -1,6 +1,18 @@
 <?php
 
-function EJAddNote() {
+function EJAddNote(&$parameters) {
+    if (EJIsAPIParamValid($parameters, "aidAddNote")) {
+        $session = $parameters[W3GetAPIParamIndex("aidAddNote", "session") + 1];
+        if (!EJIsLogin($session)) {
+            return W3CreateAuthenticationResult();
+        }
+        
+        if (EJInsertNote($parameters)) {
+            return W3CreateSuccessfulResult();
+        }
+    }
+
+    return W3CreateFailedResult();    
 }
 
 function EJGetNote(&$filter) {

@@ -28,7 +28,6 @@
             "uidLine"
         ]
     },
-
     "uidNoteTagTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
@@ -36,20 +35,17 @@
             ["uidNoteTagLabel", "uidNoteTag", "uidNoteGetButton"]
         ]
     },
-
     "uidNoteTagLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidNoteTagLabel"
     },
-
     "uidNoteTag": {
         W3Const.w3PropType: W3Const.w3TypeCombobox,
         W3Const.w3PropFunc: {
             W3Const.w3FuncCreator: "EJCreateNoteTagCombo"
         }
     },
-
     "uidNoteGetButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidGet",
@@ -68,7 +64,10 @@
         }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
-                W3Const.w3PlaceHolder_1
+                W3Const.w3PlaceHolder_1,
+                "W3DisableUI('uidNoteEditButton')",
+                "W3SetUIText('uidNoteContentBodyPanel', '')",
+                "W3SetUIText('uidNoteContentTitleLabel', '')"
             ]
         }
     },
@@ -82,7 +81,6 @@
             "uidNoteContentPanel"
         ]
     },
-
     "uidNoteListPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropCSS: {
@@ -93,7 +91,6 @@
             "uidNoteListLayout"
         ]
     },
-
     "uidNoteListLayout": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
@@ -102,7 +99,6 @@
             ["uidNoteListTable"]
         ]
     },
-
     "uidNoteListLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidNoteLabel",
@@ -111,7 +107,6 @@
             "float": "left"
         }
     },
-
     "uidNoteListTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
@@ -137,13 +132,11 @@
             }]
         }
     },
-
     "uidNoteListTableHeaderSelectMark": {
         W3Const.w3PropType: W3Const.w3TypeTableHeader,
         W3Const.w3PropSubUI: [
         ]
     },
-
     "uidNoteListTableHeaderID": {
         W3Const.w3PropType: W3Const.w3TypeTableHeader,
         W3Const.w3PropSubUI: [
@@ -154,7 +147,6 @@
             ]
         }
     },
-
     "uidNoteListTableHeaderTitle": {
         W3Const.w3PropType: W3Const.w3TypeTableHeader,
         W3Const.w3PropSubUI: [
@@ -165,7 +157,6 @@
             ]
         }
     },
-    
     "uidNoteContentPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropCSS: {
@@ -177,7 +168,6 @@
             "uidNoteContentBodyPanel"
         ]
     },
-
     "uidNoteContentTitlePanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropCSS: {
@@ -187,14 +177,12 @@
             "uidNoteContentTitleLabel"
         ]
     },
-
     "uidNoteContentTitleLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropCSS: {
             "font-weight": "bold"
         }
     },
-    
     "uidNoteContentBodyPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel
     },
@@ -213,7 +201,6 @@
             "float": "right"
         }
     },
-
     "uidNoteAddButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidAdd",
@@ -224,7 +211,6 @@
             ]
         }
     },
-
     "uidNoteEditButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidEdit",
@@ -236,29 +222,6 @@
                 "EJEditNote()",
                 "W3HideUI('uidNotePanel')",
                 "W3DisplayUI('uidNoteEditPanel')"
-            ]
-        }
-    },
-
-    # Add
-    
-    "uidNoteAddPanel": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropSubUI: [
-            "uidNoteAddCancelButton"
-        ],
-        W3Const.w3PropCSS: {
-            "display": "none"
-        }
-    },
-
-    "uidNoteAddCancelButton": {
-        W3Const.w3PropType: W3Const.w3TypeButton,
-        W3Const.w3PropString: "sidCancel",
-        W3Const.w3PropEvent: {
-            W3Const.w3EventClick: [
-                "W3HideUI('uidNoteAddPanel')",
-                "W3DisplayUI('uidNotePanel')"
             ]
         }
     },
@@ -276,7 +239,6 @@
             "uidNoteEditOperationPanel"
         ]
     },
-
     "uidNoteEditTitlePanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropCSS: {
@@ -286,11 +248,9 @@
             "uidNoteEditTitle"
         ]
     },
-
     "uidNoteEditTitle": {
         W3Const.w3PropType: W3Const.w3TypeText
     },
-
     "uidNoteEditor": {
         W3Const.w3PropType: W3Const.w3TypeTextEditor,
         W3Const.w3PropAttr: {
@@ -298,7 +258,6 @@
             "cols": "80"
         }
     },
-
     "uidNoteEditOperationPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
@@ -311,7 +270,6 @@
             "float": "right"
         }
     },
-
     "uidNoteEditCancelButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidCancel",
@@ -322,7 +280,6 @@
             ]
         }
     },
-
     "uidNoteEditSaveButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidSave",
@@ -331,5 +288,105 @@
                 "EJSaveNote()"
             ]
         }
+    },
+
+    # Add
+    
+    "uidNoteAddPanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidNoteAddTable",
+            "uidNoteAddOperationPanel"
+        ],
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+    "uidNoteAddOperationPanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidNoteAddOperationTable"
+        ]
+    },
+    "uidNoteAddOperationTable": {
+        W3Const.w3PropType: W3Const.w3TypeTable,
+        W3Const.w3PropSubUI: [
+            [], # No header
+            ["uidNoteAddSubmitButton", "uidNoteAddCancelButton"]
+        ],
+        W3Const.w3PropCSS: {
+            "float": "right"
+        }
+    },
+    "uidNoteAddCancelButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidCancel",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "W3HideUI('uidNoteAddPanel')",
+                "W3DisplayUI('uidNotePanel')"
+            ]
+        }
+    },
+    "uidNoteAddSubmitButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidSubmit",
+        W3Const.w3PropTriggerApi: [
+        {
+            W3Const.w3ApiID: "aidAddNote",
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteAddTitle"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteAddTag"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteAddNote"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: W3Const.w3Session
+            }]                                
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1,
+                "EJGotoNotePage()"
+            ]
+        }
+    },
+    "uidNoteAddTable": {
+        W3Const.w3PropType: W3Const.w3TypeTable,
+        W3Const.w3PropSubUI: [
+            [], # No header
+            ["uidNoteTitleLabel", "uidNoteAddTitle"],
+            ["uidNoteTagLabel",   "uidNoteAddTag"],
+            ["uidNoteLabel",      "uidNoteAddNote"]
+        ]
+    },
+    "uidNoteAddTitle": {
+        W3Const.w3PropType: W3Const.w3TypeText
+    },
+    "uidNoteAddTag": {
+        W3Const.w3PropType: W3Const.w3TypeCombobox,
+        W3Const.w3PropFunc: {
+            W3Const.w3FuncCreator: "EJCreateNoteTagCombo"
+        }
+    },
+    "uidNoteAddNote": {
+        W3Const.w3PropType: W3Const.w3TypeTextEditor,
+        W3Const.w3PropAttr: {
+            "rows": "32",
+            "cols": "80"
+        }
+    },
+    "uidNoteTitleLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropClass: "cidRightLabel",
+        W3Const.w3PropString: "sidNoteTitleLabel"
     }
 }

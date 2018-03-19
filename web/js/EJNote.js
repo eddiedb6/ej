@@ -10,6 +10,18 @@ function EJCreateNoteLink(paramArray) {
     return [uiHTML, paramArray[1], paramArray[2]];
 }
 
+function EJMarkNote(uidCell) {
+    $("#uidNoteListTable").find("tr").each(function() {
+	var tdAttr = $(this).children();
+	var uid = tdAttr.eq(1).attr("id");
+	if (uidCell == uid) {
+	    tdAttr.eq(0).text("*");
+	} else {
+	    tdAttr.eq(0).text("");
+	}
+    });
+}
+
 function EJOnNoteClicked(uidCell) {
     var idNote = W3GetUIText(uidCell)
     var session = W3GetSession();
@@ -33,15 +45,15 @@ function EJOnNoteClicked(uidCell) {
 	var note = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][2][w3ApiDataValue]];
 
 	W3SetUIText("uidNoteContentTitleLabel", title);
-
-	$("#uidNoteContentBodyPanel").html("<p>" + note + "</p>");
+	W3SetUIText("uidNoteContentBodyPanel", note);
     });
 
     W3EnableUI("uidNoteEditButton");
+    EJMarkNote(uidCell);
 }
 
 function EJEditNote() {
-    var note = $("#uidNoteContentBodyPanel").html();
+    var note = W3GetUIText("uidNoteContentBodyPanel");
     var title = W3GetUIText("uidNoteContentTitleLabel");
 
     W3SetUIText("uidNoteEditor", note);
@@ -49,8 +61,10 @@ function EJEditNote() {
 }
 
 function EJSaveNote() {
-    
     // Redirect to note page
+}
+
+function EJGotoNotePage() {
     var pageRequest = W3CreateAPI("aidPage", "uidPageNote");
     if (pageRequest == "") {
 	alert("Create note page request failed!");
