@@ -460,17 +460,13 @@
         W3Const.w3ApiHandler: "EJAddNote"
     },
 
-    "aidUpdateNote": {
+    "aidModifyNote": {
         W3Const.w3ElementType: W3Const.w3TypeApi,
-        W3Const.w3ApiName: "updatenote",
+        W3Const.w3ApiName: "modifynote",
         W3Const.w3ApiParams: [
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
             W3Const.w3ApiDataValue: "id"
-        },
-        {
-            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "title"
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
@@ -480,7 +476,10 @@
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "session"
         }],
-        W3Const.w3ApiHandler: "EJUpdateNote"
+        W3Const.w3ApiHandler: "EJModifyNote",
+        W3Const.w3ApiListener: [
+            "EJGotoNotePage(w3PlaceHolder_1, w3PlaceHolder_2)"
+        ]
     },
 
     ### Others ###

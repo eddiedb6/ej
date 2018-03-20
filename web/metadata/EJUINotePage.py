@@ -234,27 +234,21 @@
             "display": "none"
         },
         W3Const.w3PropSubUI: [
-            "uidNoteEditTitlePanel",
+            "uidNoteEditID",
             "uidNoteEditor",
             "uidNoteEditOperationPanel"
         ]
     },
-    "uidNoteEditTitlePanel": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
+    "uidNoteEditID": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropCSS: {
-            "text-align": "center"
-        },
-        W3Const.w3PropSubUI: [
-            "uidNoteEditTitle"
-        ]
-    },
-    "uidNoteEditTitle": {
-        W3Const.w3PropType: W3Const.w3TypeText
+            "display": "none"
+        }
     },
     "uidNoteEditor": {
         W3Const.w3PropType: W3Const.w3TypeTextEditor,
         W3Const.w3PropAttr: {
-            "rows": "32",
+            "rows": "64",
             "cols": "80"
         }
     },
@@ -283,9 +277,26 @@
     "uidNoteEditSaveButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidSave",
+        W3Const.w3PropTriggerApi: [
+        {
+            W3Const.w3ApiID: "aidModifyNote",
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteEditID"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteEditor"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: W3Const.w3Session
+            }]                                
+        }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
-                "EJSaveNote()"
+                W3Const.w3PlaceHolder_1
             ]
         }
     },
@@ -354,8 +365,7 @@
         }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
-                W3Const.w3PlaceHolder_1,
-                "EJGotoNotePage()"
+                W3Const.w3PlaceHolder_1
             ]
         }
     },

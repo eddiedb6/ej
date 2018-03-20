@@ -82,7 +82,18 @@ function EJGetNoteTitle(&$filter) {
     return $result;
 }
 
-function EJUpdateNote() {
+function EJModifyNote(&$parameters) {
+    if (EJIsAPIParamValid($parameters, "aidModifyNote")) {
+        $session = $parameters[W3GetAPIParamIndex("aidModifyNote", "session") + 1];
+        if (!EJIsLogin($session)) {
+            return W3CreateAuthenticationResult();
+        }
+        
+        echo EJUpdateNote($parameters);
+        return W3CreateSuccessfulResult();
+    }
+
+    return W3CreateFailedResult();    
 }
 
  ?>

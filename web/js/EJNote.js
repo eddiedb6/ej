@@ -3,10 +3,11 @@ function EJHideNoteID(paramArray) {
 }
 
 function EJCreateNoteLink(paramArray) {
+    var title = decodeURI(paramArray[0]);
     var rowIndex = paramArray[2][0];
     var columnIndex = paramArray[2][1];
     var uidCell = "uidNoteListTable" + String(rowIndex) + String(columnIndex - 1);
-    var uiHTML = "<a onclick=\"EJOnNoteClicked('" + uidCell + "')\" href='javascript:' void(0);=''>" + paramArray[0] + "</a>"
+    var uiHTML = "<a onclick=\"EJOnNoteClicked('" + uidCell + "')\" href='javascript:' void(0);=''>" + title + "</a>"
     return [uiHTML, paramArray[1], paramArray[2]];
 }
 
@@ -20,6 +21,18 @@ function EJMarkNote(uidCell) {
 	    tdAttr.eq(0).text("");
 	}
     });
+}
+
+function EJGetSelectedNoteID() {
+    var id = "";
+    $("#uidNoteListTable").find("tr").each(function() {
+	var tdAttr = $(this).children();
+	if (tdAttr.eq(0).text() == "*") {
+	    id = tdAttr.eq(1).text();
+	} 
+    });
+
+    return id;
 }
 
 function EJOnNoteClicked(uidCell) {
@@ -44,6 +57,8 @@ function EJOnNoteClicked(uidCell) {
 	var tag = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][1][w3ApiDataValue]];
 	var note = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][2][w3ApiDataValue]];
 
+	title = decodeURI(title);
+	note = decodeURI(note);
 	W3SetUIText("uidNoteContentTitleLabel", title);
 	W3SetUIText("uidNoteContentBodyPanel", note);
     });
@@ -53,18 +68,20 @@ function EJOnNoteClicked(uidCell) {
 }
 
 function EJEditNote() {
+    var id = EJGetSelectedNoteID();
+    if (id == "") {
+	W3LogError("No note selected yet");
+	return;
+    }
+
     var note = W3GetUIText("uidNoteContentBodyPanel");
-    var title = W3GetUIText("uidNoteContentTitleLabel");
-
     W3SetUIText("uidNoteEditor", note);
-    W3SetUIText("uidNoteEditTitle", title);
+    W3SetUIText("uidNoteEditID", id);
 }
 
-function EJSaveNote() {
-    // Redirect to note page
-}
-
-function EJGotoNotePage() {
+function EJGotoNotePage(data, status) {
+    W3OnAPIDefaultListener(data, status);
+    
     var pageRequest = W3CreateAPI("aidPage", "uidPageNote");
     if (pageRequest == "") {
 	alert("Create note page request failed!");

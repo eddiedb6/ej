@@ -262,8 +262,6 @@ function EJInsertNote(&$note) {
         return false;
     }
 
-    # First insert note
-    
     $columns = array ("Title", "Tag", "Note", "Modified");
     $size = sizeof($columns);
 
@@ -284,6 +282,35 @@ function EJInsertNote(&$note) {
 
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute note insert SQL failed");
+        return false;
+    }
+
+    return true;
+}
+
+function EJUpdateNote(&$note) {
+    global $ejConn;
+
+    if (!EJConnectDB()) {
+        W3LogWarning("No DB connection when modify note");
+        return false;
+    }
+
+    if (sizeof($note) - 1 != 3) {
+        W3LogError("No enough fields for note modify: require 2 but actual is " . strval(sizeof($note) - 2));
+        return false;
+    }
+
+    $datetime = W3MakeString('2018-03-20', true);
+    $newNote = W3MakeString($note[W3GetAPIParamIndex("aidModifyNote", "note") + 1], true);
+    $id = $note[W3GetAPIParamIndex("aidModifyNote", "id") + 1];
+
+    $sql = "update note set Note=" . $newNote . ", Modified=" . $datetime . "  where ID=" . $id;
+
+    return var_dump($note) . " " . $sql;
+    
+    if (!$ejConn->query($sql)) {
+        W3LogWarning("Execute note update SQL failed");
         return false;
     }
 
