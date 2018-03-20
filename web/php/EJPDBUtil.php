@@ -307,8 +307,6 @@ function EJUpdateNote(&$note) {
 
     $sql = "update note set Note=" . $newNote . ", Modified=" . $datetime . "  where ID=" . $id;
 
-    return var_dump($note) . " " . $sql;
-    
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute note update SQL failed");
         return false;

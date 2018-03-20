@@ -1,6 +1,6 @@
 function EJLogin(uidUsername, uidPassword) {
-    var username = W3GetUIValue(uidUsername);
-    var password = W3GetUIValue(uidPassword);
+    var username = W3GetUIText(uidUsername);
+    var password = W3GetUIText(uidPassword);
 	
     var loginRequest = W3CreateAPI("aidLogin", username, password);
     if (loginRequest == "") {

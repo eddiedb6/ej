@@ -89,8 +89,9 @@ function EJModifyNote(&$parameters) {
             return W3CreateAuthenticationResult();
         }
         
-        echo EJUpdateNote($parameters);
-        return W3CreateSuccessfulResult();
+        if (EJUpdateNote($parameters)) {
+            return W3CreateSuccessfulResult();
+        }
     }
 
     return W3CreateFailedResult();    
