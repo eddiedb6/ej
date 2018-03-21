@@ -114,6 +114,7 @@
 
         # Debug Page
         "sidDebugContent": "I'm Debug Page!",
+        "sidButtonDebug": "Debug",
 
         # Error Page
         "sidErrorContent": "I'm Error Page!",
