@@ -2,22 +2,22 @@
 // Processor
 //
 
-function EJCalcBillTotalAmount(paramArray) {
-    return EJCalcCurrencyAmount(paramArray, billTotalAmount);
+function EJCalcBillTotalAmount(processorParam) {
+    return EJCalcCurrencyAmount(processorParam, billTotalAmount);
 }
 
-function EJCalcIncomeTotalAmount(paramArray) {
-    return EJCalcCurrencyAmount(paramArray, incomeTotalAmount);
+function EJCalcIncomeTotalAmount(processorParam) {
+    return EJCalcCurrencyAmount(processorParam, incomeTotalAmount);
 }
 
-function EJGenerateCategoryDrawFunc(paramArray) {
-    var categoryString = paramArray[0];
+function EJGenerateCategoryDrawFunc(processorParam) {
+    var categoryString = processorParam[0];
     var drawFunc = "EJDrawCategoryReport(w3PlaceHolder_1, " + categoryString + ")";
-    return [drawFunc, paramArray[1]];
+    return [drawFunc, processorParam[1]];
 }
 
-function EJGeneratePaymentmodeDrawFunc(paramArray) {
-    var paymentmodeString = paramArray[0];
+function EJGeneratePaymentmodeDrawFunc(processorParam) {
+    var paymentmodeString = processorParam[0];
     var drawFunc = "EJDrawPaymentmodeReport(w3PlaceHolder_1, " + paymentmodeString + ")";
-    return [drawFunc, paramArray[1]];
+    return [drawFunc, processorParam[1]];
 }

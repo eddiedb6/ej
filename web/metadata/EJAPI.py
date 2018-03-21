@@ -457,7 +457,10 @@
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "session"
         }],
-        W3Const.w3ApiHandler: "EJAddNote"
+        W3Const.w3ApiHandler: "EJAddNote",
+        W3Const.w3ApiListener: [
+            "EJGotoNotePage(w3PlaceHolder_1, w3PlaceHolder_2)"
+        ]
     },
 
     "aidModifyNote": {

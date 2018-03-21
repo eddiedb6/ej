@@ -57,7 +57,7 @@ function EJReadTable($sql, $callback) {
     return true;
 }
 
-function EJInsertBill(&$bill) {
+function EJInsertBill(&$billParams) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -70,21 +70,23 @@ function EJInsertBill(&$bill) {
     $columns = array ("PID", "Datetime", "Amount", "Currency", "Category", "PaymentMode", "Note");
     $size = sizeof($columns);
 
-    if (sizeof($bill) - 3 != $size) {
+    $uselessParamCount = 3; # Match string, session, etc.
+    $paramOffset = 1; # 0 is for the whole match string in reg                       
+    if (sizeof($billParams) - $uselessParamCount != $size) {
         W3LogError("No enough fields for bill insert: require " .
                    strval($size) .
                    " but actual is " .
-                   strval(sizeof($bill) - 1));
+                   strval(sizeof($billParams) - $paramOffset));
         return false;
     }
     
-    $values = array($bill[W3GetAPIParamIndex("aidAddBill", "owner") + 1],
-                    W3MakeString($bill[W3GetAPIParamIndex("aidAddBill", "datetime") + 1], true),
-                    $bill[W3GetAPIParamIndex("aidAddBill", "amount") + 1],
-                    $bill[W3GetAPIParamIndex("aidAddBill", "currency") + 1],
-                    $bill[W3GetAPIParamIndex("aidAddBill", "category") + 1],
-                    $bill[W3GetAPIParamIndex("aidAddBill", "paymentmode") + 1],
-                    W3MakeString($bill[W3GetAPIParamIndex("aidAddBill", "note") + 1], true));
+    $values = array($billParams[W3GetAPIParamIndex("aidAddBill", "owner") + $paramOffset],
+                    W3MakeString($billParams[W3GetAPIParamIndex("aidAddBill", "datetime") + $paramOffset], true),
+                    $billParams[W3GetAPIParamIndex("aidAddBill", "amount") + $paramOffset],
+                    $billParams[W3GetAPIParamIndex("aidAddBill", "currency") + $paramOffset],
+                    $billParams[W3GetAPIParamIndex("aidAddBill", "category") + $paramOffset],
+                    $billParams[W3GetAPIParamIndex("aidAddBill", "paymentmode") + $paramOffset],
+                    W3MakeString($billParams[W3GetAPIParamIndex("aidAddBill", "note") + $paramOffset], true));
     $sql = "insert into bill (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
 
     if (!$ejConn->query($sql)) {
@@ -94,12 +96,12 @@ function EJInsertBill(&$bill) {
 
     // Then map bill to finance event
 
-    $events = $bill[W3GetAPIParamIndex("aidAddBill", "event") + 1];
+    $events = $billParams[W3GetAPIParamIndex("aidAddBill", "event") + $paramOffset];
     if (trim($events) == "") {
         return true;
     }
     
-    $pid = $bill[W3GetAPIParamIndex("aidAddBill", "owner") + 1];
+    $pid = $billParams[W3GetAPIParamIndex("aidAddBill", "owner") + $paramOffset];
     $maxIDSql = "select max(ID) from bill where bill.PID=" . $pid;
         
     EJReadTable($maxIDSql, function ($row) use ($events) {
@@ -137,7 +139,7 @@ function EJInsertBill(&$bill) {
     return true;
 }
 
-function EJInsertDebt(&$debt) {
+function EJInsertDebt(&$debtParams) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -148,19 +150,25 @@ function EJInsertDebt(&$debt) {
     $columns = array ("Start", "End", "Amount", "Balance", "Note", "FID");
     $size = sizeof($columns);
 
-    if (sizeof($debt) - 1 != $size) {
+    $uselessParamCount = 1; # Match string, session, etc.
+    $paramOffset = 1; # 0 is for the whole match string in reg                       
+    if (sizeof($debtParams) - $uselessParamCount != $size) {
         W3LogError("No enough fields for debt insert: require " .
                    strval($size) .
                    " but actual is " .
-                   strval(sizeof($debt) - 1));
+                   strval(sizeof($debtParams) - $paramOffset));
         return false;
     }
-    
-    $values = array(W3MakeString($debt[W3GetAPIParamIndex("aidAddDebt", "start") + 1], true),
-                    W3MakeString($debt[W3GetAPIParamIndex("aidAddDebt", "end") + 1], true),
-                    $debt[W3GetAPIParamIndex("aidAddDebt", "amount") + 1],
-                    $debt[W3GetAPIParamIndex("aidAddDebt", "balance") + 1],
-                    W3MakeString($debt[W3GetAPIParamIndex("aidAddDebt", "note") + 1], true),
+
+    $balanceVal = $debtParams[W3GetAPIParamIndex("aidAddDebt", "balance") + $paramOffset];
+    if ($balanceVal == "") {
+        $balanceVal = "0";
+    }
+    $values = array(W3MakeString($debtParams[W3GetAPIParamIndex("aidAddDebt", "start") + $paramOffset], true),
+                    W3MakeString($debtParams[W3GetAPIParamIndex("aidAddDebt", "end") + $paramOffset], true),
+                    $debtParams[W3GetAPIParamIndex("aidAddDebt", "amount") + $paramOffset],
+                    $balanceVal,
+                    W3MakeString($debtParams[W3GetAPIParamIndex("aidAddDebt", "note") + $paramOffset], true),
                     1); # [ED] PENDING: Handle FID
     $sql = "insert into debt (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
@@ -171,7 +179,7 @@ function EJInsertDebt(&$debt) {
     return true;
 }
 
-function EJInsertFinanceEvent(&$event) {
+function EJInsertFinanceEvent(&$eventParams) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -182,17 +190,19 @@ function EJInsertFinanceEvent(&$event) {
     $columns = array ("Name", "Budget", "Note", "FID");
     $size = sizeof($columns);
 
-    if (sizeof($event) -1 != $size) {
+    $uselessParamCount = 1; # Match string, session, etc.
+    $paramOffset = 1; # 0 is for the whole match string in reg                       
+    if (sizeof($eventParams) - $uselessParamCount != $size) {
         W3LogError("No enough fields for finance event insert: require " .
                    strval($size) .
                    " but actual is " .
-                   strval(sizeof($event) - 1));
+                   strval(sizeof($eventParams) - $paramOffset));
         return false;
     }
     
-    $values = array(W3MakeString($event[W3GetAPIParamIndex("aidAddFinanceEvent", "name") + 1], true),
-                    $event[W3GetAPIParamIndex("aidAddFinanceEvent", "budget") + 1],
-                    W3MakeString($event[W3GetAPIParamIndex("aidAddFinanceEvent", "note") + 1], true),
+    $values = array(W3MakeString($eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "name") + $paramOffset], true),
+                    $eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "budget") + $paramOffset],
+                    W3MakeString($eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "note") + $paramOffset], true),
                     1); # [ED] PENDING: Handle FID
     $sql = "insert into financeevent (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
@@ -203,7 +213,7 @@ function EJInsertFinanceEvent(&$event) {
     return true;
 }
 
-function EJInsertIncome(&$income) {
+function EJInsertIncome(&$incomeParams) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -214,20 +224,22 @@ function EJInsertIncome(&$income) {
     $columns = array ("PID", "Datetime", "Amount", "Currency", "Category", "Note");
     $size = sizeof($columns);
 
-    if (sizeof($income) - 2 != $size) {
+    $uselessParamCount = 2; # Match string, session, etc.
+    $paramOffset = 1; # 0 is for the whole match string in reg                       
+    if (sizeof($incomeParams) - $uselessParamCount != $size) {
         W3LogError("No enough fields for income insert: require " .
                    strval($size) .
                    " but actual is " .
-                   strval(sizeof($income) - 1));
+                   strval(sizeof($incomeParams) - $paramOffset));
         return false;
     }
     
-    $values = array($income[W3GetAPIParamIndex("aidAddIncome", "owner") + 1],
-                    W3MakeString($income[W3GetAPIParamIndex("aidAddIncome", "datetime") + 1], true),
-                    $income[W3GetAPIParamIndex("aidAddIncome", "amount") + 1],
-                    $income[W3GetAPIParamIndex("aidAddIncome", "currency") + 1],
-                    $income[W3GetAPIParamIndex("aidAddIncome", "category") + 1],
-                    W3MakeString($income[W3GetAPIParamIndex("aidAddIncome", "note") + 1], true));
+    $values = array($incomeParams[W3GetAPIParamIndex("aidAddIncome", "owner") + $paramOffset],
+                    W3MakeString($incomeParams[W3GetAPIParamIndex("aidAddIncome", "datetime") + $paramOffset], true),
+                    $incomeParams[W3GetAPIParamIndex("aidAddIncome", "amount") + $paramOffset],
+                    $incomeParams[W3GetAPIParamIndex("aidAddIncome", "currency") + $paramOffset],
+                    $incomeParams[W3GetAPIParamIndex("aidAddIncome", "category") + $paramOffset],
+                    W3MakeString($incomeParams[W3GetAPIParamIndex("aidAddIncome", "note") + $paramOffset], true));
     $sql = "insert into income (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute income insert SQL failed");
@@ -254,7 +266,7 @@ function EJInsertExchangeRate($date, $currency) {
     return true;
 }
 
-function EJInsertNote(&$note) {
+function EJInsertNote(&$noteParams) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -265,19 +277,21 @@ function EJInsertNote(&$note) {
     $columns = array ("Title", "Tag", "Note", "Modified");
     $size = sizeof($columns);
 
-    if (sizeof($note) - 1 != $size) {
+    $uselessParamCount = 1; # Match string, session, etc.
+    $paramOffset = 1; # 0 is for the whole match string in reg                       
+    if (sizeof($noteParams) - $uselessParamCount != $size) {
         W3LogError("No enough fields for note insert: require " .
-                   strval($size - 1) .
+                   strval($size - 1) . # "Modified" not from param
                    " but actual is " .
-                   strval(sizeof($note) - 2));
+                   strval(sizeof($noteParams) - $paramOffset));
         return false;
     }
 
-    $datetime = '2018-03-20';
-    $values = array(W3MakeString($note[W3GetAPIParamIndex("aidAddNote", "title") + 1], true),
-                    $note[W3GetAPIParamIndex("aidAddNote", "tag") + 1],
-                    W3MakeString($note[W3GetAPIParamIndex("aidAddNote", "note") + 1], true),
-                    W3MakeString($datetime, true));
+    $datetime = W3MakeString(date("Y-m-d H:i:s"), true);
+    $values = array(W3MakeString($noteParams[W3GetAPIParamIndex("aidAddNote", "title") + $paramOffset], true),
+                    $noteParams[W3GetAPIParamIndex("aidAddNote", "tag") + $paramOffset],
+                    W3MakeString($noteParams[W3GetAPIParamIndex("aidAddNote", "note") + $paramOffset], true),
+                    $datetime);
     $sql = "insert into note (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
 
     if (!$ejConn->query($sql)) {
@@ -288,7 +302,7 @@ function EJInsertNote(&$note) {
     return true;
 }
 
-function EJUpdateNote(&$note) {
+function EJUpdateNote(&$noteParams) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -296,14 +310,18 @@ function EJUpdateNote(&$note) {
         return false;
     }
 
-    if (sizeof($note) - 1 != 3) {
-        W3LogError("No enough fields for note modify: require 2 but actual is " . strval(sizeof($note) - 2));
+    $uselessParamCount = 1; # Match string, session, etc.
+    $paramOffset = 1; # 0 is for the whole match string in reg                       
+    $columnCount = 3;
+    if (sizeof($noteParams) - $uselessParamCount != $columnCount) {
+        W3LogError("No enough fields for note modify: require 2 but actual is " . strval(sizeof($noteParams) - $paramOffset));
         return false;
     }
 
-    $datetime = W3MakeString('2018-03-20', true);
-    $newNote = W3MakeString($note[W3GetAPIParamIndex("aidModifyNote", "note") + 1], true);
-    $id = $note[W3GetAPIParamIndex("aidModifyNote", "id") + 1];
+    
+    $datetime = W3MakeString(date("Y-m-d H:i:s"), true);
+    $newNote = W3MakeString($noteParams[W3GetAPIParamIndex("aidModifyNote", "note") + $paramOffset], true);
+    $id = $noteParams[W3GetAPIParamIndex("aidModifyNote", "id") + $paramOffset];
 
     $sql = "update note set Note=" . $newNote . ", Modified=" . $datetime . "  where ID=" . $id;
 

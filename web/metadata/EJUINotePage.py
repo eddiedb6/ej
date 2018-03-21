@@ -184,7 +184,7 @@
         }
     },
     "uidNoteContentBodyPanel": {
-        W3Const.w3PropType: W3Const.w3TypePanel
+        W3Const.w3PropType: W3Const.w3TypeDisplayPanel
     },
     
     # Note - Operation

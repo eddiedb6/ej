@@ -1,13 +1,14 @@
 <?php
 
-function EJAddNote(&$parameters) {
-    if (EJIsAPIParamValid($parameters, "aidAddNote")) {
-        $session = $parameters[W3GetAPIParamIndex("aidAddNote", "session") + 1];
+function EJAddNote(&$noteParams) {
+    if (EJIsAPIParamValid($noteParams, "aidAddNote")) {
+        $paramOffset = 1; # The first one is alway whole string from reg match
+        $session = $noteParams[W3GetAPIParamIndex("aidAddNote", "session") + $paramOffset];
         if (!EJIsLogin($session)) {
             return W3CreateAuthenticationResult();
         }
         
-        if (EJInsertNote($parameters)) {
+        if (EJInsertNote($noteParams)) {
             return W3CreateSuccessfulResult();
         }
     }
@@ -15,13 +16,14 @@ function EJAddNote(&$parameters) {
     return W3CreateFailedResult();    
 }
 
-function EJGetNote(&$filter) {
-    if (!EJIsAPIParamValid($filter, "aidNote")) {
+function EJGetNote(&$noteParams) {
+    if (!EJIsAPIParamValid($noteParams, "aidNote")) {
         return W3CreateFailedResult();
     }
 
-    $session = $filter[W3GetAPIParamIndex("aidNote", "session") + 1];
-    $id = $filter[W3GetAPIParamIndex("aidNote", "id") + 1];
+    $paramOffset = 1; # The first one is alway whole string from reg match
+    $session = $noteParams[W3GetAPIParamIndex("aidNote", "session") + $paramOffset];
+    $id = $noteParams[W3GetAPIParamIndex("aidNote", "id") + $paramOffset];
 
     if (!EJIsLogin($session)) {
         return W3CreateAuthenticationResult();
@@ -47,13 +49,14 @@ function EJGetNote(&$filter) {
     return $result;
 }
 
-function EJGetNoteTitle(&$filter) {
-    if (!EJIsAPIParamValid($filter, "aidNoteTitle")) {
+function EJGetNoteTitle(&$noteParams) {
+    if (!EJIsAPIParamValid($noteParams, "aidNoteTitle")) {
         return W3CreateFailedResult();
     }
-
-    $session = $filter[W3GetAPIParamIndex("aidNoteTitle", "session") + 1];
-    $idTag = $filter[W3GetAPIParamIndex("aidNoteTitle", "tag") + 1];
+    
+    $paramOffset = 1; # The first one is alway whole string from reg match
+    $session = $noteParams[W3GetAPIParamIndex("aidNoteTitle", "session") + $paramOffset];
+    $idTag = $noteParams[W3GetAPIParamIndex("aidNoteTitle", "tag") + $paramOffset];
 
     if (!EJIsLogin($session)) {
         return W3CreateAuthenticationResult();
@@ -82,14 +85,15 @@ function EJGetNoteTitle(&$filter) {
     return $result;
 }
 
-function EJModifyNote(&$parameters) {
-    if (EJIsAPIParamValid($parameters, "aidModifyNote")) {
-        $session = $parameters[W3GetAPIParamIndex("aidModifyNote", "session") + 1];
+function EJModifyNote(&$noteParams) {
+    if (EJIsAPIParamValid($noteParams, "aidModifyNote")) {
+        $paramOffset = 1; # The first one is alway whole string from reg match
+        $session = $noteParams[W3GetAPIParamIndex("aidModifyNote", "session") + $paramOffset];
         if (!EJIsLogin($session)) {
             return W3CreateAuthenticationResult();
         }
         
-        if (EJUpdateNote($parameters)) {
+        if (EJUpdateNote($noteParams)) {
             return W3CreateSuccessfulResult();
         }
     }

@@ -32,6 +32,7 @@ function EJGetExchangeRateImpl($date, $currency) {
 
 function EJGetExchangeRateString($date, $currency) {
     $rate = "100.0";
+    # 1 - CNY
     if ($currency != "1") {
         $rate = EJGetExchangeRateImpl($date, $currency);
         if ($rate == NULL) {
@@ -197,6 +198,7 @@ function EJCalculateFinanceReport($year, $month, &$reports) {
     $totalYearDebt = $reports["debtyear"];
     
     # deposit
+    # Separate to 3 everage
     $totalMonthDeposit = $totalMonthIncome / 3;
     $totalYearDeposit = $totalYearIncome / 3;
     

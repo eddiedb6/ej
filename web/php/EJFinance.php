@@ -1,13 +1,14 @@
 <?php
 
-function EJGetBill(&$filter) {
-    if (!EJIsAPIParamValid($filter, "aidBill")) {
+function EJGetBill(&$billParams) {
+    if (!EJIsAPIParamValid($billParams, "aidBill")) {
         return W3CreateFailedResult();
     }
 
-    $session = $filter[W3GetAPIParamIndex("aidBill", "session") + 1];
-    $startDate = $filter[W3GetAPIParamIndex("aidBill", "from") + 1];
-    $endDate = $filter[W3GetAPIParamIndex("aidBill", "to") + 1];
+    $paramOffset = 1; # The first one is the whole string from reg match
+    $session = $billParams[W3GetAPIParamIndex("aidBill", "session") + $paramOffset];
+    $startDate = $billParams[W3GetAPIParamIndex("aidBill", "from") + $paramOffset];
+    $endDate = $billParams[W3GetAPIParamIndex("aidBill", "to") + $paramOffset];
 
     if (!EJIsLogin($session)) {
         return W3CreateAuthenticationResult();
@@ -55,14 +56,15 @@ function EJGetBill(&$filter) {
     return $result;
 }
 
-function EJGetDebt(&$filter) {
-    if (!EJIsAPIParamValid($filter, "aidDebt")) {
+function EJGetDebt(&$debtParams) {
+    if (!EJIsAPIParamValid($debtParams, "aidDebt")) {
         return W3CreateFailedResult();
     }
 
-    $session = $filter[W3GetAPIParamIndex("aidDebt", "session") + 1];
-    $startDate = $filter[W3GetAPIParamIndex("aidDebt", "from") + 1];
-    $endDate = $filter[W3GetAPIParamIndex("aidDebt", "to") + 1];
+    $paramOffset = 1; # The first one is the whole string from reg match
+    $session = $debtParams[W3GetAPIParamIndex("aidDebt", "session") + $paramOffset];
+    $startDate = $debtParams[W3GetAPIParamIndex("aidDebt", "from") + $paramOffset];
+    $endDate = $debtParams[W3GetAPIParamIndex("aidDebt", "to") + $paramOffset];
 
     if (!EJIsLogin($session)) {
         return W3CreateAuthenticationResult();
@@ -91,13 +93,14 @@ function EJGetDebt(&$filter) {
     return $result;
 }
 
-function EJGetFinanceEvent(&$filter) {
-    if (!EJIsAPIParamValid($filter, "aidFinanceEvent")) {
+function EJGetFinanceEvent(&$eventParams) {
+    if (!EJIsAPIParamValid($eventParams, "aidFinanceEvent")) {
         return W3CreateFailedResult();
     }
 
-    $session = $filter[W3GetAPIParamIndex("aidFinanceEvent", "session") + 1];
-    $eventName = $filter[W3GetAPIParamIndex("aidFinanceEvent", "name") + 1];
+    $paramOffset = 1; # The first one is the whole string from reg match
+    $session = $eventParams[W3GetAPIParamIndex("aidFinanceEvent", "session") + $paramOffset];
+    $eventName = $eventParams[W3GetAPIParamIndex("aidFinanceEvent", "name") + $paramOffset];
 
     if (!EJIsLogin($session)) {
         return W3CreateAuthenticationResult();
@@ -111,7 +114,7 @@ function EJGetFinanceEvent(&$filter) {
          "from financeevent " .
          "where FID=1"; # [ED] PENDING: Handle FID
     if ($eventName != "") {
-        $sql .= " and financeevent.Name like " . W3MakeString($eventName, true);
+        $sql .= " and financeevent.Name like " . W3MakeString("%" . $eventName . "%", true);
     }
     $sql .= " order by financeevent.Name asc";
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
@@ -144,14 +147,15 @@ function EJGetFinanceEvent(&$filter) {
     return $result;
 }
 
-function EJGetIncome(&$filter) {
-    if (!EJIsAPIParamValid($filter, "aidIncome")) {
+function EJGetIncome(&$incomeParams) {
+    if (!EJIsAPIParamValid($incomeParams, "aidIncome")) {
         return W3CreateFailedResult();
     }
 
-    $session = $filter[W3GetAPIParamIndex("aidIncome", "session") + 1];
-    $startDate = $filter[W3GetAPIParamIndex("aidIncome", "from") + 1];
-    $endDate = $filter[W3GetAPIParamIndex("aidIncome", "to") + 1];
+    $paramOffset = 1; # The first one is the whole string from reg match
+    $session = $incomeParams[W3GetAPIParamIndex("aidIncome", "session") + $paramOffset];
+    $startDate = $incomeParams[W3GetAPIParamIndex("aidIncome", "from") + $paramOffset];
+    $endDate = $incomeParams[W3GetAPIParamIndex("aidIncome", "to") + $paramOffset];
 
     if (!EJIsLogin($session)) {
         return W3CreateAuthenticationResult();
@@ -196,13 +200,14 @@ function EJGetIncome(&$filter) {
     return $result;
 }
 
-function EJGetFinanceReport(&$filter) {
-    if (!EJIsAPIParamValid($filter, "aidFinanceReport")) {
+function EJGetFinanceReport(&$reportParams) {
+    if (!EJIsAPIParamValid($reportParams, "aidFinanceReport")) {
         return W3CreateFailedResult();
     }
 
-    $session = $filter[W3GetAPIParamIndex("aidFinanceReport", "session") + 1];
-    $reportMonth = $filter[W3GetAPIParamIndex("aidFinanceReport", "month") + 1];
+    $paramOffset = 1; # The first one is the whole string from reg match
+    $session = $reportParams[W3GetAPIParamIndex("aidFinanceReport", "session") + $paramOffset];
+    $reportMonth = $reportParams[W3GetAPIParamIndex("aidFinanceReport", "month") + $paramOffset];
 
     if (!EJIsLogin($session)) {
         return W3CreateAuthenticationResult();
@@ -257,7 +262,8 @@ function EJGetFinanceReport(&$filter) {
 
 function EJAddBill(&$parameters) {
     if (EJIsAPIParamValid($parameters, "aidAddBill")) {
-        $session = $parameters[W3GetAPIParamIndex("aidAddBill", "session") + 1];
+        $paramOffset = 1; # The first one is the whole string from reg match
+        $session = $parameters[W3GetAPIParamIndex("aidAddBill", "session") + $paramOffset];
         if (!EJIsLogin($session)) {
             return W3CreateAuthenticationResult();
         }
@@ -272,7 +278,8 @@ function EJAddBill(&$parameters) {
 
 function EJAddDebt(&$parameters) {
     if (EJIsAPIParamValid($parameters, "aidAddDebt")) {
-        $session = $parameters[W3GetAPIParamIndex("aidAddDebt", "session") + 1];
+        $paramOffset = 1; # The first one is the whole string from reg match
+        $session = $parameters[W3GetAPIParamIndex("aidAddDebt", "session") + $paramOffset];
         if (!EJIsLogin($session)) {
             return W3CreateAuthenticationResult();
         }
@@ -287,7 +294,8 @@ function EJAddDebt(&$parameters) {
 
 function EJAddFinanceEvent(&$parameters) {
     if (EJIsAPIParamValid($parameters, "aidAddFinanceEvent")) {
-        $session = $parameters[W3GetAPIParamIndex("aidAddFinanceEvent", "session") + 1];
+        $paramOffset = 1; # The first one is the whole string from reg match
+        $session = $parameters[W3GetAPIParamIndex("aidAddFinanceEvent", "session") + $paramOffset];
         if (!EJIsLogin($session)) {
             return W3CreateAuthenticationResult();
         }
@@ -302,7 +310,8 @@ function EJAddFinanceEvent(&$parameters) {
 
 function EJAddIncome(&$parameters) {
     if (EJIsAPIParamValid($parameters, "aidAddIncome")) {
-        $session = $parameters[W3GetAPIParamIndex("aidAddIncome", "session") + 1];
+        $paramOffset = 1; # The first one is the whole string from reg match
+        $session = $parameters[W3GetAPIParamIndex("aidAddIncome", "session") + $paramOffset];
         if (!EJIsLogin($session)) {
             return W3CreateAuthenticationResult();
         }

@@ -1,10 +1,10 @@
-function EJCalcCurrencyAmount(paramArray, varAmount) {
-    var amountWithCurrencyRate = paramArray[0].split("|");
+function EJCalcCurrencyAmount(processorParam, varAmount) {
+    var amountWithCurrencyRate = processorParam[0].split("|");
     var amount = amountWithCurrencyRate[0];
     var rate = amountWithCurrencyRate[1];
 
     // Remove currency rate and keep only amount
-    paramArray[0] = amount;
+    processorParam[0] = amount;
 
     if (rate != "0") {
 	var totalAmount = W3GetVariable(varAmount);
@@ -13,11 +13,11 @@ function EJCalcCurrencyAmount(paramArray, varAmount) {
 
     } else {
 	// Mark that the exchange failed
-	var css = paramArray[1];
+	var css = processorParam[1];
 	css["color"] = "gray";
     }	
 
-    return paramArray;
+    return processorParam;
 }
 
 function EJDrawCategoryReport(uidCanvas, categoryString) {
@@ -63,10 +63,12 @@ function EJDrawFinanceReport(uidCanvas, dataString, textArray) {
 	W3LogWarning("Report has no data: " + uidCanvas);
 	return;
     }
-    
+
+    var floatBit = 4;
     for (var i = 0; i < dataArray.length; ++i) {
-	dataArray[i] = (parseInt(dataArray[i]) / 10000).toFixed(4);
+	dataArray[i] = (parseInt(dataArray[i]) / 10000).toFixed(floatBit);
     }
 
-    W3DrawPercentageReport(uidCanvas, dataArray, textArray, 5);
+    var padding = 5;
+    W3DrawPercentageReport(uidCanvas, dataArray, textArray, padding);
 }

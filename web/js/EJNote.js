@@ -1,14 +1,14 @@
-function EJHideNoteID(paramArray) {
-    return [paramArray[0], {"display": "none", }, paramArray[2]];
+function EJHideNoteID(processorParam) {
+    return [processorParam[0], {"display": "none", }, processorParam[2]];
 }
 
-function EJCreateNoteLink(paramArray) {
-    var title = decodeURI(paramArray[0]);
-    var rowIndex = paramArray[2][0];
-    var columnIndex = paramArray[2][1];
+function EJCreateNoteLink(processorParam) {
+    var title = decodeURI(processorParam[0]);
+    var rowIndex = processorParam[2][0];
+    var columnIndex = processorParam[2][1];
     var uidCell = "uidNoteListTable" + String(rowIndex) + String(columnIndex - 1);
     var uiHTML = "<a onclick=\"EJOnNoteClicked('" + uidCell + "')\" href='javascript:' void(0);=''>" + title + "</a>"
-    return [uiHTML, paramArray[1], paramArray[2]];
+    return [uiHTML, processorParam[1], processorParam[2]];
 }
 
 function EJMarkNote(uidCell) {
@@ -58,7 +58,6 @@ function EJOnNoteClicked(uidCell) {
 	var note = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][2][w3ApiDataValue]];
 
 	title = decodeURI(title);
-	note = decodeURI(note);
 	W3SetUIText("uidNoteContentTitleLabel", title);
 	W3SetUIText("uidNoteContentBodyPanel", note);
     });

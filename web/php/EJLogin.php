@@ -5,8 +5,9 @@ function EJLogin(&$credential) {
         return W3CreateFailedResult();
     }
 
-    $username = $credential[W3GetAPIParamIndex("aidLogin", "username") + 1];
-    $password = $credential[W3GetAPIParamIndex("aidLogin", "password") + 1];
+    $paramOffset = 1; # The first one is the whole match string from reg
+    $username = $credential[W3GetAPIParamIndex("aidLogin", "username") + $paramOffset];
+    $password = $credential[W3GetAPIParamIndex("aidLogin", "password") + $paramOffset];
 
     $isLogin = false;
     $sql = "select " .
