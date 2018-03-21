@@ -287,6 +287,7 @@ function EJInsertNote(&$noteParams) {
         return false;
     }
 
+    date_default_timezone_set("Asia/Shanghai");
     $datetime = W3MakeString(date("Y-m-d H:i:s"), true);
     $values = array(W3MakeString($noteParams[W3GetAPIParamIndex("aidAddNote", "title") + $paramOffset], true),
                     $noteParams[W3GetAPIParamIndex("aidAddNote", "tag") + $paramOffset],
@@ -318,7 +319,7 @@ function EJUpdateNote(&$noteParams) {
         return false;
     }
 
-    
+    date_default_timezone_set("Asia/Shanghai");
     $datetime = W3MakeString(date("Y-m-d H:i:s"), true);
     $newNote = W3MakeString($noteParams[W3GetAPIParamIndex("aidModifyNote", "note") + $paramOffset], true);
     $id = $noteParams[W3GetAPIParamIndex("aidModifyNote", "id") + $paramOffset];
