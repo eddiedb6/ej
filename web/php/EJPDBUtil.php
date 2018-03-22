@@ -266,7 +266,7 @@ function EJInsertExchangeRate($date, $currency) {
     return true;
 }
 
-function EJInsertNote(&$noteParams) {
+function EJInsertNote(&$noteParams, &$postParams) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -277,13 +277,13 @@ function EJInsertNote(&$noteParams) {
     $columns = array ("Title", "Tag", "Note", "Modified");
     $size = sizeof($columns);
 
-    $uselessParamCount = 1; # Match string, session, etc.
+    $uselessParamCount = 2; # Match string, session, etc.
     $paramOffset = 1; # 0 is for the whole match string in reg                       
-    if (sizeof($noteParams) - $uselessParamCount != $size) {
+    if (sizeof($noteParams) + sizeof($postParams) - $uselessParamCount != $size) {
         W3LogError("No enough fields for note insert: require " .
                    strval($size - 1) . # "Modified" not from param
                    " but actual is " .
-                   strval(sizeof($noteParams) - $paramOffset));
+                   strval(sizeof($noteParams) - $paramOffset + sizeof($postParams) - $paramOffset));
         return false;
     }
 
@@ -291,7 +291,7 @@ function EJInsertNote(&$noteParams) {
     $datetime = W3MakeString(date("Y-m-d H:i:s"), true);
     $values = array(W3MakeString($noteParams[W3GetAPIParamIndex("aidAddNote", "title") + $paramOffset], true),
                     $noteParams[W3GetAPIParamIndex("aidAddNote", "tag") + $paramOffset],
-                    W3MakeString($noteParams[W3GetAPIParamIndex("aidAddNote", "note") + $paramOffset], true),
+                    W3MakeString($postParams[W3GetAPIPostIndex("aidAddNote", "note") + $paramOffset]),
                     $datetime);
     $sql = "insert into note (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
 
@@ -303,7 +303,7 @@ function EJInsertNote(&$noteParams) {
     return true;
 }
 
-function EJUpdateNote(&$noteParams) {
+function EJUpdateNote(&$noteParams, &$postParams) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -311,17 +311,20 @@ function EJUpdateNote(&$noteParams) {
         return false;
     }
 
-    $uselessParamCount = 1; # Match string, session, etc.
+    $uselessParamCount = 3; # Match string, session, etc.
     $paramOffset = 1; # 0 is for the whole match string in reg                       
-    $columnCount = 3;
-    if (sizeof($noteParams) - $uselessParamCount != $columnCount) {
-        W3LogError("No enough fields for note modify: require 2 but actual is " . strval(sizeof($noteParams) - $paramOffset));
+    $columnCount = 2; # Note, ID
+    if (sizeof($noteParams) + sizeof($postParams) - $uselessParamCount != $columnCount) {
+        W3LogError("No enough fields for note modify: require " .
+                   strval($columnCount) .
+                   " but actual is " .
+                   strval(sizeof($noteParams) - $paramOffset + sizeof($postParams) - $paramOffset));
         return false;
     }
 
     date_default_timezone_set("Asia/Shanghai");
     $datetime = W3MakeString(date("Y-m-d H:i:s"), true);
-    $newNote = W3MakeString($noteParams[W3GetAPIParamIndex("aidModifyNote", "note") + $paramOffset], true);
+    $newNote = W3MakeString($postParams[W3GetAPIPostIndex("aidModifyNote", "note") + $paramOffset]);
     $id = $noteParams[W3GetAPIParamIndex("aidModifyNote", "id") + $paramOffset];
 
     $sql = "update note set Note=" . $newNote . ", Modified=" . $datetime . "  where ID=" . $id;

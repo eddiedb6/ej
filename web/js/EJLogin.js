@@ -8,7 +8,7 @@ function EJLogin(uidUsername, uidPassword) {
 	return;
     }
 
-    W3CallAPIAsync(loginRequest, function(data, status) {
+    W3PostAPIAsync(loginRequest, function(data, status) {
 	var result = eval("(" + data + ")");
 	if (result[w3ApiResultStatus] != w3ApiResultSuccessful) {
 	    W3LogWarning("Login failed!");

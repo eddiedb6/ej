@@ -1,15 +1,19 @@
 <?php
 
 function EJAddNote(&$noteParams) {
-    if (EJIsAPIParamValid($noteParams, "aidAddNote")) {
+    $aid = "aidAddNote";
+    if (EJIsAPIParamValid($noteParams, $aid)) {
         $paramOffset = 1; # The first one is alway whole string from reg match
-        $session = $noteParams[W3GetAPIParamIndex("aidAddNote", "session") + $paramOffset];
+        $session = $noteParams[W3GetAPIParamIndex($aid, "session") + $paramOffset];
         if (!EJIsLogin($session)) {
             return W3CreateAuthenticationResult();
         }
-        
-        if (EJInsertNote($noteParams)) {
-            return W3CreateSuccessfulResult();
+
+        $postParams = "";
+        if (W3GetAPIPostParams($aid, $postParams)) {
+            if (EJInsertNote($noteParams, $postParams)) {
+                return W3CreateSuccessfulResult();
+            }
         }
     }
 
@@ -86,15 +90,20 @@ function EJGetNoteTitle(&$noteParams) {
 }
 
 function EJModifyNote(&$noteParams) {
-    if (EJIsAPIParamValid($noteParams, "aidModifyNote")) {
+    $aid = "aidModifyNote";
+    
+    if (EJIsAPIParamValid($noteParams, $aid)) {
         $paramOffset = 1; # The first one is alway whole string from reg match
-        $session = $noteParams[W3GetAPIParamIndex("aidModifyNote", "session") + $paramOffset];
+        $session = $noteParams[W3GetAPIParamIndex($aid, "session") + $paramOffset];
         if (!EJIsLogin($session)) {
             return W3CreateAuthenticationResult();
         }
-        
-        if (EJUpdateNote($noteParams)) {
-            return W3CreateSuccessfulResult();
+
+        $postParams = "";
+        if (W3GetAPIPostParams($aid, $postParams)) {
+            if (EJUpdateNote($noteParams, $postParams)) {
+                return W3CreateSuccessfulResult();
+            }
         }
     }
 

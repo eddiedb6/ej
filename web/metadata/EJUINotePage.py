@@ -286,13 +286,14 @@
                 W3Const.w3ApiDataValue: "uidNoteEditID"
             },
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidNoteEditor"
-            },
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
                 W3Const.w3ApiDataValue: W3Const.w3Session
-            }]                                
+            }],
+            W3Const.w3ApiPost: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteEditor"
+            }]
         }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
@@ -355,13 +356,14 @@
                 W3Const.w3ApiDataValue: "uidNoteAddTag"
             },
             {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidNoteAddNote"
-            },
-            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
                 W3Const.w3ApiDataValue: W3Const.w3Session
-            }]                                
+            }],
+            W3Const.w3ApiPost: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteAddNote"
+            }]
         }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [

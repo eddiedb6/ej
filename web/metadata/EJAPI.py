@@ -451,11 +451,12 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "note"
-        },
+            W3Const.w3ApiDataValue: "session"
+        }],
+        W3Const.w3ApiPost: [
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: "note"
         }],
         W3Const.w3ApiHandler: "EJAddNote",
         W3Const.w3ApiListener: [
@@ -473,11 +474,12 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "note"
-        },
+            W3Const.w3ApiDataValue: "session"
+        }],
+        W3Const.w3ApiPost: [
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: "note"
         }],
         W3Const.w3ApiHandler: "EJModifyNote",
         W3Const.w3ApiListener: [
