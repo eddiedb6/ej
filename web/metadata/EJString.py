@@ -49,6 +49,7 @@
         "sidTableNoteTag3": "Windows",
         "sidTableNoteTag4": "LAMP",
         "sidTableNoteTag5": "Utility",
+        "sidTableNoteTag6": "Reading",
         "sidTableNoteTag80": "Life",
         "sidTableNoteTag90": "Travel",
         
