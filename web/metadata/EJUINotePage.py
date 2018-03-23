@@ -170,7 +170,7 @@
     "uidNoteContentPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropCSS: {
-            "padding-left": "5px",
+            "padding-left": "15px",
             "float": "left",
         },
         W3Const.w3PropSubUI: [
