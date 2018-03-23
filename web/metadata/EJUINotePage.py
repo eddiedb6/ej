@@ -32,7 +32,7 @@
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
             [],
-            ["uidNoteTagLabel", "uidNoteTag", "uidNoteGetButton"]
+            ["uidNoteTagLabel", "uidNoteTag", "uidNoteGetButton", "uidNoteAddButton"]
         ]
     },
     "uidNoteTagLabel": {
@@ -68,6 +68,16 @@
                 "W3DisableUI('uidNoteEditButton')",
                 "W3SetUIText('uidNoteContentBodyPanel', '')",
                 "W3SetUIText('uidNoteContentTitleLabel', '')"
+            ]
+        }
+    },
+    "uidNoteAddButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidAdd",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "W3HideUI('uidNotePanel')",
+                "W3DisplayUI('uidNoteAddPanel')"
             ]
         }
     },
@@ -192,23 +202,12 @@
     "uidNoteOperationPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
-            "uidNoteAddButton",
             "uidNoteEditButton"
         ],
         W3Const.w3PropCSS: {
             "clear": "both",
             "padding-top": "5px",
             "float": "right"
-        }
-    },
-    "uidNoteAddButton": {
-        W3Const.w3PropType: W3Const.w3TypeButton,
-        W3Const.w3PropString: "sidAdd",
-        W3Const.w3PropEvent: {
-            W3Const.w3EventClick: [
-                "W3HideUI('uidNotePanel')",
-                "W3DisplayUI('uidNoteAddPanel')"
-            ]
         }
     },
     "uidNoteEditButton": {
