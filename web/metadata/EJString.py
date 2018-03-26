@@ -50,8 +50,10 @@
         "sidTableNoteTag4": "LAMP",
         "sidTableNoteTag5": "Utility",
         "sidTableNoteTag6": "Reading",
+        "sidTableNoteTag7": "Graphic",
+        "sidTableNoteTag8": "Math",
+        "sidTableNoteTag9": "Mobile",
         "sidTableNoteTag80": "Life",
-        "sidTableNoteTag90": "Travel",
         
         # Common 
         "sidButtonBack": "Back",
