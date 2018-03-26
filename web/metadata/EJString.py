@@ -53,7 +53,6 @@
         "sidTableNoteTag7": "Graphic",
         "sidTableNoteTag8": "Math",
         "sidTableNoteTag9": "Mobile",
-        "sidTableNoteTag80": "Life",
         
         # Common 
         "sidButtonBack": "Back",
