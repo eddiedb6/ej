@@ -303,6 +303,41 @@ function EJInsertNote(&$noteParams, &$postParams) {
     return true;
 }
 
+function EJInsertCalendarEvent(&$eventParams) {
+    global $ejConn;
+
+    if (!EJConnectDB()) {
+        W3LogWarning("No DB connection when insert calendar event");
+        return false;
+    }
+
+    $columns = array ("Name", "Datetime", "RepeatMonth", "Note");
+    $size = sizeof($columns);
+
+    $uselessParamCount = 2; # Match string, session, etc.
+    $paramOffset = 1; # 0 is for the whole match string in reg                       
+    if (sizeof($eventParams) - $uselessParamCount != $size) {
+        W3LogError("No enough fields for calendar event insert: require " .
+                   strval($size) .
+                   " but actual is " .
+                   strval(sizeof($eventParams) - $paramOffset));
+        return false;
+    }
+
+    $aid = "aidAddCalendarEvent";
+    $values = array(W3MakeString($eventParams[W3GetAPIParamIndex($aid, "name") + $paramOffset], true),
+                    W3MakeString($eventParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset], true),
+                    $eventParams[W3GetAPIParamIndex($aid, "repeatmonth") + $paramOffset],
+                    W3MakeString($eventParams[W3GetAPIParamIndex($aid, "note") + $paramOffset], true));
+    $sql = "insert into calendar (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
+    if (!$ejConn->query($sql)) {
+        W3LogWarning("Execute calendar event insert SQL failed");
+        return false;
+    }
+
+    return true;
+}
+
 function EJUpdateNote(&$noteParams, &$postParams) {
     global $ejConn;
 

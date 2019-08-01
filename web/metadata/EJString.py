@@ -89,6 +89,8 @@
         "sidMonthLabel": "Month:",
         "sidUsernameLabel": "Username:",
         "sidPasswordLabel": "Password:",
+        "sidNameLabel": "Name:",
+        "sidRepeatLabel": "Repeat(month):",
 
         # Common column
         "sidColumnDatetime": "Datetime",
