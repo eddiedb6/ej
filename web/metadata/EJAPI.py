@@ -487,6 +487,69 @@
         ]
     },
 
+    ### Calendar ###
+
+    "aidCalendarEvent": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "calendarevent",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "month"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        }],
+        W3Const.w3ApiResult: {
+            W3Const.w3ApiResultData: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "name"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "datetime"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "repeatmonth"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "note"
+            }]
+        },
+        W3Const.w3ApiHandler: "EJGetCalendarEvent"
+    },
+
+    "aidAddCalendarEvent": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "addcalendarevent",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "name"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "datetime"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+            W3Const.w3ApiDataValue: "repeatmonth"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "note"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "session"
+        }],
+        W3Const.w3ApiHandler: "EJAddCalendarEvent"
+    },
+
     ### Others ###
 
     "aidLogin": {

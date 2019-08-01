@@ -130,6 +130,16 @@
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidPasswordLabel"
     },
+    "uidNameLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropClass: "cidRightLabel",
+        W3Const.w3PropString: "sidNameLabel"
+    },
+    "uidRepeatLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropClass: "cidRightLabel",
+        W3Const.w3PropString: "sidRepeatLabel"
+    },
 
     # Common Table Column Label
     "uidColumnOwner": {

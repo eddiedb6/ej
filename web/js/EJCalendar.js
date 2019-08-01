@@ -4,12 +4,46 @@
 //
 
 $(window).load(function() {
-    var naviID = "#uidNavigation";
-    var calendarID = "#uidPageCalendar";
-    var screenWidth = $(window).width();
-    var naviWidth = $(naviID).width();
-    var calendarWidth = screenWidth - naviWidth - 50;
+    if (document.getElementById("uidCalendar") == null) {
+        // Make sure calendar is loaded first
+        return;
+    }
     
-    $(calendarID).css("max-width", calendarWidth);
+    var calendarElement = $("#uidCalendar");
+    var naviElement = $("#uidNavigation");
+    if ((calendarElement == undefined) || (naviElement == undefined)) {
+        return;
+    }
+    
+    var screenWidth = $(window).width();
+    var naviWidth = naviElement.width();
+    var calendarWidth = screenWidth - naviWidth - 50;
+
+    calendarElement.css("max-width", calendarWidth);
+    calendarElement.calendarEvent(EJUpdateMonthEvent);
 });
+
+function EJUpdateMonthEvent(year, month, calendarUpdater)
+{
+    var aid = "aidCalendarEvent";
+    var session = W3GetSession();
+    var calendarEventRequest = W3CreateAPI(aid, String(year) + "-" + String(month), session);
+    if (calendarEventRequest == "") {
+	alert("Failed to create calendar event request");
+	return;
+    }
+
+    W3CallAPIAsync(calendarEventRequest, function(data, status) {
+	var result = eval("(" + data + ")");
+	if (result[w3ApiResultStatus] != w3ApiResultSuccessful) {
+	    W3LogWarning("Get calendar event failed!");
+	    alert("Get calendar event failed!");
+	    return;
+	}
+
+        if (calendarUpdater != undefined) {
+            calendarUpdater(result[w3ApiResultData]);
+        }
+    });
+}
 
