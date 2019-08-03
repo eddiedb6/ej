@@ -547,7 +547,10 @@
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
             W3Const.w3ApiDataValue: "session"
         }],
-        W3Const.w3ApiHandler: "EJAddCalendarEvent"
+        W3Const.w3ApiHandler: "EJAddCalendarEvent",
+        W3Const.w3ApiListener: [
+            "EJGotoCalendarPage(w3PlaceHolder_1, w3PlaceHolder_2)"
+        ]
     },
 
     ### Others ###

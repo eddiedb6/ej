@@ -47,3 +47,13 @@ function EJUpdateMonthEvent(year, month, calendarUpdater)
     });
 }
 
+function EJGotoCalendarPage(data, status) {
+    W3OnAPIDefaultListener(data, status);
+
+    var pageRequest = W3CreateAPI("aidPage", "uidPageCalendar");
+    if (pageRequest == "") {
+	alert("Create calendar page request failed!");
+	return;
+    }
+    W3CallAPI(pageRequest);
+}
