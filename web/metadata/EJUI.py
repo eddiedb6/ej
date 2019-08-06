@@ -4,5 +4,6 @@
     "LoginPage": ImportPartial("EJUILoginPage.py"),
     "FinancePage": ImportPartial("EJUIFinancePage.py"),
     "NotePage": ImportPartial("EJUINotePage.py"),
-    "CalendarPage": ImportPartial("EJUICalendarPage.py")
+    "CalendarPage": ImportPartial("EJUICalendarPage.py"),
+    "MapPage": ImportPartial("EJUIMapPage.py")
 }
