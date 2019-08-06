@@ -116,6 +116,7 @@
         "sidNaviFinance": "Finance",
         "sidNaviNote": "Note",
         "sidNaviCalendar": "Calendar",
+        "sidNaviMap": "Map",
         "sidNaviDebug": "Debug",
 
         # Debug Page
