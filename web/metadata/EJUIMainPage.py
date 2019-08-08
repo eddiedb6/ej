@@ -59,7 +59,7 @@
             "uidLineBreak",
             "uidNaviCalendar",
             "uidLineBreak",
-            "uidNaviMap",
+            "uidNaviJourney",
             "uidLineBreak",
             "uidNaviDebug",
             "uidLineBreak"
@@ -136,9 +136,9 @@
             ]
         }
     },
-    "uidNaviMap": {
+    "uidNaviJourney": {
         W3Const.w3PropType: W3Const.w3TypeLink,
-        W3Const.w3PropString: "sidNaviMap",
+        W3Const.w3PropString: "sidNaviJourney",
         W3Const.w3PropTriggerApi: [
         {
             W3Const.w3ApiID: "aidPage",
@@ -146,7 +146,7 @@
             W3Const.w3ApiParams: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                W3Const.w3ApiDataValue: "uidPageMap"
+                W3Const.w3ApiDataValue: "uidPageJourney"
             }]
         }],
         W3Const.w3PropEvent: {
