@@ -104,7 +104,12 @@
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
                 W3Const.w3ApiDataValue: W3Const.w3Session
             }]
-        }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
+        }
     },
     "uidJourneyFilterAddButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,

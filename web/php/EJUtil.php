@@ -70,7 +70,7 @@ function EJExecuteWithAuthenticatedFamily($aid, &$params, $executor) {
 
 function EJReadResultFromTable($aid, $sql, $isResultArray) {
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ($isResultArray ? ":[" : ":{");
-    EJReadTable($sql, function ($row) use (&$result, $aid) {
+    EJReadTable($sql, function ($row) use (&$result, $aid, $isResultArray) {
         $apiDef = W3GetAPIDef($aid);
         $columns = $apiDef[w3ApiResult][w3ApiResultData];
         if ($isResultArray) {

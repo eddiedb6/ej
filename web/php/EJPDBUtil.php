@@ -435,22 +435,33 @@ function EJGetPersonInfo($personName, &$personID, &$familyID) {
     return $result;
 }
 
-function EJGetEventInfo($eventName, &$eventID, &$familyID) {
+function EJGetEventInfo($eventName, $eventID) {
+    $result = false;
+    $condition = "";
+    if ($eventName != null) {
+        $condition = "Name = " . W3MakeString($eventName);
+    } else if ($eventID != null) {
+        $condition = "ID = " . W3MakeString($eventID);
+    } else {
+        W3LogWarning("Neither of event name and id is valid when try to get event info");
+        return array();
+    }
+
     $sql = "select " .
-         "financeevent.ID as id, financeevent.FID as family"
+         "ID, FID, Name, Budget" .
          " from " .
          "financeevent" .
-         " where " .
-         "financeevent.Name = " . W3MakeString($eventName);
+         " where " . $condition;
 
-    $result = false;
-    EJReadTable($sql, function ($row) use (&$result, &$eventID, &$familyID) {
-        $result = true;
-        $eventID = $row["id"];
-        $familyID = $row["family"];
+    $eventInfo = array();
+    EJReadTable($sql, function ($row) use (&$eventInfo) {
+        $eventInfo["ID"] = $row["ID"];
+        $eventInfo["FID"] = $row["FID"];
+        $eventInfo["Name"] = $row["Name"];
+        $eventInfo["Budget"] = $row["Budget"];
     });
 
-    return $result;
+    return $eventInfo;
 }
 
 function EJMapJourneyToPerson(&$persons) {

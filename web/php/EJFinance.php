@@ -52,7 +52,7 @@ function EJGetBill(&$billParams) {
 
 function EJGetDebt(&$debtParams) {
     $aid = "aidDebt";
-    return EJExecuteWithAuthentication($aid, $$debtParams, function ($session, $aid, &$debtParams) {
+    return EJExecuteWithAuthentication($aid, $debtParams, function ($session, $aid, &$debtParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $startDate = $debtParams[W3GetAPIParamIndex($aid, "from") + $paramOffset];
         $endDate = $debtParams[W3GetAPIParamIndex($aid, "to") + $paramOffset];
