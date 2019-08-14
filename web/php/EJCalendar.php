@@ -2,7 +2,7 @@
 
 function EJAddCalendarEvent(&$calendarParams) {
     $aid = "aidAddCalendarEvent";
-    return EJExecuteWithAuthentication($aid, $calendarParams, function () use ($aid, &$calendarParams) {
+    return EJExecuteWithAuthentication($aid, $calendarParams, function ($session, $aid, &$calendarParams) {
         if (EJInsertCalendarEvent($calendarParams)) {
             return W3CreateSuccessfulResult();
         }
@@ -27,7 +27,7 @@ function EJIsCalendarEventHappenThisMonth($currentYear, $currentMonth, $eventDat
 
 function EJGetCalendarEvent(&$calendarParams) {
     $aid = "aidCalendarEvent";
-    return EJExecuteWithAuthentication($aid, $calendarParams, function () use ($aid, &$calendarParams) {
+    return EJExecuteWithAuthentication($aid, $calendarParams, function ($session, $aid, &$calendarParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $monthStr = $calendarParams[W3GetAPIParamIndex($aid, "month") + $paramOffset];
 

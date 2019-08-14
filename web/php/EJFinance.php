@@ -2,7 +2,7 @@
 
 function EJGetBill(&$billParams) {
     $aid = "aidBill";
-    return EJExecuteWithAuthentication($aid, $billParams, function () use ($aid, &$billParams) {
+    return EJExecuteWithAuthentication($aid, $billParams, function ($session, $aid, &$billParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $startDate = $billParams[W3GetAPIParamIndex($aid, "from") + $paramOffset];
         $endDate = $billParams[W3GetAPIParamIndex($aid, "to") + $paramOffset];
@@ -52,7 +52,7 @@ function EJGetBill(&$billParams) {
 
 function EJGetDebt(&$debtParams) {
     $aid = "aidDebt";
-    return EJExecuteWithAuthentication($aid, $$debtParams, function () use ($aid, &$debtParams) {
+    return EJExecuteWithAuthentication($aid, $$debtParams, function ($session, $aid, &$debtParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $startDate = $debtParams[W3GetAPIParamIndex($aid, "from") + $paramOffset];
         $endDate = $debtParams[W3GetAPIParamIndex($aid, "to") + $paramOffset];
@@ -71,7 +71,7 @@ function EJGetDebt(&$debtParams) {
 
 function EJGetFinanceEvent(&$eventParams) {
     $aid = "aidFinanceEvent";
-    return EJExecuteWithAuthentication($aid, $eventParams, function () use ($aid, &$eventParams) {
+    return EJExecuteWithAuthentication($aid, $eventParams, function ($session, $aid, &$eventParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $eventName = $eventParams[W3GetAPIParamIndex($aid, "name") + $paramOffset];
 
@@ -119,7 +119,7 @@ function EJGetFinanceEvent(&$eventParams) {
 
 function EJGetIncome(&$incomeParams) {
     $aid = "aidIncome";
-    return EJExecuteWithAuthentication($aid, $incomeParams, function () use ($aid, &$incomeParams) {
+    return EJExecuteWithAuthentication($aid, $incomeParams, function ($session, $aid, &$incomeParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $startDate = $incomeParams[W3GetAPIParamIndex($aid, "from") + $paramOffset];
         $endDate = $incomeParams[W3GetAPIParamIndex($aid, "to") + $paramOffset];
@@ -166,7 +166,7 @@ function EJGetIncome(&$incomeParams) {
 
 function EJGetFinanceReport(&$reportParams) {
     $aid = "aidFinanceReport";
-    return EJExecuteWithAuthentication($aid, $reportParams, function () use ($aid, &$reportParams) {
+    return EJExecuteWithAuthentication($aid, $reportParams, function ($session, $aid, &$reportParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $reportMonth = $reportParams[W3GetAPIParamIndex($aid, "month") + $paramOffset];
 
@@ -220,7 +220,7 @@ function EJGetFinanceReport(&$reportParams) {
 
 function EJAddBill(&$parameters) {
     $aid = "aidAddBill";
-    return EJExecuteWithAuthentication($aid, $parameters, function () use ($aid, &$parameters) {
+    return EJExecuteWithAuthentication($aid, $parameters, function ($session, $aid, &$parameters) {
         if (EJInsertBill($parameters)) {
             return W3CreateSuccessfulResult();
         }
@@ -231,7 +231,7 @@ function EJAddBill(&$parameters) {
 
 function EJAddDebt(&$parameters) {
     $aid = "aidAddDebt";
-    return EJExecuteWithAuthentication($aid, $parameters, function () use ($aid, &$parameters) {
+    return EJExecuteWithAuthentication($aid, $parameters, function ($session, $aid, &$parameters) {
         if (EJInsertDebt($parameters)) {
             return W3CreateSuccessfulResult();
         }
@@ -242,7 +242,7 @@ function EJAddDebt(&$parameters) {
 
 function EJAddFinanceEvent(&$parameters) {
     $aid = "aidAddFinanceEvent";
-    return EJExecuteWithAuthentication($aid, $parameters, function () use ($aid, &$parameters) {
+    return EJExecuteWithAuthentication($aid, $parameters, function ($session, $aid, &$parameters) {
         if (EJInsertFinanceEvent($parameters)) {
             return W3CreateSuccessfulResult();
         }
@@ -253,7 +253,7 @@ function EJAddFinanceEvent(&$parameters) {
 
 function EJAddIncome(&$parameters) {
     $aid = "aidAddIncome";
-    return EJExecuteWithAuthentication($aid, $parameters, function () use ($aid, &$parameters) {
+    return EJExecuteWithAuthentication($aid, $parameters, function ($session, $aid, &$parameters) {
         if (EJInsertIncome($parameters)) {
             return W3CreateSuccessfulResult();
         }

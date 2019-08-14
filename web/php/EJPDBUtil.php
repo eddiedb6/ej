@@ -375,7 +375,7 @@ function EJInsertCalendarEvent(&$eventParams) {
     return true;
 }
 
-function EJInsertJourney(&$journeyParams) {
+function EJInsertJourney(&$journeyParams, $eventID) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -402,26 +402,9 @@ function EJInsertJourney(&$journeyParams) {
                     W3MakeString($journeyParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset], true),
                     W3MakeString($journeyNote, true));
 
-    $eventStr = $journeyParams[W3GetAPIParamIndex($aid, "event") + $paramOffset];
-    if ($eventStr != "") {
-        $sql = "select " .
-             "financeevent.ID as id" .
-             " from " .
-             "financeevent" .
-             " where " .
-             "financeevent.Name = " . W3MakeString(trim($eventStr));
-        $result = null;
-        EJReadTable($sql, function ($row) use (&$result) {
-            $result = $row["id"];
-        });
-
-        if ($result == null) {
-            W3LogError("Event of journey is not existed: " . $eventStr);
-            return false;
-        }
-
+    if ($eventID != null) {
         array_push($columns, "Event");
-        array_push($values, $result);
+        array_push($values, $eventID);
     }
 
     $sql = "insert into journey (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
@@ -432,6 +415,73 @@ function EJInsertJourney(&$journeyParams) {
     }
 
     return true;
+}
+
+function EJGetPersonInfo($personName, &$personID, &$familyID) {
+    $sql = "select " .
+         "person.ID as id, person.FID as family" .
+         " from " .
+         "person" .
+         " where " .
+         "person.Name = " . W3MakeString($personName);
+
+    $result = false;
+    EJReadTable($sql, function ($row) use (&$result, &$personID, &$familyID) {
+        $result = true;
+        $personID = $row["id"];
+        $familyID = $row["family"];
+    });
+
+    return $result;
+}
+
+function EJGetEventInfo($eventName, &$eventID, &$familyID) {
+    $sql = "select " .
+         "financeevent.ID as id, financeevent.FID as family"
+         " from " .
+         "financeevent" .
+         " where " .
+         "financeevent.Name = " . W3MakeString($eventName);
+
+    $result = false;
+    EJReadTable($sql, function ($row) use (&$result, &$eventID, &$familyID) {
+        $result = true;
+        $eventID = $row["id"];
+        $familyID = $row["family"];
+    });
+
+    return $result;
+}
+
+function EJMapJourneyToPerson(&$persons) {
+    $result = false;
+
+    $maxIDSql = "select max(ID) from journey";
+    EJReadTable($maxIDSql, function ($row) use (&$persons, &$result) {
+        global $ejConn;
+
+        if (!EJConnectDB()) {
+            W3LogWarning("No DB connection when map journey and person");
+            return;
+        }
+
+        $journeyID = $row["max(ID)"];
+        if (trim($journeyID) == "") {
+            return;
+        }
+
+        foreach ($persons as $pid) {
+            $insertSql = "insert into mapjourneyperson (Journey, Person) values (" . $journeyID . ", " . $pid . ")";
+            if (!$ejConn->query($insertSql)) {
+                W3LogWarning("Execute journey person insert SQL failed");
+                return;
+            }
+        }
+
+        $result = true;
+    });
+
+    return $result;
 }
 
  ?>
