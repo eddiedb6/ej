@@ -130,7 +130,7 @@
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
             [],
-            ["uidMapSearchInput", "uidMapSearchButton"]
+            ["uidMapSearchInput", "uidMapSearchButton", "uidMapAllPlaceButton", "uidMapClearButton"]
         ]
     },
     "uidMapSearchInput": {
@@ -142,6 +142,24 @@
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 "EJMapSearch('uidMapSearchInput')"
+            ]
+        }
+    },
+    "uidMapAllPlaceButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidShowAllPlace",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "EJShowAllPlaces()"
+            ]
+        }
+    },
+    "uidMapClearButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidClear",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "EJClearMap()"
             ]
         }
     },

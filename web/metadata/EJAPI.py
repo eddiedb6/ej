@@ -714,6 +714,44 @@
         W3Const.w3ApiHandler: "EJGetJourneyPlace"
     },
 
+    "aidAllPlace": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "allplace",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
+        }],
+        W3Const.w3ApiResult: {
+            W3Const.w3ApiResultData: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "name"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "latitude"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "longitude"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "datetime"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "remark"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "note"
+            }]
+        },
+        W3Const.w3ApiHandler: "EJGetAllPlace"
+    },
+
     ### Others ###
 
     "aidLogin": {

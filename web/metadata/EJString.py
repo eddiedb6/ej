@@ -66,6 +66,7 @@
         "sidNull": "-",
         "sidOther": "Other",
         "sidSearch": "Search",
+        "sidClear": "Clear",
 
         # Common label
         "sidTotalLabel": "Total: ",
@@ -152,6 +153,7 @@
         "sidJourneyLabel": "Current Journey: ",
         "sidLatitudeLabel": "Latitude: ",
         "sidLongitudeLabel": "Longitude: ",
-        "sidRemarkLabel": "Remark: "
+        "sidRemarkLabel": "Remark: ",
+        "sidShowAllPlace": "Display All"
     }
 }

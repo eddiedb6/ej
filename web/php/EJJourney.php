@@ -193,4 +193,32 @@ function EJGetJourneyPlace(&$journeyParams) {
     });
 }
 
+function EJGetAllPlace(&$params) {
+    $aid = "aidAllPlace";
+    return EJExecuteWithAuthenticatedFamily($aid, $params, function ($fid, $aid, &$params) {
+        $sqlJourney = "select " .
+                    "journey.ID" .
+                    " from " .
+                    "journey, mapjourneyperson, person" .
+                    " where " .
+                    "journey.ID=mapjourneyperson.Journey" .
+                    " and " .
+                    "mapjourneyperson.Person=person.ID" .
+                    " and " .
+                    "person.FID=" . $fid;
+        $sqlPlace = "select " .
+             "journeynote.Datetime as datetime, journeynote.Remark as remark, journeynote.Note as note, " .
+             "journeyplace.Name as name, journeyplace.Latitude as latitude, journeyplace.Longitude as longitude" .
+             " from " .
+             "journeynote, journeyplace" .
+             " where " .
+             "journeynote.Place=journeyplace.ID" .
+             " and " .
+             "journeynote.Journey in (" . $sqlJourney . ")" .
+             " order by journeynote.Datetime asc";
+
+        return EJReadResultFromTable($aid, $sqlPlace, true);
+    });
+}
+
  ?>
