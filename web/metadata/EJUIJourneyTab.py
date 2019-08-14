@@ -15,8 +15,35 @@
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
             "uidJourneyFilterTable",
-            "uidJourneyTable"
+            "uidJourneyTable",
+            "uidJourneyToMapPanel"
         ]
+    },
+
+    # Query: Jump to Map
+
+    "uidJourneyToMapPanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidJourneyGotoMapButton"
+        ],
+        W3Const.w3PropCSS: {
+            "clear": "both",
+            "padding-top": "5px",
+            "float": "left"
+        }
+    },
+    "uidJourneyGotoMapButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidGotoMap",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "EJDisplaySelectedJourneyOnMap()"
+            ]
+        },
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        }
     },
 
     # Query: Display
@@ -24,7 +51,7 @@
     "uidJourneyTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
-            ["uidNullLabel", "uidColumnName", "uidTableHeaderDatetime", "uidColumnTraveler", "uidColumnEvent", "uidTableHeaderBalance", "uidColumnNote"]
+            ["uidNullLabel", "uidColumnName", "uidTableHeaderDatetime", "uidColumnTraveler", "uidColumnEvent", "uidTableHeaderBalance", "uidColumnNote", "uidTableHeaderInvisibleData"]
         ],
         W3Const.w3PropCSS: {
             "border": "1px solid"
@@ -34,8 +61,8 @@
             W3Const.w3SinkRow: [
             {
                 # Empty no map
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                W3Const.w3ApiDataValue: W3Const.w3ApiDataNull
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeFunc,
+                W3Const.w3ApiDataValue: "EJCreateJourneySelectBox(w3PlaceHolder_1, w3PlaceHolder_2)"
             },
             {
                 # Column 2 map to API result field "name"
@@ -66,6 +93,11 @@
                 # Column 7 map to API result field "note"
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
                 W3Const.w3ApiDataValue: "note"
+            },
+            {
+                # Column 8 map to API result field "id"
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "id"
             }]
         }
     },

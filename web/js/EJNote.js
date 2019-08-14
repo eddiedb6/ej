@@ -1,7 +1,3 @@
-function EJHideNoteID(processorParam) {
-    return [processorParam[0], {"display": "none", }, processorParam[2]];
-}
-
 function EJCreateNoteLink(processorParam) {
     var title = decodeURI(processorParam[0]);
     var rowIndex = processorParam[2][0];

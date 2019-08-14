@@ -155,4 +155,42 @@ function EJAddJourney(&$parameters) {
     });
 }
 
+function EJAddJourneyPlace(&$parameters) {
+    $aid = "aidAddJourneyPlace";
+    return EJExecuteWithAuthentication($aid, $parameters, function ($session, $aid, &$parameters) {
+        $placeID = EJInsertJourneyPlace($parameters);
+        if ($placeID < 0) {
+            W3LogError("Failed to get journey place ID");
+            return W3CreateFailedResult();
+        }
+
+        if (EJInsertJourneyNote($parameters, $placeID)) {
+            return W3CreateSuccessfulResult();
+        }
+
+        return W3CreateFailedResult();
+    });
+}
+
+function EJGetJourneyPlace(&$journeyParams) {
+    $aid = "aidJourneyPlace";
+    return EJExecuteWithAuthentication($aid, $journeyParams, function ($session, $aid, &$journeyParams) {
+        $paramOffset = 1; # The first one is the whole string from reg match
+        $jid = $journeyParams[W3GetAPIParamIndex($aid, "jid") + $paramOffset];
+
+        $sql = "select " .
+             "journeynote.Datetime as datetime, journeynote.Remark as remark, journeynote.Note as note, " .
+             "journeyplace.Name as name, journeyplace.Latitude as latitude, journeyplace.Longitude as longitude" .
+             " from " .
+             "journeynote, journeyplace" .
+             " where " .
+             "journeynote.Place=journeyplace.ID" .
+             " and " .
+             "journeynote.Journey=" . $jid .
+             " order by journeynote.Datetime asc";
+
+        return EJReadResultFromTable($aid, $sql, true);
+    });
+}
+
  ?>

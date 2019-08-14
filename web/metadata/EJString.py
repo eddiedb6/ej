@@ -146,6 +146,12 @@
 
         # Journey Page
         "sidJourneyTabJourney": "Journey",
-        "sidJourneyTabMap": "Map"
+        "sidJourneyTabMap": "Map",
+        "sidGotoMap": "Display on Map",
+        "sidAddPlace": "Add to Journey",
+        "sidJourneyLabel": "Current Journey: ",
+        "sidLatitudeLabel": "Latitude: ",
+        "sidLongitudeLabel": "Longitude: ",
+        "sidRemarkLabel": "Remark: "
     }
 }

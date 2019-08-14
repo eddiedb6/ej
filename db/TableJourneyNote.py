@@ -10,6 +10,10 @@
         PDBConst.Attributes: ["int", "not null"]
     },
     {
+        PDBConst.Name: "Datetime",
+        PDBConst.Attributes: ["datetime", "not null"]
+    },
+    {
         PDBConst.Name: "Remark",
         PDBConst.Attributes: ["tinyint"]
     },

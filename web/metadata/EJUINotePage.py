@@ -120,7 +120,7 @@
     "uidNoteListTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
-            ["uidNoteListTableHeaderSelectMark", "uidNoteListTableHeaderID", "uidNoteListTableHeaderTitle"]
+            ["uidNoteListTableHeaderSelectMark", "uidTableHeaderInvisibleData", "uidNoteListTableHeaderTitle"]
         ],
         W3Const.w3PropSinkApi: {
             W3Const.w3ApiID: "aidNoteTitle",
@@ -146,16 +146,6 @@
         W3Const.w3PropType: W3Const.w3TypeTableHeader,
         W3Const.w3PropSubUI: [
         ]
-    },
-    "uidNoteListTableHeaderID": {
-        W3Const.w3PropType: W3Const.w3TypeTableHeader,
-        W3Const.w3PropSubUI: [
-        ],
-        W3Const.w3PropFunc: {
-            W3Const.w3FuncProcessor: [
-                "EJHideNoteID(w3PlaceHolder_1)"
-            ]
-        }
     },
     "uidNoteListTableHeaderTitle": {
         W3Const.w3PropType: W3Const.w3TypeTableHeader,

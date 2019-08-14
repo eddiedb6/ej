@@ -417,6 +417,82 @@ function EJInsertJourney(&$journeyParams, $eventID) {
     return true;
 }
 
+function EJInsertJourneyPlace(&$placeParams) {
+    global $ejConn;
+
+    $placeID = -1;
+
+    if (!EJConnectDB()) {
+        W3LogWarning("No DB connection when insert journey place");
+        return $placeID;
+    }
+
+    $aid = "aidAddJourneyPlace";
+    $paramOffset = 1; # 0 is for the whole match string in reg
+    $name = $placeParams[W3GetAPIParamIndex($aid, "name") + $paramOffset];
+    $latitude = $placeParams[W3GetAPIParamIndex($aid, "latitude") + $paramOffset];
+    $longitude = $placeParams[W3GetAPIParamIndex($aid, "longitude") + $paramOffset];
+
+    // First check whether the place is there already
+
+    $querySql = "select ID as id from journeyplace where " .
+              "Name=" . W3MakeString($name) .
+              " and Latitude=" . $latitude .
+              " and Longitude=" . $longitude;
+    EJReadTable($querySql, function ($row) use (&$placeID) {
+        $placeID = $row["id"];
+    });
+
+    if ($placeID >= 0) {
+        return $placeID;
+    }
+
+    // Then if not place existed, add a new one
+
+    $columns = array ("Name", "Latitude", "Longitude");
+    $values = array(W3MakeString($name), $latitude, $longitude);
+    $insertSql = "insert into journeyplace (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
+    if (!$ejConn->query($insertSql)) {
+        W3LogWarning("Execute journey place insert SQL failed");
+        return $placeID;
+    }
+
+    // Return the new place ID
+
+    $maxIDSql = "select max(ID) from journeyplace";
+    EJReadTable($maxIDSql, function ($row) use (&$placeID) {
+        $placeID = $row["max(ID)"];
+    });
+
+    return $placeID;
+}
+
+function EJInsertJourneyNote(&$noteParams, $placeID) {
+    global $ejConn;
+
+    if (!EJConnectDB()) {
+        W3LogWarning("No DB connection when insert journey note");
+        return false;
+    }
+
+    $aid = "aidAddJourneyPlace";
+    $paramOffset = 1; # The first one is alway whole string from reg match
+    $journeyID = $noteParams[W3GetAPIParamIndex($aid, "jid") + $paramOffset];
+    $datetime = $noteParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset];
+    $remark = $noteParams[W3GetAPIParamIndex($aid, "remark") + $paramOffset];
+    $note = str_replace("%20", " ", $noteParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
+
+    $columns = array ("Journey", "Place", "Datetime", "Remark", "Note");
+    $values = array($journeyID, $placeID, W3MakeString($datetime), $remark, W3MakeString($note));
+    $insertSql = "insert into journeynote (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
+    if (!$ejConn->query($insertSql)) {
+        W3LogWarning("Execute journey note insert SQL failed");
+        return false;
+    }
+
+    return true;
+}
+
 function EJGetPersonInfo($personName, &$personID, &$familyID) {
     $sql = "select " .
          "person.ID as id, person.FID as family" .
