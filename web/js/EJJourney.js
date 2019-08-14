@@ -26,22 +26,71 @@ $(window).load(function() {
     }
 });
 
+var _searchFunc = null;
+
 function EJMapHandler(map)
 {
-    var bj = new Microsoft.Maps.Location(39.918794, 116.398568);
-    var pinBJ = new Microsoft.Maps.Pushpin(bj, {
-        title: 'China',
-        subTitle: 'Beijing',
-        text: '1'
-    });
+    if (map == null) {
+        return;
+    }
 
-    var sh = new Microsoft.Maps.Location(30.918794, 121.398568);
-    var pinSH = new Microsoft.Maps.Pushpin(sh, {
-        title: 'China',
-        subTitle: 'Shanghai',
-        text: '2'
-    });
+    var mapObj = map;
+    var searchManager = null;
 
-    map.entities.push(pinBJ);
-    map.entities.push(pinSH);
+    function doSearch(address) {
+        var searchRequest = {
+            where: address,
+            callback: function (r) {
+                if (r == null || r.results == null || r.results.length <= 0) {
+                    return;
+                }
+
+                var pin;
+                var pins = [];
+                var locs = [];
+
+                for (var i = 0; i < r.results.length; ++i) {
+                    pin = new Microsoft.Maps.Pushpin(r.results[i].location, { text: i + '' });
+                    pins.push(pin);
+                    locs.push(r.results[i].location);
+                }
+
+                mapObj.entities.push(pins);
+
+                var bounds;
+                if (r.results.length == 1) {
+                    bounds = r.results[0].bestView;
+                } else {
+                    bounds = Microsoft.Maps.LocationRect.fromLocations(locs);
+                }
+
+                mapObj.setView({ bounds: bounds });
+            },
+            errorCallback: function (e) {
+                alert("No map search results found.");
+            }
+        };
+
+        searchManager.geocode(searchRequest);
+    }
+
+    _searchFunc = function (address) {
+        if (searchManager == null) {
+            Microsoft.Maps.loadModule("Microsoft.Maps.Search", function() {
+                searchManager = new Microsoft.Maps.Search.SearchManager(mapObj);
+                doSearch(address);
+            });
+        } else {
+            mapObj.entities.clear();
+            doSearch(address);
+        }
+    };
+}
+
+function EJMapSearch(uidInput)
+{
+    if (_searchFunc != null) {
+        var address = W3GetUIText(uidInput);
+        _searchFunc(address);
+    }
 }

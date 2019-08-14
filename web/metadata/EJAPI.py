@@ -15,7 +15,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiResult: {
             W3Const.w3ApiResultData: [
@@ -65,7 +65,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],            
         W3Const.w3ApiResult: {
             W3Const.w3ApiResultData: [
@@ -107,7 +107,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiResult: {
             W3Const.w3ApiResultData: [
@@ -149,7 +149,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],            
         W3Const.w3ApiResult: {
             W3Const.w3ApiResultData: [
@@ -223,7 +223,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiResult: {
             W3Const.w3ApiResultData: [
@@ -285,7 +285,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiHandler: "EJAddBill"
     },
@@ -316,7 +316,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiHandler: "EJAddDebt"
     },
@@ -351,7 +351,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiHandler: "EJAddIncome"
     },
@@ -374,7 +374,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],            
         W3Const.w3ApiHandler: "EJAddFinanceEvent"
     },
@@ -391,7 +391,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiResult: {
             W3Const.w3ApiResultData: [
@@ -421,7 +421,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiResult: {
             W3Const.w3ApiResultData: [
@@ -451,7 +451,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiPost: [
         {
@@ -474,7 +474,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiPost: [
         {
@@ -499,7 +499,7 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiResult: {
             W3Const.w3ApiResultData: [
@@ -545,12 +545,90 @@
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-            W3Const.w3ApiDataValue: "session"
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
         }],
         W3Const.w3ApiHandler: "EJAddCalendarEvent",
         W3Const.w3ApiListener: [
             "EJGotoCalendarPage(w3PlaceHolder_1, w3PlaceHolder_2)"
         ]
+    },
+
+    ### Journey ###
+
+    "aidJourney": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "journey",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "from"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "to"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
+        }],
+        W3Const.w3ApiResult: {
+            W3Const.w3ApiResultData: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "name"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "datetime"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "traveler"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "event"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "balance"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+                W3Const.w3ApiDataValue: "note"
+            }]
+        },
+        W3Const.w3ApiHandler: "EJGetJourney"
+    },
+    "aidAddJourney": {
+        W3Const.w3ElementType: W3Const.w3TypeApi,
+        W3Const.w3ApiName: "addjourney",
+        W3Const.w3ApiParams: [
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "name"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "datetime"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "traveler"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "event"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: "note"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
+            W3Const.w3ApiDataValue: W3Const.w3SessionKey
+        }],
+        W3Const.w3ApiHandler: "EJAddJourney"
     },
 
     ### Others ###
@@ -571,7 +649,7 @@
             W3Const.w3ApiResultData: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
-                W3Const.w3ApiDataValue: "session"
+                W3Const.w3ApiDataValue: W3Const.w3SessionKey
             }]
         },
         W3Const.w3ApiHandler: "EJLogin"

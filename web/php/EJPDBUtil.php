@@ -375,4 +375,63 @@ function EJInsertCalendarEvent(&$eventParams) {
     return true;
 }
 
+function EJInsertJourney(&$journeyParams) {
+    global $ejConn;
+
+    if (!EJConnectDB()) {
+        W3LogWarning("No DB connection when insert journey");
+        return false;
+    }
+
+    $columns = array ("Name", "Datetime", "Note");
+    $size = sizeof($columns);
+
+    $uselessParamCount = 4; # Match string, session, etc. And "Event" will be check later
+    $paramOffset = 1; # 0 is for the whole match string in reg
+    if (sizeof($journeyParams) - $uselessParamCount != $size) {
+        W3LogError("No enough fields for journey insert: require " .
+                   strval($size) .
+                   " but actual is " .
+                   strval(sizeof($journeyParams) - $paramOffset));
+        return false;
+    }
+
+    $aid = "aidAddJourney";
+    $journeyNote = str_replace("%20", " ", $journeyParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
+    $values = array(W3MakeString($journeyParams[W3GetAPIParamIndex($aid, "name") + $paramOffset], true),
+                    W3MakeString($journeyParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset], true),
+                    W3MakeString($journeyNote, true));
+
+    $eventStr = $journeyParams[W3GetAPIParamIndex($aid, "event") + $paramOffset];
+    if ($eventStr != "") {
+        $sql = "select " .
+             "financeevent.ID as id" .
+             " from " .
+             "financeevent" .
+             " where " .
+             "financeevent.Name = " . W3MakeString(trim($eventStr));
+        $result = null;
+        EJReadTable($sql, function ($row) use (&$result) {
+            $result = $row["id"];
+        });
+
+        if ($result == null) {
+            W3LogError("Event of journey is not existed: " . $eventStr);
+            return false;
+        }
+
+        array_push($columns, "Event");
+        array_push($values, $result);
+    }
+
+    $sql = "insert into journey (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
+
+    if (!$ejConn->query($sql)) {
+        W3LogWarning("Execute journey insert SQL failed");
+        return false;
+    }
+
+    return true;
+}
+
  ?>

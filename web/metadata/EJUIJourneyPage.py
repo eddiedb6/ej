@@ -2,23 +2,33 @@
     "uidPageJourney": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
-            "uidMSMap"
+            "uidJourneyTab"
         ]
     },
-
-    # Map
-    
-    "uidMSMap": {
-        W3Const.w3PropType: W3Const.w3TypeMap,
-        W3Const.w3PropMap: {
-            W3Const.w3AttrMapHandler: "EJMapHandler(w3PlaceHolder_1)",
-            W3Const.w3AttrMapLocation: "39.918794, 116.398568",
-            W3Const.w3AttrMapKey: ""
-        },
+    "uidJourneyTab": {
+        W3Const.w3PropType: W3Const.w3TypeTab,
+        W3Const.w3PropSubUI: [
+            ["uidJourneyTabJourneyLabel", "uidJourneyTabJourneyPanel"],
+            ["uidJourneyTabMapLabel",     "uidJourneyTabMapPanel"]
+        ],
         W3Const.w3PropCSS: {
-            "border": "2px solid",
-            "min-width": "800px",
-            "min-height": "600px"
+            # CSS for tab only support these format
+            "border-width": "1px",
+            "border-style": "solid",
+            "background-color": "white"
         }
-    }
+    },
+    "uidJourneyTabJourneyLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropString: "sidJourneyTabJourney",
+        W3Const.w3PropClass: "cidLRPadding"
+    },
+    "uidJourneyTabMapLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropString: "sidJourneyTabMap",
+        W3Const.w3PropClass: "cidLRPadding"
+    },
+
+    "JourneyTab": ImportPartial("EJUIJourneyTab.py"),
+    "MapTab": ImportPartial("EJUIMapTab.py")
 }

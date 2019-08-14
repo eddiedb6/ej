@@ -65,6 +65,7 @@
         "sidTotalAmount": "0",
         "sidNull": "-",
         "sidOther": "Other",
+        "sidSearch": "Search",
 
         # Common label
         "sidTotalLabel": "Total: ",
@@ -91,6 +92,7 @@
         "sidPasswordLabel": "Password:",
         "sidNameLabel": "Name:",
         "sidRepeatLabel": "Repeat(month):",
+        "sidTravelerLabel": "Traveler:",
 
         # Common column
         "sidColumnDatetime": "Datetime",
@@ -99,6 +101,7 @@
         "sidColumnCategory": "Category",
         "sidColumnPayment": "Payment Mode",
         "sidColumnNote": "Note",
+        "sidColumnName": "Name",
         "sidColumnOwner": "Owner",
         "sidColumnStart": "Start",
         "sidColumnEnd": "End",
@@ -107,6 +110,7 @@
         "sidColumnYearReport": "This Year",
         "sidColumnBudget": "Budget",
         "sidColumnEvent": "Event",
+        "sidColumnTraveler": "Traverler",
         
         # Main Page
         "sidTitle": "E&J's",
@@ -138,6 +142,10 @@
 
         # Note Page
         "sidNoteTagLabel": "Tag:",
-        "sidNoteTitleLabel": "Title:"
+        "sidNoteTitleLabel": "Title:",
+
+        # Journey Page
+        "sidJourneyTabJourney": "Journey",
+        "sidJourneyTabMap": "Map"
     }
 }
