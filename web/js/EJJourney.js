@@ -210,6 +210,23 @@ function EJCreateJourneySelectBox(uidTable, rowIndex)
     return "<input id=\"" + uid + "\" type='checkbox' onclick=\"EJOnJourneySelected('" + uidTable + "'," + rowIndex + ")\">";
 }
 
+function EJUpdatePlace(request, updateFunc)
+{
+    W3CallAPIAsync(request, function(data, status) {
+	var result = eval("(" + data + ")");
+	if (result[w3ApiResultStatus] != w3ApiResultSuccessful) {
+	    W3LogWarning("Get place failed!");
+	    alert("Get place failed!");
+	    return;
+	}
+
+        var places = result[w3ApiResultData];
+        if (updateFunc != null && places.length > 0) {
+            updateFunc(places);
+        }
+    });
+}
+
 function EJFreshJourney(journeyID)
 {
     EJClearMap();
@@ -227,18 +244,7 @@ function EJFreshJourney(journeyID)
 	return;
     }
 
-    W3CallAPIAsync(request, function(data, status) {
-	var result = eval("(" + data + ")");
-	if (result[w3ApiResultStatus] != w3ApiResultSuccessful) {
-	    W3LogWarning("Get journey place failed!");
-	    alert("Get journey place failed!");
-	    return;
-	}
-
-        if (_journeyDisplayFunc != null) {
-            _journeyDisplayFunc(result[w3ApiResultData]);
-        }
-    });
+    EJUpdatePlace(request, _journeyDisplayFunc);
 }
 
 function EJOnJourneySelected(uidTable, rowIndex)
@@ -316,18 +322,7 @@ function EJShowAllPlaces()
 	return;
     }
 
-    W3CallAPIAsync(request, function(data, status) {
-	var result = eval("(" + data + ")");
-	if (result[w3ApiResultStatus] != w3ApiResultSuccessful) {
-	    W3LogWarning("Get all place failed!");
-	    alert("Get all place failed!");
-	    return;
-	}
-
-        if (_allDisplayFunc != null) {
-            _allDisplayFunc(result[w3ApiResultData]);
-        }
-    });
+    EJUpdatePlace(request, _allDisplayFunc);
 }
 
 function EJClearMap()
@@ -432,18 +427,7 @@ function EJFreshJourney(journeyID)
 	return;
     }
 
-    W3CallAPIAsync(request, function(data, status) {
-	var result = eval("(" + data + ")");
-	if (result[w3ApiResultStatus] != w3ApiResultSuccessful) {
-	    W3LogWarning("Get journey place failed!");
-	    alert("Get journey place failed!");
-	    return;
-	}
-
-        if (_journeyDisplayFunc != null) {
-            _journeyDisplayFunc(result[w3ApiResultData]);
-        }
-    });
+    EJUpdatePlace(request, _journeyDisplayFunc);
 }
 
 function EJOnSearchPlaceSelected(e)

@@ -2,8 +2,8 @@
 
 function EJAddCalendarEvent(&$calendarParams) {
     $aid = "aidAddCalendarEvent";
-    return EJExecuteWithAuthentication($aid, $calendarParams, function ($session, $aid, &$calendarParams) {
-        if (EJInsertCalendarEvent($calendarParams)) {
+    return EJExecuteWithAuthenticatedFamily($aid, $calendarParams, function ($fid, $aid, &$calendarParams) {
+        if (EJInsertCalendarEvent($calendarParams, $fid)) {
             return W3CreateSuccessfulResult();
         }
 
@@ -27,7 +27,7 @@ function EJIsCalendarEventHappenThisMonth($currentYear, $currentMonth, $eventDat
 
 function EJGetCalendarEvent(&$calendarParams) {
     $aid = "aidCalendarEvent";
-    return EJExecuteWithAuthentication($aid, $calendarParams, function ($session, $aid, &$calendarParams) {
+    return EJExecuteWithAuthenticatedFamily($aid, $calendarParams, function ($fid, $aid, &$calendarParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $monthStr = $calendarParams[W3GetAPIParamIndex($aid, "month") + $paramOffset];
 
@@ -47,6 +47,8 @@ function EJGetCalendarEvent(&$calendarParams) {
              "calendar" .
              " where " .
              "calendar.Datetime < " . W3MakeDateString($nextYear, $nextMonth, 1, true) .
+             " and " .
+             "calendar.FID=" . $fid .
              " order by calendar.Datetime asc";
         $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
         EJReadTable($sql, function ($row) use (&$result, $currentYear, $currentMonth, $aid) {

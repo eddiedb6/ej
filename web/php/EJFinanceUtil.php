@@ -145,7 +145,7 @@ function EJCalculateDebtReport($year, $month, &$reports, $isLastMonth = true) {
     }
 }
     
-function EJCalculateFinanceReport($year, $month, &$reports) {
+function EJCalculateFinanceReport($year, $month, &$reports, $fid) {
     $preYear = $year;
     $preMonth = $month - 1;
     if ($preMonth == 0) {
@@ -166,7 +166,7 @@ function EJCalculateFinanceReport($year, $month, &$reports) {
          " and " .
          "income.Datetime < " . W3MakeDateString($year, $month, 1, true) .
          " and " .
-         "income.PID in (select person.ID from person where person.FID=1)"; # [ED] PENDING: Handle FID
+         "income.PID in (select person.ID from person where person.FID=" . $fid . ")";
     $totalMonthIncome = EJSumCurrency($sql);
 
     # income of year
@@ -175,7 +175,7 @@ function EJCalculateFinanceReport($year, $month, &$reports) {
          " and " .
          "income.Datetime < " . W3MakeDateString($year, $month, 1, true) .
          " and " .
-         "income.PID in (select person.ID from person where person.FID=1)"; # [ED] PENDING: Handle FID
+         "income.PID in (select person.ID from person where person.FID=" . $fid . ")";
     $totalYearIncome = EJSumCurrency($sql);
 
     # consume of month

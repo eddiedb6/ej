@@ -60,8 +60,6 @@
             "uidNaviCalendar",
             "uidLineBreak",
             "uidNaviJourney",
-            "uidLineBreak",
-            "uidNaviDebug",
             "uidLineBreak"
         ],
         W3Const.w3PropClass: "cidLeftBorder",

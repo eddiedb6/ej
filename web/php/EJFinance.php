@@ -2,7 +2,7 @@
 
 function EJGetBill(&$billParams) {
     $aid = "aidBill";
-    return EJExecuteWithAuthentication($aid, $billParams, function ($session, $aid, &$billParams) {
+    return EJExecuteWithAuthenticatedFamily($aid, $billParams, function ($fid, $aid, &$billParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $startDate = $billParams[W3GetAPIParamIndex($aid, "from") + $paramOffset];
         $endDate = $billParams[W3GetAPIParamIndex($aid, "to") + $paramOffset];
@@ -26,7 +26,7 @@ function EJGetBill(&$billParams) {
              " and " .
              "bill.Category = billcategory.ID" .
              " and " .
-             "bill.PID in (select person.ID from person where person.FID=1)" . # [ED] PENDING: Handle FID
+             "bill.PID in (select person.ID from person where person.FID=" . $fid . ")" .
              " order by bill.Datetime asc";
         $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
         EJReadTable($sql, function ($row) use (&$result, $aid) {
@@ -52,7 +52,7 @@ function EJGetBill(&$billParams) {
 
 function EJGetDebt(&$debtParams) {
     $aid = "aidDebt";
-    return EJExecuteWithAuthentication($aid, $debtParams, function ($session, $aid, &$debtParams) {
+    return EJExecuteWithAuthenticatedFamily($aid, $debtParams, function ($fid, $aid, &$debtParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $startDate = $debtParams[W3GetAPIParamIndex($aid, "from") + $paramOffset];
         $endDate = $debtParams[W3GetAPIParamIndex($aid, "to") + $paramOffset];
@@ -62,7 +62,7 @@ function EJGetDebt(&$debtParams) {
              "debt.Amount as amount, debt.Balance as balance, debt.Note as note" .
              " from " .
              "debt" .
-             " where FID=1 and " . # [ED] PENDING: Handle FID
+             " where FID=" . $fid . " and " .
              "(debt.Start <= '" . $endDate . "' and debt.End >= '" . $startDate . "')" .
              " order by debt.Start asc";
         return EJReadResultFromTable($aid, $sql, true);
@@ -71,7 +71,7 @@ function EJGetDebt(&$debtParams) {
 
 function EJGetFinanceEvent(&$eventParams) {
     $aid = "aidFinanceEvent";
-    return EJExecuteWithAuthentication($aid, $eventParams, function ($session, $aid, &$eventParams) {
+    return EJExecuteWithAuthenticatedFamily($aid, $eventParams, function ($fid, $aid, &$eventParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $eventName = $eventParams[W3GetAPIParamIndex($aid, "name") + $paramOffset];
 
@@ -81,7 +81,7 @@ function EJGetFinanceEvent(&$eventParams) {
              "financeevent.Budget as budget, " .
              "financeevent.Note as note " .
              "from financeevent " .
-             "where FID=1"; # [ED] PENDING: Handle FID
+             "where FID=" . $fid . "";
         if ($eventName != "") {
             $sql .= " and financeevent.Name like " . W3MakeString("%" . $eventName . "%", true);
         }
@@ -119,7 +119,7 @@ function EJGetFinanceEvent(&$eventParams) {
 
 function EJGetIncome(&$incomeParams) {
     $aid = "aidIncome";
-    return EJExecuteWithAuthentication($aid, $incomeParams, function ($session, $aid, &$incomeParams) {
+    return EJExecuteWithAuthenticatedFamily($aid, $incomeParams, function ($fid, $aid, &$incomeParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $startDate = $incomeParams[W3GetAPIParamIndex($aid, "from") + $paramOffset];
         $endDate = $incomeParams[W3GetAPIParamIndex($aid, "to") + $paramOffset];
@@ -140,7 +140,7 @@ function EJGetIncome(&$incomeParams) {
              " and " .
              "income.Category = incomecategory.ID" .
              " and " .
-             "income.PID in (select person.ID from person where person.FID=1)" . # [ED] PENDING: Handle FID
+             "income.PID in (select person.ID from person where person.FID=" . $fid . ")" .
              " order by income.Datetime asc";
         $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
         EJReadTable($sql, function ($row) use (&$result, $aid) {
@@ -166,7 +166,7 @@ function EJGetIncome(&$incomeParams) {
 
 function EJGetFinanceReport(&$reportParams) {
     $aid = "aidFinanceReport";
-    return EJExecuteWithAuthentication($aid, $reportParams, function ($session, $aid, &$reportParams) {
+    return EJExecuteWithAuthenticatedFamily($aid, $reportParams, function ($fid, $aid, &$reportParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
         $reportMonth = $reportParams[W3GetAPIParamIndex($aid, "month") + $paramOffset];
 
@@ -193,7 +193,7 @@ function EJGetFinanceReport(&$reportParams) {
             "paymentmodeyear" => ""
         );
     
-        EJCalculateFinanceReport($year, $month, $report);
+        EJCalculateFinanceReport($year, $month, $report, $fid);
     
         $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ": {";
         $result .= "income:" . strval($report["income"]) . ",";
@@ -231,8 +231,8 @@ function EJAddBill(&$parameters) {
 
 function EJAddDebt(&$parameters) {
     $aid = "aidAddDebt";
-    return EJExecuteWithAuthentication($aid, $parameters, function ($session, $aid, &$parameters) {
-        if (EJInsertDebt($parameters)) {
+    return EJExecuteWithAuthenticatedFamily($aid, $parameters, function ($fid, $aid, &$parameters) {
+        if (EJInsertDebt($parameters, $fid)) {
             return W3CreateSuccessfulResult();
         }
 
@@ -242,8 +242,8 @@ function EJAddDebt(&$parameters) {
 
 function EJAddFinanceEvent(&$parameters) {
     $aid = "aidAddFinanceEvent";
-    return EJExecuteWithAuthentication($aid, $parameters, function ($session, $aid, &$parameters) {
-        if (EJInsertFinanceEvent($parameters)) {
+    return EJExecuteWithAuthenticatedFamily($aid, $parameters, function ($fid, $aid, &$parameters) {
+        if (EJInsertFinanceEvent($parameters, $fid)) {
             return W3CreateSuccessfulResult();
         }
 

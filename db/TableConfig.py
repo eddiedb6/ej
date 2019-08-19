@@ -10,6 +10,6 @@
         PDBConst.Attributes: ["varchar(128)"]
     }],
     PDBConst.Initials: [
-        {"Name": "'version'", "Value": "'0.1'"}
+        {"Name": "'version'", "Value": "'1.0'"}
     ]
 }

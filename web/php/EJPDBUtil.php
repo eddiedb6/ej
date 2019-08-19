@@ -139,7 +139,7 @@ function EJInsertBill(&$billParams) {
     return true;
 }
 
-function EJInsertDebt(&$debtParams) {
+function EJInsertDebt(&$debtParams, $fid) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -169,7 +169,7 @@ function EJInsertDebt(&$debtParams) {
                     $debtParams[W3GetAPIParamIndex("aidAddDebt", "amount") + $paramOffset],
                     $balanceVal,
                     W3MakeString($debtParams[W3GetAPIParamIndex("aidAddDebt", "note") + $paramOffset], true),
-                    1); # [ED] PENDING: Handle FID
+                    $fid);
     $sql = "insert into debt (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute debt insert SQL failed");
@@ -179,7 +179,7 @@ function EJInsertDebt(&$debtParams) {
     return true;
 }
 
-function EJInsertFinanceEvent(&$eventParams) {
+function EJInsertFinanceEvent(&$eventParams, $fid) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -203,7 +203,7 @@ function EJInsertFinanceEvent(&$eventParams) {
     $values = array(W3MakeString($eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "name") + $paramOffset], true),
                     $eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "budget") + $paramOffset],
                     W3MakeString($eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "note") + $paramOffset], true),
-                    1); # [ED] PENDING: Handle FID
+                    $fid);
     $sql = "insert into financeevent (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute finance event insert SQL failed");
@@ -266,7 +266,7 @@ function EJInsertExchangeRate($date, $currency) {
     return true;
 }
 
-function EJInsertNote(&$noteParams, &$postParams) {
+function EJInsertNote(&$noteParams, &$postParams, $fid) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -274,14 +274,14 @@ function EJInsertNote(&$noteParams, &$postParams) {
         return false;
     }
 
-    $columns = array ("Title", "Tag", "Note", "Modified");
+    $columns = array ("Title", "Tag", "Note", "Modified", "FID");
     $size = sizeof($columns);
 
     $uselessParamCount = 2; # Match string, session, etc.
     $paramOffset = 1; # 0 is for the whole match string in reg                       
-    if (sizeof($noteParams) + sizeof($postParams) - $uselessParamCount != $size) {
+    if (sizeof($noteParams) + sizeof($postParams) - $uselessParamCount != $size - 1) { # 1 for FID
         W3LogError("No enough fields for note insert: require " .
-                   strval($size - 1) . # "Modified" not from param
+                   strval($size - 2) . # "Modified" not from param, also FID
                    " but actual is " .
                    strval(sizeof($noteParams) - $paramOffset + sizeof($postParams) - $paramOffset));
         return false;
@@ -292,7 +292,8 @@ function EJInsertNote(&$noteParams, &$postParams) {
     $values = array(W3MakeString($noteParams[W3GetAPIParamIndex("aidAddNote", "title") + $paramOffset], true),
                     $noteParams[W3GetAPIParamIndex("aidAddNote", "tag") + $paramOffset],
                     W3MakeString($postParams[W3GetAPIPostIndex("aidAddNote", "note") + $paramOffset]),
-                    $datetime);
+                    $datetime,
+                    $fid);
     $sql = "insert into note (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
 
     if (!$ejConn->query($sql)) {
@@ -303,7 +304,7 @@ function EJInsertNote(&$noteParams, &$postParams) {
     return true;
 }
 
-function EJUpdateNote(&$noteParams, &$postParams) {
+function EJUpdateNote(&$noteParams, &$postParams, $fid) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -327,7 +328,7 @@ function EJUpdateNote(&$noteParams, &$postParams) {
     $newNote = W3MakeString($postParams[W3GetAPIPostIndex("aidModifyNote", "note") + $paramOffset]);
     $id = $noteParams[W3GetAPIParamIndex("aidModifyNote", "id") + $paramOffset];
 
-    $sql = "update note set Note=" . $newNote . ", Modified=" . $datetime . "  where ID=" . $id;
+    $sql = "update note set Note=" . $newNote . ", Modified=" . $datetime . "  where ID=" . $id . " and FID=" . $fid;
 
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute note update SQL failed");
@@ -337,7 +338,7 @@ function EJUpdateNote(&$noteParams, &$postParams) {
     return true;
 }
 
-function EJInsertCalendarEvent(&$eventParams) {
+function EJInsertCalendarEvent(&$eventParams, $fid) {
     global $ejConn;
 
     if (!EJConnectDB()) {
@@ -345,14 +346,14 @@ function EJInsertCalendarEvent(&$eventParams) {
         return false;
     }
 
-    $columns = array ("Name", "Datetime", "RepeatMonth", "Note");
+    $columns = array ("Name", "Datetime", "RepeatMonth", "Note", "FID");
     $size = sizeof($columns);
 
     $uselessParamCount = 2; # Match string, session, etc.
     $paramOffset = 1; # 0 is for the whole match string in reg                       
-    if (sizeof($eventParams) - $uselessParamCount != $size) {
+    if (sizeof($eventParams) - $uselessParamCount != $size - 1) { # 1 for FID
         W3LogError("No enough fields for calendar event insert: require " .
-                   strval($size) .
+                   strval($size - 1) . # 1 for FID
                    " but actual is " .
                    strval(sizeof($eventParams) - $paramOffset));
         return false;
@@ -365,7 +366,8 @@ function EJInsertCalendarEvent(&$eventParams) {
     $values = array(W3MakeString($eventName, true),
                     W3MakeString($eventParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset], true),
                     $eventParams[W3GetAPIParamIndex($aid, "repeatmonth") + $paramOffset],
-                    W3MakeString($eventNote, true));
+                    W3MakeString($eventNote, true),
+                    $fid);
     $sql = "insert into calendar (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute calendar event insert SQL failed");
