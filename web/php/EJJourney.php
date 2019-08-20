@@ -105,8 +105,8 @@ function EJAddJourney(&$parameters) {
     $aid = "aidAddJourney";
     return EJExecuteWithAuthenticatedFamily($aid, $parameters, function ($familyID, $aid, &$parameters) {
         $paramOffset = 1; # The first one is alway whole string from reg match
-        $eventStr = $parameters[W3GetAPIParamIndex($aid, "event") + $paramOffset];
-        $travelerStr = $parameters[W3GetAPIParamIndex($aid, "traveler") + $paramOffset];
+        $eventStr = EJDecodeURLString($parameters[W3GetAPIParamIndex($aid, "event") + $paramOffset]);
+        $travelerStr = EJDecodeURLString($parameters[W3GetAPIParamIndex($aid, "traveler") + $paramOffset]);
         $travelers = explode(",", $travelerStr);
         if (sizeof($travelers) <= 0) {
             W3LogError("No traveler of journey");
@@ -130,19 +130,18 @@ function EJAddJourney(&$parameters) {
 
         $persons = array();
         foreach ($travelers as $personName) {
-            $personFamilyID = null;
-            $personID = null;
-            if (!EJGetPersonInfo(trim($personName), $personID, $personFamilyID)) {
+            $personInfo = EJGetPersonInfo(trim($personName));
+            if (sizeof($personInfo) <= 0) {
                 W3LogError("Traveler of journey is not existed: " . $personName);
                 return W3CreateFailedResult();
             }
 
-            if ($personFamilyID != $familyID) {
+            if ($personInfo["FID"] != $familyID) {
                 W3LogError("Traveler of journey is not in same family: " . $personName);
                 return W3CreateFailedResult();
             }
 
-            array_push($persons, $personID);
+            array_push($persons, $personInfo["ID"]);
         }
 
         if (EJInsertJourney($parameters, $eventID)) {

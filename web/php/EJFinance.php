@@ -73,7 +73,7 @@ function EJGetFinanceEvent(&$eventParams) {
     $aid = "aidFinanceEvent";
     return EJExecuteWithAuthenticatedFamily($aid, $eventParams, function ($fid, $aid, &$eventParams) {
         $paramOffset = 1; # The first one is the whole string from reg match
-        $eventName = $eventParams[W3GetAPIParamIndex($aid, "name") + $paramOffset];
+        $eventName = EJDecodeURLString($eventParams[W3GetAPIParamIndex($aid, "name") + $paramOffset]);
 
         $sql = "select " .
              "financeevent.ID as id, " .

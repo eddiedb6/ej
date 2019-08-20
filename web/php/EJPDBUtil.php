@@ -79,14 +79,15 @@ function EJInsertBill(&$billParams) {
                    strval(sizeof($billParams) - $paramOffset));
         return false;
     }
-    
+
+    $billNote = EJDecodeURLString($billParams[W3GetAPIParamIndex("aidAddBill", "note") + $paramOffset]);
     $values = array($billParams[W3GetAPIParamIndex("aidAddBill", "owner") + $paramOffset],
                     W3MakeString($billParams[W3GetAPIParamIndex("aidAddBill", "datetime") + $paramOffset], true),
                     $billParams[W3GetAPIParamIndex("aidAddBill", "amount") + $paramOffset],
                     $billParams[W3GetAPIParamIndex("aidAddBill", "currency") + $paramOffset],
                     $billParams[W3GetAPIParamIndex("aidAddBill", "category") + $paramOffset],
                     $billParams[W3GetAPIParamIndex("aidAddBill", "paymentmode") + $paramOffset],
-                    W3MakeString($billParams[W3GetAPIParamIndex("aidAddBill", "note") + $paramOffset], true));
+                    W3MakeString($billNote, true));
     $sql = "insert into bill (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
 
     if (!$ejConn->query($sql)) {
@@ -96,7 +97,7 @@ function EJInsertBill(&$billParams) {
 
     // Then map bill to finance event
 
-    $events = $billParams[W3GetAPIParamIndex("aidAddBill", "event") + $paramOffset];
+    $events = EJDecodeURLString($billParams[W3GetAPIParamIndex("aidAddBill", "event") + $paramOffset]);
     if (trim($events) == "") {
         return true;
     }
@@ -160,6 +161,7 @@ function EJInsertDebt(&$debtParams, $fid) {
         return false;
     }
 
+    $debtNote = EJDecodeURLString($debtParams[W3GetAPIParamIndex("aidAddDebt", "note") + $paramOffset]);
     $balanceVal = $debtParams[W3GetAPIParamIndex("aidAddDebt", "balance") + $paramOffset];
     if ($balanceVal == "") {
         $balanceVal = "0";
@@ -168,7 +170,7 @@ function EJInsertDebt(&$debtParams, $fid) {
                     W3MakeString($debtParams[W3GetAPIParamIndex("aidAddDebt", "end") + $paramOffset], true),
                     $debtParams[W3GetAPIParamIndex("aidAddDebt", "amount") + $paramOffset],
                     $balanceVal,
-                    W3MakeString($debtParams[W3GetAPIParamIndex("aidAddDebt", "note") + $paramOffset], true),
+                    W3MakeString($debtNote, true),
                     $fid);
     $sql = "insert into debt (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
@@ -199,10 +201,12 @@ function EJInsertFinanceEvent(&$eventParams, $fid) {
                    strval(sizeof($eventParams) - $paramOffset));
         return false;
     }
-    
-    $values = array(W3MakeString($eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "name") + $paramOffset], true),
+
+    $eventName = EJDecodeURLString($eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "name") + $paramOffset]);
+    $eventNote = EJDecodeURLString($eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "note") + $paramOffset]);
+    $values = array(W3MakeString($eventName, true),
                     $eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "budget") + $paramOffset],
-                    W3MakeString($eventParams[W3GetAPIParamIndex("aidAddFinanceEvent", "note") + $paramOffset], true),
+                    W3MakeString($eventNote, true),
                     $fid);
     $sql = "insert into financeevent (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
@@ -233,13 +237,14 @@ function EJInsertIncome(&$incomeParams) {
                    strval(sizeof($incomeParams) - $paramOffset));
         return false;
     }
-    
+
+    $incomeNote = EJDecodeURLString($incomeParams[W3GetAPIParamIndex("aidAddIncome", "note") + $paramOffset]);
     $values = array($incomeParams[W3GetAPIParamIndex("aidAddIncome", "owner") + $paramOffset],
                     W3MakeString($incomeParams[W3GetAPIParamIndex("aidAddIncome", "datetime") + $paramOffset], true),
                     $incomeParams[W3GetAPIParamIndex("aidAddIncome", "amount") + $paramOffset],
                     $incomeParams[W3GetAPIParamIndex("aidAddIncome", "currency") + $paramOffset],
                     $incomeParams[W3GetAPIParamIndex("aidAddIncome", "category") + $paramOffset],
-                    W3MakeString($incomeParams[W3GetAPIParamIndex("aidAddIncome", "note") + $paramOffset], true));
+                    W3MakeString($incomeNote, true));
     $sql = "insert into income (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($sql)) {
         W3LogWarning("Execute income insert SQL failed");
@@ -361,8 +366,8 @@ function EJInsertCalendarEvent(&$eventParams, $fid) {
 
     $aid = "aidAddCalendarEvent";
 
-    $eventName = str_replace("%20", " ", $eventParams[W3GetAPIParamIndex($aid, "name") + $paramOffset]);
-    $eventNote = str_replace("%20", " ", $eventParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
+    $eventName = EJDecodeURLString($eventParams[W3GetAPIParamIndex($aid, "name") + $paramOffset]);
+    $eventNote = EJDecodeURLString($eventParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
     $values = array(W3MakeString($eventName, true),
                     W3MakeString($eventParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset], true),
                     $eventParams[W3GetAPIParamIndex($aid, "repeatmonth") + $paramOffset],
@@ -399,8 +404,9 @@ function EJInsertJourney(&$journeyParams, $eventID) {
     }
 
     $aid = "aidAddJourney";
-    $journeyNote = str_replace("%20", " ", $journeyParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
-    $values = array(W3MakeString($journeyParams[W3GetAPIParamIndex($aid, "name") + $paramOffset], true),
+    $journeyNote = EJDecodeURLString($journeyParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
+    $journeyName = EJDecodeURLString($journeyParams[W3GetAPIParamIndex($aid, "name") + $paramOffset]);
+    $values = array(W3MakeString($journeyName, true),
                     W3MakeString($journeyParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset], true),
                     W3MakeString($journeyNote, true));
 
@@ -431,7 +437,7 @@ function EJInsertJourneyPlace(&$placeParams) {
 
     $aid = "aidAddJourneyPlace";
     $paramOffset = 1; # 0 is for the whole match string in reg
-    $name = $placeParams[W3GetAPIParamIndex($aid, "name") + $paramOffset];
+    $name = $placeParams[W3GetAPIParamIndex($aid, "name") + $paramOffset]; # This name will be Decode by client
     $latitude = $placeParams[W3GetAPIParamIndex($aid, "latitude") + $paramOffset];
     $longitude = $placeParams[W3GetAPIParamIndex($aid, "longitude") + $paramOffset];
 
@@ -482,7 +488,7 @@ function EJInsertJourneyNote(&$noteParams, $placeID) {
     $journeyID = $noteParams[W3GetAPIParamIndex($aid, "jid") + $paramOffset];
     $datetime = $noteParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset];
     $remark = $noteParams[W3GetAPIParamIndex($aid, "remark") + $paramOffset];
-    $note = str_replace("%20", " ", $noteParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
+    $note = EJDecodeURLString($noteParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
 
     $columns = array ("Journey", "Place", "Datetime", "Remark", "Note");
     $values = array($journeyID, $placeID, W3MakeString($datetime), $remark, W3MakeString($note));
@@ -495,33 +501,31 @@ function EJInsertJourneyNote(&$noteParams, $placeID) {
     return true;
 }
 
-function EJGetPersonInfo($personName, &$personID, &$familyID) {
+function EJGetPersonInfo($personName) {
     $sql = "select " .
-         "person.ID as id, person.FID as family" .
+         "person.ID, person.FID" .
          " from " .
          "person" .
          " where " .
          "person.Name = " . W3MakeString($personName);
 
-    $result = false;
-    EJReadTable($sql, function ($row) use (&$result, &$personID, &$familyID) {
-        $result = true;
-        $personID = $row["id"];
-        $familyID = $row["family"];
+    $personInfo = array();
+    EJReadTable($sql, function ($row) use (&$personInfo) {
+        $personInfo["ID"] = $row["ID"];
+        $personInfo["FID"] = $row["FID"];
     });
 
-    return $result;
+    return $personInfo;
 }
 
 function EJGetEventInfo($eventName, $eventID) {
-    $result = false;
     $condition = "";
     if ($eventName != null) {
         $condition = "Name = " . W3MakeString($eventName);
     } else if ($eventID != null) {
         $condition = "ID = " . W3MakeString($eventID);
     } else {
-        W3LogWarning("Neither of event name and id is valid when try to get event info");
+        W3LogWarning("Neither of event name nor id is valid when try to get event info");
         return array();
     }
 
@@ -569,6 +573,27 @@ function EJMapJourneyToPerson(&$persons) {
 
         $result = true;
     });
+
+    return $result;
+}
+
+function EJReadResultFromTable($aid, $sql, $isResultArray) {
+    $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ($isResultArray ? ":[" : ":{");
+    EJReadTable($sql, function ($row) use (&$result, $aid, $isResultArray) {
+        $apiDef = W3GetAPIDef($aid);
+        $columns = $apiDef[w3ApiResult][w3ApiResultData];
+        if ($isResultArray) {
+            $result .= "{";
+        }
+        foreach ($columns as $value) {
+            $resultForColumn = $row[$value[w3ApiDataValue]];
+            $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($resultForColumn) . ",";
+        }
+        if ($isResultArray) {
+            $result = rtrim($result, ",") . "},";
+        }
+    });
+    $result = rtrim($result, ",") . ($isResultArray ? "]}" : "}}");
 
     return $result;
 }

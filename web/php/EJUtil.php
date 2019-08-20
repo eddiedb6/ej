@@ -68,25 +68,9 @@ function EJExecuteWithAuthenticatedFamily($aid, &$params, $executor) {
     return EJExecuteAPI($aid, $params, $executor, true, true);
 }
 
-function EJReadResultFromTable($aid, $sql, $isResultArray) {
-    $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ($isResultArray ? ":[" : ":{");
-    EJReadTable($sql, function ($row) use (&$result, $aid, $isResultArray) {
-        $apiDef = W3GetAPIDef($aid);
-        $columns = $apiDef[w3ApiResult][w3ApiResultData];
-        if ($isResultArray) {
-            $result .= "{";
-        }
-        foreach ($columns as $value) {
-            $resultForColumn = $row[$value[w3ApiDataValue]];
-            $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($resultForColumn) . ",";
-        }
-        if ($isResultArray) {
-            $result = rtrim($result, ",") . "},";
-        }
-    });
-    $result = rtrim($result, ",") . ($isResultArray ? "]}" : "}}");
-
-    return $result;
+function EJDecodeURLString($str) {
+    # Replace White Space
+    return str_replace("%20", " ", $str);
 }
 
  ?>
