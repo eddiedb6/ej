@@ -55,10 +55,10 @@ def SendEventPriorNoticeMail(name, date, repeat, note):
 
 def HandleCalendarEvent(events):
     for row in events:
-        name = row[1]
-        date = row[2]
-        repeat = row[3]
-        note = row[4]
+        name = row[0]
+        date = row[1]
+        repeat = row[2]
+        note = row[3]
         if IsEventHappendToday(date, repeat):
             SendEventNoticeMail(name, date, repeat, note)
         elif IsEventNeedPreNotice(date, repeat):
@@ -69,7 +69,7 @@ try:
     db = MySQLdb.connect(EJServiceConfig.ejDBServer, EJServiceConfig.ejDBUsername, EJServiceConfig.ejDBPassword, EJServiceConfig.ejDBDBName)
 
     cursor = db.cursor()
-    cursor.execute("select * from calendar")
+    cursor.execute("select Name, Datetime, RepeatMonth, Note from calendar where FID=1")
 
     events = cursor.fetchall()
     HandleCalendarEvent(events)
