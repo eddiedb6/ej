@@ -26,7 +26,8 @@
             ImportFile("TableJourney.py"),
             ImportFile("TableJourneyNote.py"),
             ImportFile("TableJourneyPlace.py"),
-            ImportFile("TableMapJourneyPerson.py")
+            ImportFile("TableMapJourneyPerson.py"),
+            ImportFile("TablePOI.py")
         ]
     }
     

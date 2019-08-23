@@ -37,6 +37,22 @@ function EJCloseDB() {
     }
 }
 
+function EJExecuteSQL($sql) {
+    global $ejConn;
+
+    if (!EJConnectDB()) {
+        W3LogWarning("No DB connection when exectue SQL");
+        return false;
+    }
+
+    if (!$ejConn->query($sql)) {
+        W3LogWarning("Execute SQL failed");
+        return false;
+    }
+
+    return true;
+}
+
 function EJReadTable($sql, $callback) {
     global $ejConn;
 
@@ -425,7 +441,7 @@ function EJInsertJourney(&$journeyParams, $eventID) {
     return true;
 }
 
-function EJInsertJourneyPlace(&$placeParams) {
+function EJInsertJourneyPlace(&$placeParams, $aid) {
     global $ejConn;
 
     $placeID = -1;
@@ -435,7 +451,6 @@ function EJInsertJourneyPlace(&$placeParams) {
         return $placeID;
     }
 
-    $aid = "aidAddJourneyPlace";
     $paramOffset = 1; # 0 is for the whole match string in reg
     $name = $placeParams[W3GetAPIParamIndex($aid, "name") + $paramOffset]; # This name will be Decode by client
     $latitude = $placeParams[W3GetAPIParamIndex($aid, "latitude") + $paramOffset];
@@ -495,6 +510,29 @@ function EJInsertJourneyNote(&$noteParams, $placeID) {
     $insertSql = "insert into journeynote (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
     if (!$ejConn->query($insertSql)) {
         W3LogWarning("Execute journey note insert SQL failed");
+        return false;
+    }
+
+    return true;
+}
+
+function EJInsertPOI(&$noteParams, $placeID, $fid) {
+    global $ejConn;
+
+    if (!EJConnectDB()) {
+        W3LogWarning("No DB connection when insert POI");
+        return false;
+    }
+
+    $aid = "aidAddPOI";
+    $paramOffset = 1; # The first one is alway whole string from reg match
+    $note = EJDecodeURLString($noteParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
+
+    $columns = array ("FID", "Place", "Note");
+    $values = array($fid, $placeID, W3MakeString($note));
+    $insertSql = "insert into poi (" . implode(",", $columns) . ") values (" . implode("," , $values) . ")";
+    if (!$ejConn->query($insertSql)) {
+        W3LogWarning("Execute POI insert SQL failed");
         return false;
     }
 
@@ -575,6 +613,14 @@ function EJMapJourneyToPerson(&$persons) {
     });
 
     return $result;
+}
+
+function EJReadSingleResultFromTable($aid, $sql) {
+    return EJReadResultFromTable($aid, $sql, false);
+}
+
+function EJReadMultiResultFromTable($aid, $sql) {
+    return EJReadResultFromTable($aid, $sql, true);
 }
 
 function EJReadResultFromTable($aid, $sql, $isResultArray) {

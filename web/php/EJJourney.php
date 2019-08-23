@@ -157,7 +157,7 @@ function EJAddJourney(&$parameters) {
 function EJAddJourneyPlace(&$parameters) {
     $aid = "aidAddJourneyPlace";
     return EJExecuteWithAuthentication($aid, $parameters, function ($session, $aid, &$parameters) {
-        $placeID = EJInsertJourneyPlace($parameters);
+        $placeID = EJInsertJourneyPlace($parameters, $aid);
         if ($placeID < 0) {
             W3LogError("Failed to get journey place ID");
             return W3CreateFailedResult();
@@ -188,7 +188,7 @@ function EJGetJourneyPlace(&$journeyParams) {
              "journeynote.Journey=" . $jid .
              " order by journeynote.Datetime asc";
 
-        return EJReadResultFromTable($aid, $sql, true);
+        return EJReadMultiResultFromTable($aid, $sql);
     });
 }
 
@@ -216,7 +216,91 @@ function EJGetAllPlace(&$params) {
              "journeynote.Journey in (" . $sqlJourney . ")" .
              " order by journeynote.Datetime asc";
 
-        return EJReadResultFromTable($aid, $sqlPlace, true);
+        return EJReadMultiResultFromTable($aid, $sqlPlace);
+    });
+}
+
+function EJAddPOI(&$parameters) {
+    $aid = "aidAddPOI";
+    return EJExecuteWithAuthenticatedFamily($aid, $parameters, function ($fid, $aid, &$parameters) {
+        $placeID = EJInsertJourneyPlace($parameters, $aid);
+        if ($placeID < 0) {
+            W3LogError("Failed to get POI place ID");
+            return W3CreateFailedResult();
+        }
+
+        if (EJInsertPOI($parameters, $placeID, $fid)) {
+            return W3CreateSuccessfulResult();
+        }
+
+        return W3CreateFailedResult();
+    });
+}
+
+function EJGetAllPOI(&$params) {
+    $aid = "aidAllPOI";
+    return EJExecuteWithAuthenticatedFamily($aid, $params, function ($fid, $aid, &$params) {
+        $paramOffset = 1; # The first one is the whole string from reg match
+        $jid = $params[W3GetAPIParamIndex($aid, "jid") + $paramOffset];
+
+        $sql = "select " .
+             "poi.ID as poiid, poi.Note as note, " .
+             "journeyplace.Name as name, journeyplace.Latitude as latitude, journeyplace.Longitude as longitude" .
+             " from " .
+             "poi, journeyplace" .
+             " where " .
+             "poi.Place=journeyplace.ID" .
+             " and " .
+             "poi.FID=" . $fid .
+             " order by poi.ID asc";
+
+        return EJReadMultiResultFromTable($aid, $sql);
+    });
+}
+
+function EJAddPOIToJourney(&$parameters) {
+    $aid = "aidAddPOIToJourney";
+    return EJExecuteWithAuthentication($aid, $parameters, function ($session, $aid, &$parameters) {
+        $paramOffset = 1; # The first one is the whole string from reg match
+        $poiID = $parameters[W3GetAPIParamIndex($aid, "poi") + $paramOffset];
+
+        $sql = "select journeyplace.ID as id from poi, journeyplace where poi.Place=journeyplace.ID and poi.ID=" . $poiID;
+        $placeID = NULL;
+        EJReadTable($sql, function ($row) use (&$placeID) {
+            $placeID = $row["id"];
+        });
+        if ($placeID == NULL) {
+            W3LogError("Failed to get POI place when add POI to journey");
+            return W3CreateFailedResult();
+        }
+
+        // Mock "aidAddJourneyPlace"
+        $jid = $parameters[W3GetAPIParamIndex($aid, "journey") + $paramOffset];
+        $datetime = $parameters[W3GetAPIParamIndex($aid, "datetime") + $paramOffset];
+        $remark = $parameters[W3GetAPIParamIndex($aid, "remark") + $paramOffset];
+        $note = $parameters[W3GetAPIParamIndex($aid, "note") + $paramOffset]; // It's mock and no decode here
+        $mockParams = array(
+            "Whold regex string",
+            $jid,
+            "name",
+            $datetime,
+            "latitude",
+            "longitude",
+            $remark,
+            $note,
+            $session
+        );
+        if (!EJInsertJourneyNote($mockParams, $placeID)) {
+            return W3CreateFailedResult();
+        }
+
+        // Remove POI because it's already in journey
+        $sql = "delete from poi where ID=" . $poiID;
+        if (!EJExecuteSQL($sql)) {
+            return W3CreateFailedResult();
+        }
+
+        return W3CreateSuccessfulResult();
     });
 }
 

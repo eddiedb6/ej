@@ -15,10 +15,13 @@
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
             "uidSelectedJourneyPanel",
-            "uidMapOperationTable",
+            "uidMapSearchPanel",
             "uidSelectedPlacePanel",
         ]
     },
+
+    # Operation - place
+
     "uidSelectedPlacePanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
@@ -32,17 +35,14 @@
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
             [], # No header
-            ["uidNameLabel",      "uidMapPlaceName"],
-            ["uidLatitudeLabel",  "uidMapPlaceLatitude"],
-            ["uidLongitudeLabel", "uidMapPlaceLongitude"],
-            ["uidDatetimeLabel",  "uidMapPlaceDatetime"],
-            ["uidRemarkLabel",    "uidMapPlaceRemark"],
-            ["uidNoteLabel",      "uidMapPlaceNote"],
-            ["uidNullLabel",      "uidMapAddPlaceButton"]
+            ["uidNameLabel",             "uidMapPlaceName"],
+            ["uidLatitudeLabel",         "uidMapPlaceLatitude"],
+            ["uidLongitudeLabel",        "uidMapPlaceLongitude"],
+            ["uidMapPlaceDatetimeLabel", "uidMapPlaceDatetime"],
+            ["uidMapPlaceRemarkLabel",   "uidMapPlaceRemark"],
+            ["uidMapPlaceNoteLabel",     "uidMapPlaceNote"],
+            ["uidSelectedPOIID",     "uidMapPlaceOperationTable"]
         ]
-    },
-    "uidMapPlaceDatetime": {
-        W3Const.w3PropType: W3Const.w3TypeDatePicker
     },
     "uidLatitudeLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
@@ -54,16 +54,29 @@
         W3Const.w3PropString: "sidLongitudeLabel",
         W3Const.w3PropClass: "cidRightLabel"
     },
-    "uidRemarkLabel": {
+    "uidMapPlaceDatetimeLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropString: "sidDatetimeLabel",
+        W3Const.w3PropClass: "cidRightLabel",
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+    "uidMapPlaceRemarkLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidRemarkLabel",
+        W3Const.w3PropClass: "cidRightLabel",
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+    "uidMapPlaceNoteLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropString: "sidNoteLabel",
         W3Const.w3PropClass: "cidRightLabel"
     },
     "uidMapPlaceName": {
         W3Const.w3PropType: W3Const.w3TypeLabel
-    },
-    "uidMapPlaceRemark": {
-        W3Const.w3PropType: W3Const.w3TypeText
     },
     "uidMapPlaceLatitude": {
         W3Const.w3PropType: W3Const.w3TypeLabel
@@ -71,9 +84,198 @@
     "uidMapPlaceLongitude": {
         W3Const.w3PropType: W3Const.w3TypeLabel
     },
-    "uidMapPlaceNote": {
-        W3Const.w3PropType: W3Const.w3TypeText
+    "uidMapPlaceDatetime": {
+        W3Const.w3PropType: W3Const.w3TypeDatePicker,
+        W3Const.w3PropCSS: {
+            "display": "none"
+        },
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        }
     },
+    "uidMapPlaceRemark": {
+        W3Const.w3PropType: W3Const.w3TypeText,
+        W3Const.w3PropCSS: {
+            "display": "none"
+        },
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        }
+    },
+    "uidMapPlaceNote": {
+        W3Const.w3PropType: W3Const.w3TypeText,
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        }
+    },
+    "uidSelectedPOIID": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropCSS: {
+            "display": "none",
+            "width": "0"
+        }
+    },
+    "uidMapPlaceOperationTable": {
+        W3Const.w3PropType: W3Const.w3TypeTable,
+        W3Const.w3PropSubUI: [
+            [],
+            ["uidMapAddPlaceButton", "uidMapSwitchToPlacePanelButton", "uidMapConfirmAddPlaceButton", "uidMapAddPOIButton"]
+        ]
+    },
+    "uidMapAddPlaceButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidAddJourneyPlace",
+        W3Const.w3PropTriggerApi: [
+        {
+            W3Const.w3ApiID: "aidAddJourneyPlace",
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidSelectedJourneyID"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceName"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceDatetime"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceLatitude"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceLongitude"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceRemark"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceNote"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: W3Const.w3Session
+            }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1,
+                "EJClearMap()"
+            ]
+        },
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        },
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+    "uidMapAddPOIButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidAddPOI",
+        W3Const.w3PropTriggerApi: [
+        {
+            W3Const.w3ApiID: "aidAddPOI",
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceName"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceLatitude"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceLongitude"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceNote"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: W3Const.w3Session
+            }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1,
+                "EJClearMap()"
+            ]
+        },
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        }
+    },
+    "uidMapSwitchToPlacePanelButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidAddJourneyPlace",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "EJDisplayPOIOnPlacePanel()"
+            ]
+        },
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        },
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+    "uidMapConfirmAddPlaceButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidSubmit",
+        W3Const.w3PropTriggerApi: [
+        {
+            W3Const.w3ApiID: "aidAddPOIToJourney",
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidSelectedPOIID"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidSelectedJourneyID"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceDatetime"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceRemark"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidMapPlaceNote"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: W3Const.w3Session
+            }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1,
+                "EJClearMap()"
+            ]
+        },
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        },
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+
+    # Operation - journey
+
     "uidSelectedJourneyPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
@@ -126,11 +328,20 @@
             ]
         }
     },
-    "uidMapOperationTable": {
+
+    # Operation - search
+
+    "uidMapSearchPanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidMapSearchTable"
+        ]
+    },
+    "uidMapSearchTable": {
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
             [],
-            ["uidMapSearchInput", "uidMapSearchButton", "uidMapAllPlaceButton", "uidMapClearButton"]
+            ["uidMapSearchInput", "uidMapSearchButton", "uidMapShowAllPlaceButton", "uidMapShowAllPOIButton", "uidMapClearButton"]
         ]
     },
     "uidMapSearchInput": {
@@ -145,12 +356,21 @@
             ]
         }
     },
-    "uidMapAllPlaceButton": {
+    "uidMapShowAllPlaceButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidShowAllPlace",
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 "EJShowAllPlaces()"
+            ]
+        }
+    },
+    "uidMapShowAllPOIButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidShowAllPOI",
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                "EJShowAllPOIs()"
             ]
         }
     },
@@ -160,53 +380,6 @@
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 "EJClearMap()"
-            ]
-        }
-    },
-    "uidMapAddPlaceButton": {
-        W3Const.w3PropType: W3Const.w3TypeButton,
-        W3Const.w3PropString: "sidAddPlace",
-        W3Const.w3PropTriggerApi: [
-        {
-            W3Const.w3ApiID: "aidAddJourneyPlace",
-            W3Const.w3ApiParams: [
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidSelectedJourneyID"
-            },
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidMapPlaceName"
-            },
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidMapPlaceDatetime"
-            },
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidMapPlaceLatitude"
-            },
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidMapPlaceLongitude"
-            },
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidMapPlaceRemark"
-            },
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidMapPlaceNote"
-            },
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
-                W3Const.w3ApiDataValue: W3Const.w3Session
-            }]
-        }],
-        W3Const.w3PropEvent: {
-            W3Const.w3EventClick: [
-                W3Const.w3PlaceHolder_1,
-                "W3HideUI('uidSelectedPlacePanel')"
             ]
         }
     },
@@ -223,7 +396,7 @@
         W3Const.w3PropType: W3Const.w3TypeMap,
         W3Const.w3PropMap: {
             W3Const.w3AttrMapHandler: "EJMapHandler(w3PlaceHolder_1)",
-            W3Const.w3AttrMapLocation: "",
+            W3Const.w3AttrMapLocation: [],
             W3Const.w3AttrMapKey: ""
         },
         W3Const.w3PropCSS: {

@@ -65,7 +65,7 @@ function EJGetDebt(&$debtParams) {
              " where FID=" . $fid . " and " .
              "(debt.Start <= '" . $endDate . "' and debt.End >= '" . $startDate . "')" .
              " order by debt.Start asc";
-        return EJReadResultFromTable($aid, $sql, true);
+        return EJReadMultiResultFromTable($aid, $sql);
     });
 }
 

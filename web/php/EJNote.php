@@ -29,7 +29,7 @@ function EJGetNote(&$noteParams) {
              " and " .
              "note.FID = " . $fid;
 
-        return EJReadResultFromTable($aid, $sql, false);
+        return EJReadSingleResultFromTable($aid, $sql);
     });
 }
 
@@ -49,7 +49,7 @@ function EJGetNoteTitle(&$noteParams) {
              "note.Tag = " . $idTag .
              " order by note.Modified desc";
 
-        return EJReadResultFromTable($aid, $sql, true);
+        return EJReadMultiResultFromTable($aid, $sql);
     });
 }
 

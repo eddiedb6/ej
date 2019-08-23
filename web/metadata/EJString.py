@@ -149,11 +149,14 @@
         "sidJourneyTabJourney": "Journey",
         "sidJourneyTabMap": "Map",
         "sidGotoMap": "Display on Map",
-        "sidAddPlace": "Add to Journey",
+        "sidAddJourneyPlace": "Add to Journey",
+        "sidAddPOI": "Add to POI",
         "sidJourneyLabel": "Current Journey: ",
         "sidLatitudeLabel": "Latitude: ",
         "sidLongitudeLabel": "Longitude: ",
         "sidRemarkLabel": "Remark: ",
-        "sidShowAllPlace": "Display All"
+        "sidShowAllPlace": "Places",
+        "sidShowAllPOI": "POIs",
+        "sidAddPOIToJourney": "Add POI to Journey"
     }
 }

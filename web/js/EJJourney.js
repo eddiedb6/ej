@@ -3,6 +3,8 @@
 // Calculate calendar panel width
 //
 
+// Map Operation
+
 $(window).load(function() {
     if (document.getElementById("uidMSMap") == null) {
         // Make map is loaded first
@@ -28,7 +30,8 @@ $(window).load(function() {
 
 var _searchFunc = null;
 var _journeyDisplayFunc = null;
-var _allDisplayFunc = null;
+var _allPlacesDisplayFunc = null;
+var _allPOIsDisplayFunc = null;
 var _mapCleanFunc = null;
 
 var _selectedJourneyID = null;
@@ -42,10 +45,8 @@ function EJMapHandler(map)
     var mapObj = map;
     var searchManager = null;
 
-    function doDisplay(places, pinColor, withLine, lineColor)
+    function doDisplay(places, pinColor, withLine, lineColor, subtitleGenerator, clickHandler)
     {
-        mapObj.entities.clear();
-
         var pins = [];
         var locs = [];
         var lines = [];
@@ -58,8 +59,11 @@ function EJMapHandler(map)
                                                      color: pinColor,
                                                      text: i + 1 + '',
                                                      title: W3Decode(places[i]["name"]),
-                                                     subTitle: EJGenerateRemarkString(places[i]["remark"])
+                                                     subTitle: subtitleGenerator(places[i])
                                                  });
+            pin["AttrPlace"] = places[i];
+            Microsoft.Maps.Events.addHandler(pin, 'click', clickHandler);
+
             pins.push(pin);
             locs.push(location);
 
@@ -115,7 +119,7 @@ function EJMapHandler(map)
                     locs.push(r.results[i].location);
 
                     Microsoft.Maps.Events.addHandler(pin, 'click', function (e) {
-                        EJOnSearchPlaceSelected(e);
+                        EJOnSearchPlaceClicked(e);
                     });
 
                     W3LogDebug("Search Reult: " + i);
@@ -143,7 +147,6 @@ function EJMapHandler(map)
     }
 
     _searchFunc = function (address) {
-        mapObj.entities.clear();
         if (searchManager == null) {
             Microsoft.Maps.loadModule("Microsoft.Maps.Search", function() {
                 searchManager = new Microsoft.Maps.Search.SearchManager(mapObj);
@@ -155,20 +158,32 @@ function EJMapHandler(map)
     };
 
     _journeyDisplayFunc = function (places) {
-        doDisplay(places, 'blue', true, 'red');
+        doDisplay(places, 'blue', true, 'red', EJGenerateRemarkString, EJOnJourneyPlaceClicked);
     };
 
-    _allDisplayFunc = function (places) {
-        doDisplay(places, 'red', false, null);
+    _allPlacesDisplayFunc = function (places) {
+        doDisplay(places, 'red', false, null, EJGenerateRemarkString, EJOnJourneyPlaceClicked);
+    };
+
+    _allPOIsDisplayFunc = function (pois) {
+        doDisplay(pois, 'green', false, null, function (p) { return ""; }, EJOnPOIClicked);
     };
 
     _mapCleanFunc = function () {
         mapObj.entities.clear();
 
-        var location = new Microsoft.Maps.Location("31.230369567871094", "121.47370147705078");
+        var coordinate = ["31.230369567871094", "121.47370147705078"];
+        var mapProp = W3TryGetUIProperty("uidMSMap", w3PropMap);
+        if (mapProp != null && mapProp.hasOwnProperty(w3AttrMapLocation)) {
+            coordinate = mapProp[w3AttrMapLocation];
+        }
+
+        var location = new Microsoft.Maps.Location(coordinate[0], coordinate[1]);
         mapObj.setView({ center: location, zoom: 15 });
     };
 }
+
+// Utility
 
 function EJGenerateJourneyCheckboxID(uidTable, rowIndex)
 {
@@ -180,8 +195,9 @@ function EJGenerateJourneyCellID(uidTable, rowIndex, column)
     return uidTable + "" + rowIndex + "" + column;
 }
 
-function EJGenerateRemarkString(remark)
+function EJGenerateRemarkString(place)
 {
+    var remark = place["remark"];
     if (remark < 1) {
         remark = 1;
     } else if (remark > 5) {
@@ -196,6 +212,8 @@ function EJGenerateRemarkString(remark)
     return result;
 }
 
+// UI Utility
+
 function EJFillSelectedJourney(selectedJourney)
 {
     W3SetUIText("uidSelectedJourneyName", selectedJourney[0]);
@@ -204,11 +222,45 @@ function EJFillSelectedJourney(selectedJourney)
     W3SetUIText("uidSelectedJourneyID", selectedJourney[3]);
 }
 
+function EJCleanPlaceDetail()
+{
+    W3SetUIText("uidMapPlaceDatetime", "");
+    W3SetUIText("uidMapPlaceRemark", "");
+    W3SetUIText("uidMapPlaceNote", "");
+}
+
+function EJFillPlaceDetail(placePin)
+{
+    W3SetUIText("uidMapPlaceName", placePin.getTitle());
+    W3SetUIText("uidMapPlaceLatitude", placePin.getLocation().latitude);
+    W3SetUIText("uidMapPlaceLongitude", placePin.getLocation().longitude);
+
+    if (!placePin.hasOwnProperty("AttrPlace")) {
+        return;
+    }
+
+    if (placePin["AttrPlace"].hasOwnProperty("datetime")) {
+        var date = placePin["AttrPlace"]["datetime"].split(" ", 1);
+        W3SetUIText("uidMapPlaceDatetime", date);
+    }
+    if (placePin["AttrPlace"].hasOwnProperty("remark")) {
+        W3SetUIText("uidMapPlaceRemark", EJGenerateRemarkString(placePin["AttrPlace"]));
+    }
+    if (placePin["AttrPlace"].hasOwnProperty("note")) {
+        W3SetUIText("uidMapPlaceNote", placePin["AttrPlace"]["note"]);
+    }
+    if (placePin["AttrPlace"].hasOwnProperty("poiid")) {
+        W3SetUIText("uidSelectedPOIID", placePin["AttrPlace"]["poiid"]);
+    }
+}
+
 function EJCreateJourneySelectBox(uidTable, rowIndex)
 {
     var uid = EJGenerateJourneyCheckboxID(uidTable, rowIndex);
     return "<input id=\"" + uid + "\" type='checkbox' onclick=\"EJOnJourneySelected('" + uidTable + "'," + rowIndex + ")\">";
 }
+
+// UI Operation
 
 function EJUpdatePlace(request, updateFunc)
 {
@@ -230,7 +282,6 @@ function EJUpdatePlace(request, updateFunc)
 function EJFreshJourney(journeyID)
 {
     EJClearMap();
-    W3HideUI("uidSelectedPlacePanel");
 
     if (journeyID == null) {
         return;
@@ -247,20 +298,58 @@ function EJFreshJourney(journeyID)
     EJUpdatePlace(request, _journeyDisplayFunc);
 }
 
+// UI Callback
+
+function EJDisplaySelectedJourneyOnMap()
+{
+    $("table#uidJourneyTable [type='checkbox']").each(function (index) {
+        if (!$(this).is(":checked")) {
+            return;
+        }
+
+        $("#uidJourneyTabHeader2").click();
+        EJSetViewDisplayJourney();
+        EJFreshJourney(_selectedJourneyID);
+    });
+}
+
+function EJDisplayCurrentJourneyOnMap()
+{
+    EJSetViewDisplayJourney();
+    EJFreshJourney(_selectedJourneyID);
+}
+
+function EJOnSearchPlaceClicked(e)
+{
+    EJFillPlaceDetail(e.target);
+    EJSetViewSearchPlaceSelected();
+}
+
+function EJOnJourneyPlaceClicked(e)
+{
+    EJFillPlaceDetail(e.target);
+    EJSetViewJourneyPlaceSelected();
+}
+
+function EJOnPOIClicked(e)
+{
+    EJFillPlaceDetail(e.target);
+    EJSetViewPOISelected();
+}
+
 function EJOnJourneySelected(uidTable, rowIndex)
 {
-    EJClearMap();
-
     var uidCheckBox = EJGenerateJourneyCheckboxID(uidTable, rowIndex);
 
+    // Unselected
     if (!$("#" + uidCheckBox).is(":checked")) {
-        W3DisableUI("uidJourneyGotoMapButton");
-        W3HideUI("uidSelectedJourneyPanel");
-        W3HideUI("uidSelectedPlacePanel");
         _selectedJourneyID = null;
+        EJSetViewJourneyUnselected();
+
         return;
     }
 
+    // Selected
     var selectedJourney = [];
     selectedJourney.push(W3GetUIText(EJGenerateJourneyCellID(uidTable, rowIndex, 1)));
     selectedJourney.push(W3GetUIText(EJGenerateJourneyCellID(uidTable, rowIndex, 2)));
@@ -271,48 +360,26 @@ function EJOnJourneySelected(uidTable, rowIndex)
         if (rowIndex != index) {
             $(this).attr("checked", false);
         } else if (rowIndex == index) {
-            W3EnableUI("uidJourneyGotoMapButton");
-            EJFillSelectedJourney(selectedJourney);
-            W3DisplayUI("uidSelectedJourneyPanel");
             _selectedJourneyID = selectedJourney[3];
+            EJFillSelectedJourney(selectedJourney);
+            EJSetViewJourneySelected();
         }
     });
 }
 
-function EJDisplaySelectedJourneyOnMap()
+function EJClearMap()
 {
-    $("table#uidJourneyTable [type='checkbox']").each(function (index) {
-        if (!$(this).is(":checked")) {
-            return;
-        }
+    EJSetViewNoPlaceDisplay();
+    EJCleanPlaceDetail();
 
-        $("#uidJourneyTabHeader2").click();
-        EJFreshJourney(_selectedJourneyID);
-    });
-}
-
-function EJDisplayCurrentJourneyOnMap()
-{
-    EJFreshJourney(_selectedJourneyID);
-}
-
-function EJOnSearchPlaceSelected(e)
-{
-    if (_selectedJourneyID == null) {
-        return;
+    if (_mapCleanFunc != null) {
+        _mapCleanFunc();
     }
-
-    W3DisplayUI("uidSelectedPlacePanel");
-
-    W3SetUIText("uidMapPlaceName", e.target.getTitle());
-    W3SetUIText("uidMapPlaceLatitude", e.target.getLocation().latitude);
-    W3SetUIText("uidMapPlaceLongitude", e.target.getLocation().longitude);
 }
 
 function EJShowAllPlaces()
 {
     EJClearMap();
-    W3HideUI("uidSelectedPlacePanel");
 
     var aid = "aidAllPlace";
     var session = W3GetSession();
@@ -322,123 +389,157 @@ function EJShowAllPlaces()
 	return;
     }
 
-    EJUpdatePlace(request, _allDisplayFunc);
+    EJUpdatePlace(request, _allPlacesDisplayFunc);
 }
 
-function EJClearMap()
+function EJShowAllPOIs()
 {
-    if (_mapCleanFunc != null) {
-        _mapCleanFunc();
+    EJClearMap();
+
+    var aid = "aidAllPOI";
+    var session = W3GetSession();
+    var request = W3CreateAPI(aid, session);
+    if (request == "") {
+	alert("Failed to create get all POI request");
+	return;
     }
+
+    EJUpdatePlace(request, _allPOIsDisplayFunc);
 }
 
 function EJMapSearch(uidInput)
 {
+    EJClearMap();
+
     if (_searchFunc != null) {
         var address = W3GetUIText(uidInput);
         _searchFunc(address);
     }
 }
 
-function EJGenerateJourneyCheckboxID(uidTable, rowIndex)
+function EJDisplayPOIOnPlacePanel()
 {
-    return uidTable + "CheckBox" + rowIndex;
+    EJSetViewPlaceDetailDisplay();
+    EJSetViewPlaceDetailEnable();
+
+    W3HideUI("uidMapAddPlaceButton");
+    W3HideUI("uidMapSwitchToPlacePanelButton");
+    W3DisplayUI("uidMapConfirmAddPlaceButton");
+    W3EnableUI("uidMapConfirmAddPlaceButton");
 }
 
-function EJGenerateJourneyCellID(uidTable, rowIndex, column)
+// Set View
+
+function EJSetViewJourneyUnselected()
 {
-    return uidTable + "" + rowIndex + "" + column;
+    W3DisableUI("uidJourneyGotoMapButton");
+    W3HideUI("uidSelectedJourneyPanel");
+
+    EJSetViewNoPlaceDisplay();
 }
 
-function EJFillSelectedJourney(selectedJourney)
+function EJSetViewJourneySelected()
 {
-    W3SetUIText("uidSelectedJourneyName", selectedJourney[0]);
-    W3SetUIText("uidSelectedJourneyDatetime", selectedJourney[1]);
-    W3SetUIText("uidSelectedJourneyTraveler", selectedJourney[2]);
-    W3SetUIText("uidSelectedJourneyID", selectedJourney[3]);
+    W3EnableUI("uidJourneyGotoMapButton");
+    W3DisplayUI("uidSelectedJourneyPanel");
+
+    EJSetViewNoPlaceDisplay();
 }
 
-function EJOnJourneySelected(uidTable, rowIndex)
+function EJSetViewDisplayJourney()
 {
-    var uidCheckBox = EJGenerateJourneyCheckboxID(uidTable, rowIndex);
+    W3DisplayUI("uidSelectedJourneyPanel");
 
-    if (!$("#" + uidCheckBox).is(":checked")) {
-        W3DisableUI("uidJourneyGotoMapButton");
-        W3HideUI("uidSelectedJourneyPanel");
-        W3HideUI("uidSelectedPlacePanel");
-        _selectedJourneyID = null;
-        return;
-    }
-
-    var selectedJourney = [];
-    selectedJourney.push(W3GetUIText(EJGenerateJourneyCellID(uidTable, rowIndex, 1)));
-    selectedJourney.push(W3GetUIText(EJGenerateJourneyCellID(uidTable, rowIndex, 2)));
-    selectedJourney.push(W3GetUIText(EJGenerateJourneyCellID(uidTable, rowIndex, 3)));
-    selectedJourney.push(W3GetUIText(EJGenerateJourneyCellID(uidTable, rowIndex, 7)));
-
-    $("table#" + uidTable + " [type='checkbox']").each(function (index) {
-        if (rowIndex != index) {
-            $(this).attr("checked", false);
-        } else if (rowIndex == index) {
-            W3EnableUI("uidJourneyGotoMapButton");
-            EJFillSelectedJourney(selectedJourney);
-            W3DisplayUI("uidSelectedJourneyPanel");
-            _selectedJourneyID = selectedJourney[3];
-        }
-    });
+    EJSetViewNoPlaceDisplay();
 }
 
-function EJCreateJourneySelectBox(uidTable, rowIndex)
-{
-    var uid = EJGenerateJourneyCheckboxID(uidTable, rowIndex);
-    return "<input id=\"" + uid + "\" type='checkbox' onclick=\"EJOnJourneySelected('" + uidTable + "'," + rowIndex + ")\">";
-}
-
-function EJDisplaySelectedJourneyOnMap()
-{
-    $("table#uidJourneyTable [type='checkbox']").each(function (index) {
-        if (!$(this).is(":checked")) {
-            return;
-        }
-
-        $("#uidJourneyTabHeader2").click();
-        EJFreshJourney(_selectedJourneyID);
-    });
-}
-
-function EJDisplayCurrentJourneyOnMap()
-{
-    EJFreshJourney(_selectedJourneyID);
-}
-
-function EJFreshJourney(journeyID)
+function EJSetViewNoPlaceDisplay()
 {
     W3HideUI("uidSelectedPlacePanel");
-
-    if (journeyID == null) {
-        return;
-    }
-
-    var aid = "aidJourneyPlace";
-    var session = W3GetSession();
-    var request = W3CreateAPI(aid, String(journeyID), session);
-    if (request == "") {
-	alert("Failed to create get journey place request");
-	return;
-    }
-
-    EJUpdatePlace(request, _journeyDisplayFunc);
 }
 
-function EJOnSearchPlaceSelected(e)
+function EJSetViewSearchPlaceSelected()
 {
-    if (_selectedJourneyID == null) {
-        return;
-    }
-
     W3DisplayUI("uidSelectedPlacePanel");
 
-    W3SetUIText("uidMapPlaceName", e.target.getTitle());
-    W3SetUIText("uidMapPlaceLatitude", e.target.getLocation().latitude);
-    W3SetUIText("uidMapPlaceLongitude", e.target.getLocation().longitude);
+    W3DisplayUI("uidMapAddPlaceButton");
+    W3HideUI("uidMapSwitchToPlacePanelButton");
+    W3HideUI("uidMapConfirmAddPlaceButton");
+
+    W3EnableUI("uidMapAddPOIButton");
+
+    EJSetViewPlaceDetailEnable();
+
+    if (_selectedJourneyID == null) {
+        W3DisableUI("uidMapAddPlaceButton");
+        EJSetViewPlaceDetailHide();
+    } else {
+        W3EnableUI("uidMapAddPlaceButton");
+        EJSetViewPlaceDetailDisplay();
+    }
+}
+
+function EJSetViewJourneyPlaceSelected()
+{
+    W3DisplayUI("uidSelectedPlacePanel");
+
+    W3DisplayUI("uidMapAddPlaceButton");
+    W3HideUI("uidMapSwitchToPlacePanelButton");
+    W3HideUI("uidMapConfirmAddPlaceButton");
+
+    W3DisableUI("uidMapAddPOIButton");
+    W3DisableUI("uidMapAddPlaceButton");
+
+    EJSetViewPlaceDetailDisplay();
+    EJSetViewPlaceDetailDisable();
+}
+
+function EJSetViewPOISelected()
+{
+    W3DisplayUI("uidSelectedPlacePanel");
+
+    W3HideUI("uidMapAddPlaceButton");
+    W3DisplayUI("uidMapSwitchToPlacePanelButton");
+    W3HideUI("uidMapConfirmAddPlaceButton");
+
+    W3DisableUI("uidMapAddPOIButton");
+
+    EJSetViewPlaceDetailHide();
+    EJSetViewPlaceDetailDisable();
+
+    if (_selectedJourneyID == null) {
+        W3DisableUI("uidMapSwitchToPlacePanelButton");
+    } else {
+        W3EnableUI("uidMapSwitchToPlacePanelButton");
+    }
+}
+
+function EJSetViewPlaceDetailDisplay()
+{
+    W3DisplayUI("uidMapPlaceDatetimeLabel");
+    W3DisplayUI("uidMapPlaceDatetime");
+    W3DisplayUI("uidMapPlaceRemarkLabel");
+    W3DisplayUI("uidMapPlaceRemark");
+}
+
+function EJSetViewPlaceDetailHide()
+{
+    W3HideUI("uidMapPlaceDatetimeLabel");
+    W3HideUI("uidMapPlaceDatetime");
+    W3HideUI("uidMapPlaceRemarkLabel");
+    W3HideUI("uidMapPlaceRemark");
+}
+
+function EJSetViewPlaceDetailDisable()
+{
+    W3DisableUI("uidMapPlaceDatetime");
+    W3DisableUI("uidMapPlaceRemark");
+    W3DisableUI("uidMapPlaceNote");
+}
+
+function EJSetViewPlaceDetailEnable()
+{
+    W3EnableUI("uidMapPlaceDatetime");
+    W3EnableUI("uidMapPlaceRemark");
+    W3EnableUI("uidMapPlaceNote");
 }
