@@ -207,7 +207,7 @@ function EJGetAllPlace(&$params) {
                     "person.FID=" . $fid;
         $sqlPlace = "select " .
              "journeynote.Datetime as datetime, journeynote.Remark as remark, journeynote.Note as note, " .
-             "journeyplace.Name as name, journeyplace.Latitude as latitude, journeyplace.Longitude as longitude" .
+             "journeyplace.Name as name, journeyplace.Latitude as latitude, journeyplace.Longitude as longitude, journeyplace.ID as placeid" .
              " from " .
              "journeynote, journeyplace" .
              " where " .
@@ -216,7 +216,26 @@ function EJGetAllPlace(&$params) {
              "journeynote.Journey in (" . $sqlJourney . ")" .
              " order by journeynote.Datetime asc";
 
-        return EJReadMultiResultFromTable($aid, $sqlPlace);
+        $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
+        $places = array();
+        EJReadTable($sqlPlace, function ($row) use (&$places, &$result, $aid) {
+            if (in_array($row["placeid"], $places)) {
+                return;
+            }
+            array_push($places, $row["placeid"]);
+
+            $apiDef = W3GetAPIDef($aid);
+            $columns = $apiDef[w3ApiResult][w3ApiResultData];
+            $result .= "{";
+            foreach ($columns as $value) {
+                $resultForColumn = $row[$value[w3ApiDataValue]];
+                $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($resultForColumn) . ",";
+            }
+            $result = rtrim($result, ",") . "},";
+        });
+        $result = rtrim($result, ",") . "]}";
+
+        return $result;
     });
 }
 
