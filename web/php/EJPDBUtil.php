@@ -459,8 +459,7 @@ function EJInsertJourneyPlace(&$placeParams, $aid) {
     // First check whether the place is there already
 
     $querySql = "select ID as id from journeyplace where " .
-              "Name=" . W3MakeString($name) .
-              " and Latitude=" . $latitude .
+              "Latitude=" . $latitude .
               " and Longitude=" . $longitude;
     EJReadTable($querySql, function ($row) use (&$placeID) {
         $placeID = $row["id"];
