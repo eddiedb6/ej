@@ -14,6 +14,25 @@ function EJAddNote(&$noteParams) {
     });
 }
 
+function EJGeneratePDF(&$noteRawData) {
+    shell_exec("./tmp/clean.sh");
+
+    $note = $noteRawData["note"];
+    $noteDecode = W3Decode($note);
+    $noteID = $noteRawData["id"];
+    $noteTxtName = "tmp/" . $noteID . ".tex";
+    $noteTxt = fopen($noteTxtName, "w");
+    if ($noteTxt == FALSE) {
+        W3LogError("Open tex file failed");
+        return;
+    }
+
+    fwrite($noteTxt, $noteDecode);
+    fclose($noteTxt);
+
+    $result = shell_exec("./tmp/pdfgen.sh " . $noteTxtName);
+}
+
 function EJGetNote(&$noteParams) {
     $aid = "aidNote";
     return EJExecuteWithAuthenticatedFamily($aid, $noteParams, function ($fid, $aid, &$noteParams) {
@@ -21,7 +40,7 @@ function EJGetNote(&$noteParams) {
         $id = $noteParams[W3GetAPIParamIndex($aid, "id") + $paramOffset];
 
         $sql = "select " .
-             "note.Title as title, note.Tag as tag, note.Note as note" .
+             "note.ID as id, note.Title as title, note.Tag as tag, note.Note as note, note.Type as type" .
              " from " .
              "note" .
              " where " .
@@ -29,7 +48,24 @@ function EJGetNote(&$noteParams) {
              " and " .
              "note.FID = " . $fid;
 
-        return EJReadSingleResultFromTable($aid, $sql);
+        $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":{";
+        EJReadTable($sql, function ($row) use (&$result, $aid) {
+            $pdfType = "2";
+            if ($row["type"] == $pdfType) {
+                EJGeneratePDF($row);
+            }
+
+            $apiDef = W3GetAPIDef($aid);
+            $columns = $apiDef[w3ApiResult][w3ApiResultData];
+
+            foreach ($columns as $value) {
+                $resultForColumn = $row[$value[w3ApiDataValue]];
+                $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($resultForColumn) . ",";
+            }
+        });
+        $result = rtrim($result, ",") . "}}";
+
+        return $result;
     });
 }
 

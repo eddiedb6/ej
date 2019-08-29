@@ -20,7 +20,7 @@ $(window).load(function() {
     var calendarWidth = screenWidth - naviWidth - 50;
 
     calendarElement.css("max-width", calendarWidth);
-    calendarElement.calendarEvent(EJUpdateMonthEvent);
+    calendarElement.W3CalendarEvent(EJUpdateMonthEvent);
 });
 
 function EJUpdateMonthEvent(year, month, calendarUpdater)

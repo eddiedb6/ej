@@ -53,6 +53,9 @@
         "sidTableNoteTag7": "Graphic",
         "sidTableNoteTag8": "Math",
         "sidTableNoteTag9": "Mobile",
+
+        "sidTableNoteType1": "HTML",
+        "sidTableNoteType2": "PDF",
         
         # Common 
         "sidButtonBack": "Back",
@@ -144,6 +147,7 @@
         # Note Page
         "sidNoteTagLabel": "Tag:",
         "sidNoteTitleLabel": "Title:",
+        "sidNoteTypeLabel": "Type:",
 
         # Journey Page
         "sidJourneyTabJourney": "Journey",

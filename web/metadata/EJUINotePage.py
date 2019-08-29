@@ -66,7 +66,7 @@
             W3Const.w3EventClick: [
                 W3Const.w3PlaceHolder_1,
                 "W3DisableUI('uidNoteEditButton')",
-                "W3SetUIText('uidNoteContentBodyPanel', '')",
+                "EJDisplayHTMLNote('')",
                 "W3SetUIText('uidNoteContentTitleLabel', '')"
             ]
         }
@@ -184,9 +184,31 @@
         }
     },
     "uidNoteContentBodyPanel": {
-        W3Const.w3PropType: W3Const.w3TypeDisplayPanel
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidNoteHTMLContent",
+            "uidNotePDFContent"
+        ]
     },
-    
+    "uidNoteHTMLContent": {
+        W3Const.w3PropType: W3Const.w3TypeDisplayPanel,
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+    "uidNotePDFContent": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidNotePDFCanvas"
+        ],
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+    "uidNotePDFCanvas": {
+        W3Const.w3PropType: W3Const.w3TypePDFCanvas
+    },
+
     # Note - Operation
     
     "uidNoteOperationPanel": {
@@ -224,7 +246,7 @@
         },
         W3Const.w3PropSubUI: [
             "uidNoteEditID",
-            "uidNoteEditor",
+            "uidNoteEditorPanel",
             "uidNoteEditOperationPanel"
         ]
     },
@@ -234,24 +256,57 @@
             "display": "none"
         }
     },
-    "uidNoteEditor": {
+    "uidNoteEditorPanel": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidNoteHTMLEditorWrapper",
+            "uidNotePDFEditor"
+        ]
+    },
+    "uidNoteHTMLEditorWrapper": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            # The wrapper is needed because the actual control will be hide deep in plugin
+            "uidNoteHTMLEditor"
+        ],
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+    "uidNoteHTMLEditor": {
         W3Const.w3PropType: W3Const.w3TypeTextEditor,
         W3Const.w3PropAttr: {
             "rows": "64",
             "cols": "80"
         }
     },
+    "uidNotePDFEditor": {
+        W3Const.w3PropType: W3Const.w3TypePlainTextEditor,
+        W3Const.w3PropAttr: {
+            "rows": "64",
+            "cols": "80"
+        },
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
     "uidNoteEditOperationPanel": {
         W3Const.w3PropType: W3Const.w3TypePanel,
         W3Const.w3PropSubUI: [
-            "uidNoteEditSaveButton",
-            "uidNoteEditCancelButton"
+            "uidNoteEditOperationTable"
         ],
         W3Const.w3PropCSS: {
             "clear": "both",
             "padding-top": "5px",
             "float": "right"
         }
+    },
+    "uidNoteEditOperationTable": {
+        W3Const.w3PropType: W3Const.w3TypeTable,
+        W3Const.w3PropSubUI: [
+            [],
+            ["uidNoteHTMLSaveButton", "uidNotePDFSaveButton", "uidNoteEditCancelButton"]
+        ]
     },
     "uidNoteEditCancelButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
@@ -263,7 +318,7 @@
             ]
         }
     },
-    "uidNoteEditSaveButton": {
+    "uidNoteHTMLSaveButton": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidSave",
         W3Const.w3PropTriggerApi: [
@@ -281,13 +336,46 @@
             W3Const.w3ApiPost: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidNoteEditor"
+                W3Const.w3ApiDataValue: "uidNoteHTMLEditor"
             }]
         }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 W3Const.w3PlaceHolder_1
             ]
+        },
+        W3Const.w3PropCSS: {
+            "display": "none"
+        }
+    },
+    "uidNotePDFSaveButton": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidSave",
+        W3Const.w3PropTriggerApi: [
+        {
+            W3Const.w3ApiID: "aidModifyNote",
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteEditID"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: W3Const.w3Session
+            }],
+            W3Const.w3ApiPost: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNotePDFEditor"
+            }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
+        },
+        W3Const.w3PropCSS: {
+            "display": "none"
         }
     },
 
@@ -313,7 +401,7 @@
         W3Const.w3PropType: W3Const.w3TypeTable,
         W3Const.w3PropSubUI: [
             [], # No header
-            ["uidNoteAddSubmitButton", "uidNoteAddCancelButton"]
+            ["uidNoteAddSubmitHTML", "uidNoteAddSubmitPDF", "uidNoteAddCancelButton"]
         ],
         W3Const.w3PropCSS: {
             "float": "right"
@@ -329,7 +417,7 @@
             ]
         }
     },
-    "uidNoteAddSubmitButton": {
+    "uidNoteAddSubmitHTML": {
         W3Const.w3PropType: W3Const.w3TypeButton,
         W3Const.w3PropString: "sidSubmit",
         W3Const.w3PropTriggerApi: [
@@ -345,19 +433,64 @@
                 W3Const.w3ApiDataValue: "uidNoteAddTag"
             },
             {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteAddType"
+            },
+            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
                 W3Const.w3ApiDataValue: W3Const.w3Session
             }],
             W3Const.w3ApiPost: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
-                W3Const.w3ApiDataValue: "uidNoteAddNote"
+                W3Const.w3ApiDataValue: "uidNoteAddHTML"
             }]
         }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 W3Const.w3PlaceHolder_1
             ]
+        },
+        W3Const.w3PropCSS: {
+            "display": "block"
+        }
+    },
+    "uidNoteAddSubmitPDF": {
+        W3Const.w3PropType: W3Const.w3TypeButton,
+        W3Const.w3PropString: "sidSubmit",
+        W3Const.w3PropTriggerApi: [
+        {
+            W3Const.w3ApiID: "aidAddNote",
+            W3Const.w3ApiParams: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteAddTitle"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteAddTag"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteAddType"
+            },
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeVar,
+                W3Const.w3ApiDataValue: W3Const.w3Session
+            }],
+            W3Const.w3ApiPost: [
+            {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeUID,
+                W3Const.w3ApiDataValue: "uidNoteAddPDF"
+            }]
+        }],
+        W3Const.w3PropEvent: {
+            W3Const.w3EventClick: [
+                W3Const.w3PlaceHolder_1
+            ]
+        },
+        W3Const.w3PropCSS: {
+            "display": "none"
         }
     },
     "uidNoteAddTable": {
@@ -366,6 +499,7 @@
             [], # No header
             ["uidNoteTitleLabel", "uidNoteAddTitle"],
             ["uidNoteTagLabel",   "uidNoteAddTag"],
+            ["uidNoteTypeLabel",  "uidNoteAddType"],
             ["uidNoteLabel",      "uidNoteAddNote"]
         ]
     },
@@ -378,8 +512,46 @@
             W3Const.w3FuncCreator: "EJCreateNoteTagCombo"
         }
     },
+    "uidNoteAddType": {
+        W3Const.w3PropType: W3Const.w3TypeCombobox,
+        W3Const.w3PropFunc: {
+            W3Const.w3FuncCreator: "EJCreateNoteTypeCombo"
+        },
+        W3Const.w3PropEvent: {
+            W3Const.w3EventChange: [
+                "EJOnNoteTypeChange()"
+            ]
+        }
+    },
     "uidNoteAddNote": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            "uidNoteAddHTMLWrapper",
+            "uidNoteAddPDF"
+        ]
+    },
+    "uidNoteAddHTMLWrapper": {
+        W3Const.w3PropType: W3Const.w3TypePanel,
+        W3Const.w3PropSubUI: [
+            # The wrapper is needed because the actual control will be hide deep in plugin
+            "uidNoteAddHTML"
+        ],
+        W3Const.w3PropCSS: {
+            "display": "block"
+        }
+    },
+    "uidNoteAddHTML": {
         W3Const.w3PropType: W3Const.w3TypeTextEditor,
+        W3Const.w3PropAttr: {
+            "rows": "32",
+            "cols": "80"
+        }
+    },
+    "uidNoteAddPDF": {
+        W3Const.w3PropType: W3Const.w3TypePlainTextEditor,
+        W3Const.w3PropCSS: {
+            "display": "none"
+        },
         W3Const.w3PropAttr: {
             "rows": "32",
             "cols": "80"
@@ -389,5 +561,10 @@
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidNoteTitleLabel"
+    },
+    "uidNoteTypeLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropClass: "cidRightLabel",
+        W3Const.w3PropString: "sidNoteTypeLabel"
     }
 }

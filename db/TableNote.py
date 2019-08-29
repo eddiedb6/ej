@@ -18,6 +18,10 @@
         PDBConst.Attributes: ["tinyint", "not null"]
     },
     {
+        PDBConst.Name: "Type",
+        PDBConst.Attributes: ["tinyint", "not null"]
+    },
+    {
         PDBConst.Name: "Modified",
         PDBConst.Attributes: ["datetime", "not null"]
     },

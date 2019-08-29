@@ -295,7 +295,7 @@ function EJInsertNote(&$noteParams, &$postParams, $fid) {
         return false;
     }
 
-    $columns = array ("Title", "Tag", "Note", "Modified", "FID");
+    $columns = array ("Title", "Tag", "Type", "Note", "Modified", "FID");
     $size = sizeof($columns);
 
     $uselessParamCount = 2; # Match string, session, etc.
@@ -312,6 +312,7 @@ function EJInsertNote(&$noteParams, &$postParams, $fid) {
     $datetime = W3MakeString(date("Y-m-d H:i:s"), true);
     $values = array(W3MakeString($noteParams[W3GetAPIParamIndex("aidAddNote", "title") + $paramOffset], true),
                     $noteParams[W3GetAPIParamIndex("aidAddNote", "tag") + $paramOffset],
+                    $noteParams[W3GetAPIParamIndex("aidAddNote", "type") + $paramOffset],
                     W3MakeString($postParams[W3GetAPIPostIndex("aidAddNote", "note") + $paramOffset]),
                     $datetime,
                     $fid);

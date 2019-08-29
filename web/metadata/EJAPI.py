@@ -404,6 +404,10 @@
                 W3Const.w3ApiDataValue: "tag"
             },
             {
+                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+                W3Const.w3ApiDataValue: "type"
+            },
+            {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
                 W3Const.w3ApiDataValue: "note"
             }]
@@ -448,6 +452,10 @@
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
             W3Const.w3ApiDataValue: "tag"
+        },
+        {
+            W3Const.w3ApiDataType: W3Const.w3ApiDataTypeNum,
+            W3Const.w3ApiDataValue: "type"
         },
         {
             W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,

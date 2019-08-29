@@ -44,4 +44,8 @@ function EJCreateNoteTagCombo() {
     return EJCreateOptionListFromDB("notetag", "ID", "SID");
 }
 
+function EJCreateNoteTypeCombo() {
+    return EJCreateOptionListFromDB("notetype", "ID", "SID");
+}
+
  ?>
