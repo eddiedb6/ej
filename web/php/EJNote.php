@@ -14,8 +14,13 @@ function EJAddNote(&$noteParams) {
     });
 }
 
-function EJGeneratePDF(&$noteRawData) {
-    shell_exec("./tmp/clean.sh");
+function EJValidatePDF($noteID) {
+    $result = shell_exec("./tmp/validate.sh " . $noteID);
+    return preg_match("/^TRUE.*/",  $result);
+}
+
+function EJGeneratePDF($noteRawData) {
+    $result = shell_exec("./tmp/clean.sh");
 
     $note = $noteRawData["note"];
     $noteDecode = W3Decode($note);
@@ -23,14 +28,20 @@ function EJGeneratePDF(&$noteRawData) {
     $noteTxtName = "tmp/" . $noteID . ".tex";
     $noteTxt = fopen($noteTxtName, "w");
     if ($noteTxt == FALSE) {
-        W3LogError("Open tex file failed");
-        return;
+        $errorLog = "Open text file failed";
+        W3LogError($errorLog);
+        return $errorLog;
     }
 
     fwrite($noteTxt, $noteDecode);
     fclose($noteTxt);
 
-    $result = shell_exec("./tmp/pdfgen.sh " . $noteTxtName);
+    $result .= shell_exec("./tmp/pdfgen.sh " . $noteTxtName);
+    if (EJValidatePDF($noteID)) {
+        return "";
+    }
+
+    return $result;
 }
 
 function EJGetNote(&$noteParams) {
@@ -50,14 +61,17 @@ function EJGetNote(&$noteParams) {
 
         $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":{";
         EJReadTable($sql, function ($row) use (&$result, $aid) {
+            $errorLog = "";
             $pdfType = "2";
             if ($row["type"] == $pdfType) {
-                EJGeneratePDF($row);
+                $errorLog = EJGeneratePDF($row);
+                $errorLog = W3Encode($errorLog);
             }
+
+            $row["error"] = $errorLog;
 
             $apiDef = W3GetAPIDef($aid);
             $columns = $apiDef[w3ApiResult][w3ApiResultData];
-
             foreach ($columns as $value) {
                 $resultForColumn = $row[$value[w3ApiDataValue]];
                 $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($resultForColumn) . ",";

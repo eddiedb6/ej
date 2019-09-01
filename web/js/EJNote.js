@@ -57,11 +57,11 @@ function EJDisplayHTMLNote(note) {
     W3SetUIText("uidNoteHTMLContent", note);
 }
 
-function EJDisplayPDFLNote(note, id) {
+function EJDisplayPDFLNote(note, error, id) {
     W3DisplayUI("uidNotePDFContent");
     W3HideUI("uidNoteHTMLContent");
     W3SetUIText("uidNotePDFCanvas", note);
-    $("#uidNotePDFCanvas").W3CreatePDF(id);
+    $("#uidNotePDFCanvas").W3DisplayPDF(id, error);
 }
 
 function EJOnNoteClicked(uidCell) {
@@ -82,10 +82,12 @@ function EJOnNoteClicked(uidCell) {
 	}
 
 	var apiDef = W3GetAPIDef("aidNote");
-	var title = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][0][w3ApiDataValue]];
-	var tag = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][1][w3ApiDataValue]]
-        var type = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][2][w3ApiDataValue]];
-	var note = result[w3ApiResultData][apiDef[w3ApiResult][w3ApiResultData][3][w3ApiDataValue]];
+        var apiResultData = apiDef[w3ApiResult][w3ApiResultData];
+        var title = result[w3ApiResultData][apiResultData[0][w3ApiDataValue]];
+        var tag = result[w3ApiResultData][apiResultData[1][w3ApiDataValue]]
+        var type = result[w3ApiResultData][apiResultData[2][w3ApiDataValue]];
+        var note = result[w3ApiResultData][apiResultData[3][w3ApiDataValue]];
+        var error = result[w3ApiResultData][apiResultData[4][w3ApiDataValue]];
 
 	title = decodeURI(title);
 	W3SetUIText("uidNoteContentTitleLabel", title);
@@ -95,7 +97,7 @@ function EJOnNoteClicked(uidCell) {
             EJDisplayHTMLNote(note);
             markChar = _htmlMark;
         } else if (type == _pdfType) {
-            EJDisplayPDFLNote(note, idNote);
+            EJDisplayPDFLNote(note, error, idNote);
             markChar = _pdfMark;
         } else {
             W3LogError("Unknown note type: " + type);

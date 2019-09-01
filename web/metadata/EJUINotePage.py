@@ -145,11 +145,13 @@
     "uidNoteListTableHeaderSelectMark": {
         W3Const.w3PropType: W3Const.w3TypeTableHeader,
         W3Const.w3PropSubUI: [
+            "uidNullLabel"
         ]
     },
     "uidNoteListTableHeaderTitle": {
         W3Const.w3PropType: W3Const.w3TypeTableHeader,
         W3Const.w3PropSubUI: [
+            "uidNullLabel"
         ],
         W3Const.w3PropFunc: {
             W3Const.w3FuncProcessor: [
@@ -276,14 +278,14 @@
     "uidNoteHTMLEditor": {
         W3Const.w3PropType: W3Const.w3TypeTextEditor,
         W3Const.w3PropAttr: {
-            "rows": "64",
+            "rows": "32",
             "cols": "80"
         }
     },
     "uidNotePDFEditor": {
         W3Const.w3PropType: W3Const.w3TypePlainTextEditor,
         W3Const.w3PropAttr: {
-            "rows": "64",
+            "rows": "32",
             "cols": "80"
         },
         W3Const.w3PropCSS: {
