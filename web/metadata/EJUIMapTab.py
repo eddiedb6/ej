@@ -76,7 +76,10 @@
         W3Const.w3PropClass: "cidRightLabel"
     },
     "uidMapPlaceName": {
-        W3Const.w3PropType: W3Const.w3TypeLabel
+        W3Const.w3PropType: W3Const.w3TypeText,
+        W3Const.w3PropAttr: {
+            W3Const.w3AttrDisabled: "true"
+        }
     },
     "uidMapPlaceLatitude": {
         W3Const.w3PropType: W3Const.w3TypeLabel

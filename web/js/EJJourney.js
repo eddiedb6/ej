@@ -477,6 +477,8 @@ function EJSetViewSearchPlaceSelected()
         W3EnableUI("uidMapAddPlaceButton");
         EJSetViewPlaceDetailDisplay();
     }
+
+    W3EnableUI("uidMapPlaceName");
 }
 
 function EJSetViewJourneyPlaceSelected()
@@ -492,6 +494,8 @@ function EJSetViewJourneyPlaceSelected()
 
     EJSetViewPlaceDetailDisplay();
     EJSetViewPlaceDetailDisable();
+
+    W3DisableUI("uidMapPlaceName");
 }
 
 function EJSetViewPOISelected()
@@ -509,8 +513,10 @@ function EJSetViewPOISelected()
 
     if (_selectedJourneyID == null) {
         W3DisableUI("uidMapSwitchToPlacePanelButton");
+        W3DisableUI("uidMapPlaceName");
     } else {
         W3EnableUI("uidMapSwitchToPlacePanelButton");
+        W3EnableUI("uidMapPlaceName");
     }
 }
 
