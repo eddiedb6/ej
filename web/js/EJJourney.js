@@ -45,6 +45,26 @@ function EJMapHandler(map)
     var mapObj = map;
     var searchManager = null;
 
+    var currentManualPlaceChar = 0;
+
+    Microsoft.Maps.Events.addHandler(map, 'rightclick', onRightClick);
+
+    function onRightClick(e)
+    {
+        var pin = new Microsoft.Maps.Pushpin(e.location,
+                                             {
+                                                 color: 'black',
+                                                 text: String.fromCharCode(currentManualPlaceChar + 'A'.charCodeAt(0))
+                                             });
+        Microsoft.Maps.Events.addHandler(pin, 'click', function (e) {
+            EJOnManualPlaceClicked(e);
+        });
+
+        mapObj.entities.push(pin);
+
+        ++currentManualPlaceChar;
+    }
+
     function doDisplay(places, pinColor, withLine, lineColor, subtitleGenerator, clickHandler)
     {
         var pins = [];
@@ -171,6 +191,7 @@ function EJMapHandler(map)
 
     _mapCleanFunc = function () {
         mapObj.entities.clear();
+        currentManualPlaceChar = 0;
 
         var coordinate = ["31.230369567871094", "121.47370147705078"];
         var mapProp = W3TryGetUIProperty("uidMSMap", w3PropMap);
@@ -227,6 +248,13 @@ function EJCleanPlaceDetail()
     W3SetUIText("uidMapPlaceDatetime", "");
     W3SetUIText("uidMapPlaceRemark", "");
     W3SetUIText("uidMapPlaceNote", "");
+}
+
+function EJFillManualPlaceDetail(manualEvent)
+{
+    W3SetUIText("uidMapPlaceName", "TBD");
+    W3SetUIText("uidMapPlaceLatitude", manualEvent.location.latitude);
+    W3SetUIText("uidMapPlaceLongitude", manualEvent.location.longitude);
 }
 
 function EJFillPlaceDetail(placePin)
@@ -335,6 +363,12 @@ function EJOnPOIClicked(e)
 {
     EJFillPlaceDetail(e.target);
     EJSetViewPOISelected();
+}
+
+function EJOnManualPlaceClicked(e)
+{
+    EJFillManualPlaceDetail(e);
+    EJSetViewSearchPlaceSelected();
 }
 
 function EJOnJourneySelected(uidTable, rowIndex)
