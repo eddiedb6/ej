@@ -33,6 +33,7 @@ var _journeyDisplayFunc = null;
 var _allPlacesDisplayFunc = null;
 var _allPOIsDisplayFunc = null;
 var _mapCleanFunc = null;
+var _mapResetFunc = null;
 
 var _selectedJourneyID = null;
 
@@ -65,13 +66,35 @@ function EJMapHandler(map)
         ++currentManualPlaceChar;
     }
 
-    function doDisplay(places, pinColor, withLine, lineColor, subtitleGenerator, clickHandler)
+    function displayAll(places, pinColor, withLine, lineColor, subtitleGenerator, clickHandler)
+    {
+        doDisplay(places, pinColor, withLine, lineColor, subtitleGenerator, clickHandler, true);
+    }
+
+    function displayInView(places, pinColor, withLine, lineColor, subtitleGenerator, clickHandler)
+    {
+        doDisplay(places, pinColor, withLine, lineColor, subtitleGenerator, clickHandler, false);
+    }
+
+    function isLocationInBounds(location, bounds)
+    {
+        if ((location.latitude < bounds.getNorth()) && location.latitude > bounds.getSouth()) {
+            if ((location.longitude < bounds.getEast()) && (location.longitude > bounds.getWest())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function doDisplay(places, pinColor, withLine, lineColor, subtitleGenerator, clickHandler, resetView)
     {
         var pins = [];
         var locs = [];
         var lines = [];
         var previousCoord = null;
 
+        var viewBounds = mapObj.getBounds();
         for (var i = 0; i < places.length; ++i) {
             var location = new Microsoft.Maps.Location(places[i]["latitude"], places[i]["longitude"]);
             var pin = new Microsoft.Maps.Pushpin(location,
@@ -84,8 +107,10 @@ function EJMapHandler(map)
             pin["AttrPlace"] = places[i];
             Microsoft.Maps.Events.addHandler(pin, 'click', clickHandler);
 
-            pins.push(pin);
             locs.push(location);
+            if (resetView || isLocationInBounds(location, viewBounds)) {
+                pins.push(pin);
+            }
 
             if (!withLine) {
                 continue;
@@ -112,8 +137,11 @@ function EJMapHandler(map)
             mapObj.entities.push(lines);
         }
 
-        var bounds = Microsoft.Maps.LocationRect.fromLocations(locs);
-        mapObj.setView({ bounds: bounds });
+        if (resetView)
+        {
+            var bounds = Microsoft.Maps.LocationRect.fromLocations(locs);
+            mapObj.setView({ bounds: bounds });
+        }
     };
 
     function doSearch(address)
@@ -178,20 +206,26 @@ function EJMapHandler(map)
     };
 
     _journeyDisplayFunc = function (places) {
-        doDisplay(places, 'blue', true, 'red', EJGenerateRemarkString, EJOnJourneyPlaceClicked);
+        displayAll(places, 'blue', true, 'red', EJGenerateRemarkString, EJOnJourneyPlaceClicked);
     };
 
     _allPlacesDisplayFunc = function (places) {
-        doDisplay(places, 'red', false, null, EJGenerateRemarkString, EJOnJourneyPlaceClicked);
+        displayInView(places, 'red', false, null, EJGenerateRemarkString, EJOnJourneyPlaceClicked);
     };
 
     _allPOIsDisplayFunc = function (pois) {
-        doDisplay(pois, 'green', false, null, function (p) { return ""; }, EJOnPOIClicked);
+        displayAll(pois, 'green', false, null, function (p) { return ""; }, EJOnPOIClicked);
     };
 
     _mapCleanFunc = function () {
         mapObj.entities.clear();
         currentManualPlaceChar = 0;
+    };
+
+    _mapResetFunc = function() {
+        if (_mapCleanFunc != null) {
+            _mapCleanFunc();
+        }
 
         var coordinate = ["31.230369567871094", "121.47370147705078"];
         var mapProp = W3TryGetUIProperty("uidMSMap", w3PropMap);
@@ -408,6 +442,15 @@ function EJClearMap()
 
     if (_mapCleanFunc != null) {
         _mapCleanFunc();
+    }
+}
+
+function EJResetMap()
+{
+    EJClearMap();
+
+    if (_mapResetFunc != null) {
+        _mapResetFunc();
     }
 }
 

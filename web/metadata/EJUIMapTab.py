@@ -168,7 +168,7 @@
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 W3Const.w3PlaceHolder_1,
-                "EJClearMap()"
+                "EJResetMap()"
             ]
         },
         W3Const.w3PropAttr: {
@@ -209,7 +209,7 @@
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 W3Const.w3PlaceHolder_1,
-                "EJClearMap()"
+                "EJResetMap()"
             ]
         },
         W3Const.w3PropAttr: {
@@ -266,7 +266,7 @@
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 W3Const.w3PlaceHolder_1,
-                "EJClearMap()"
+                "EJResetMap()"
             ]
         },
         W3Const.w3PropAttr: {
@@ -382,7 +382,7 @@
         W3Const.w3PropString: "sidClear",
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
-                "EJClearMap()"
+                "EJResetMap()"
             ]
         }
     },
