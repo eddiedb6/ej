@@ -210,7 +210,7 @@ function EJMapHandler(map)
     };
 
     _allPlacesDisplayFunc = function (places) {
-        displayInView(places, 'red', false, null, EJGenerateRemarkString, EJOnJourneyPlaceClicked);
+        displayInView(places, 'red', false, null, EJGenerateRemarkString, EJOnExistedPlaceClicked);
     };
 
     _allPOIsDisplayFunc = function (pois) {
@@ -393,6 +393,12 @@ function EJOnJourneyPlaceClicked(e)
     EJSetViewJourneyPlaceSelected();
 }
 
+function EJOnExistedPlaceClicked(e)
+{
+    EJFillPlaceDetail(e.target);
+    EJSetViewExistedPlaceSelected();
+}
+
 function EJOnPOIClicked(e)
 {
     EJFillPlaceDetail(e.target);
@@ -573,6 +579,28 @@ function EJSetViewJourneyPlaceSelected()
     EJSetViewPlaceDetailDisable();
 
     W3DisableUI("uidMapPlaceName");
+}
+
+function EJSetViewExistedPlaceSelected()
+{
+    W3DisplayUI("uidSelectedPlacePanel");
+
+    W3DisplayUI("uidMapAddPlaceButton");
+    W3HideUI("uidMapSwitchToPlacePanelButton");
+    W3HideUI("uidMapConfirmAddPlaceButton");
+
+    W3DisableUI("uidMapAddPOIButton");
+    EJSetViewPlaceDetailEnable();
+
+    if (_selectedJourneyID == null) {
+        W3DisableUI("uidMapAddPlaceButton");
+        EJSetViewPlaceDetailHide();
+    } else {
+        W3EnableUI("uidMapAddPlaceButton");
+        EJSetViewPlaceDetailDisplay();
+    }
+
+    W3EnableUI("uidMapPlaceName");
 }
 
 function EJSetViewPOISelected()
