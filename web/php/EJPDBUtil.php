@@ -498,10 +498,15 @@ function EJInsertJourneyNote(&$noteParams, $placeID) {
         return false;
     }
 
+    $currentTime = time();
+    $timestamp = strval($currentTime / 3600 % 24) . ":"
+               . strval($currentTime / 60 % 60) . ":"
+               . strval($currentTime % 60);
+
     $aid = "aidAddJourneyPlace";
     $paramOffset = 1; # The first one is alway whole string from reg match
     $journeyID = $noteParams[W3GetAPIParamIndex($aid, "jid") + $paramOffset];
-    $datetime = $noteParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset];
+    $datetime = $noteParams[W3GetAPIParamIndex($aid, "datetime") + $paramOffset] . " " . $timestamp;
     $remark = $noteParams[W3GetAPIParamIndex($aid, "remark") + $paramOffset];
     $note = EJDecodeURLString($noteParams[W3GetAPIParamIndex($aid, "note") + $paramOffset]);
 
