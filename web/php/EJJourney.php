@@ -126,6 +126,7 @@ function EJAddJourney(&$parameters) {
                 W3LogError("Event of journey is not in same family: " . $eventStr);
                 return W3CreateFailedResult();
             }
+            $eventID = $eventInfo["ID"];
         }
 
         $persons = array();
