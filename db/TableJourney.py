@@ -1,13 +1,9 @@
 {
-    PDBConst.Name: "calendar",
+    PDBConst.Name: "journey",
     PDBConst.Columns: [
     {
         PDBConst.Name: "ID",
         PDBConst.Attributes: ["int", "not null", "auto_increment", "primary key"]
-    },
-    {
-        PDBConst.Name: "FID",
-        PDBConst.Attributes: ["int", "not null"]
     },
     {
         PDBConst.Name: "Name",
@@ -18,8 +14,8 @@
         PDBConst.Attributes: ["datetime", "not null"]
     },
     {
-        PDBConst.Name: "RepeatMonth",
-        PDBConst.Attributes: ["tinyint", "not null"]
+        PDBConst.Name: "Event",
+        PDBConst.Attributes: ["int"]
     },
     {
         PDBConst.Name: "Note",

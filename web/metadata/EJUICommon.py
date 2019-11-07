@@ -20,6 +20,13 @@
     "uidNullLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel
     },
+    "uidInvisibleLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropCSS: {
+            "display": "none",
+            "width": "0"
+        }
+    },
     "uidTotalLabel": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidTotalLabel",
@@ -140,6 +147,11 @@
         W3Const.w3PropClass: "cidRightLabel",
         W3Const.w3PropString: "sidRepeatLabel"
     },
+    "uidTravelerLabel": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropClass: "cidRightLabel",
+        W3Const.w3PropString: "sidTravelerLabel"
+    },
 
     # Common Table Column Label
     "uidColumnOwner": {
@@ -177,6 +189,11 @@
         W3Const.w3PropString: "sidColumnNote",
         W3Const.w3PropClass: "cidLRPadding"
     },
+    "uidColumnName": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropString: "sidColumnName",
+        W3Const.w3PropClass: "cidLRPadding"
+    },
     "uidColumnStart": {
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropString: "sidColumnStart",
@@ -211,6 +228,11 @@
         W3Const.w3PropType: W3Const.w3TypeLabel,
         W3Const.w3PropClass: "cidLRPadding",
         W3Const.w3PropString: "sidColumnBudget"
+    },
+    "uidColumnTraveler": {
+        W3Const.w3PropType: W3Const.w3TypeLabel,
+        W3Const.w3PropClass: "cidLRPadding",
+        W3Const.w3PropString: "sidColumnTraveler"
     },
 
     # Common Table Header
@@ -277,6 +299,17 @@
         ],
         W3Const.w3PropCSS: {
             "text-align": "right"
+        }
+    },
+    "uidTableHeaderInvisibleData": {
+        W3Const.w3PropType: W3Const.w3TypeTableHeader,
+        W3Const.w3PropSubUI: [
+            "uidInvisibleLabel"
+        ],
+        W3Const.w3PropFunc: {
+            W3Const.w3FuncProcessor: [
+                "EJHideInvisibleData(w3PlaceHolder_1)"
+            ]
         }
     }
 }

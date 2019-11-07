@@ -59,9 +59,7 @@
             "uidLineBreak",
             "uidNaviCalendar",
             "uidLineBreak",
-            "uidNaviMap",
-            "uidLineBreak",
-            "uidNaviDebug",
+            "uidNaviJourney",
             "uidLineBreak"
         ],
         W3Const.w3PropClass: "cidLeftBorder",
@@ -136,9 +134,9 @@
             ]
         }
     },
-    "uidNaviMap": {
+    "uidNaviJourney": {
         W3Const.w3PropType: W3Const.w3TypeLink,
-        W3Const.w3PropString: "sidNaviMap",
+        W3Const.w3PropString: "sidNaviJourney",
         W3Const.w3PropTriggerApi: [
         {
             W3Const.w3ApiID: "aidPage",
@@ -146,58 +144,12 @@
             W3Const.w3ApiParams: [
             {
                 W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                W3Const.w3ApiDataValue: "uidPageMap"
+                W3Const.w3ApiDataValue: "uidPageJourney"
             }]
         }],
         W3Const.w3PropEvent: {
             W3Const.w3EventClick: [
                 W3Const.w3PlaceHolder_1
-            ]
-        }
-    },
-    "uidNaviDebug": {
-        W3Const.w3PropType: W3Const.w3TypeLink,
-        W3Const.w3PropString: "sidNaviDebug",
-        W3Const.w3PropTriggerApi: [
-        {
-            W3Const.w3ApiID: "aidPage",
-            W3Const.w3ApiCall: W3Const.w3ApiDirect,
-            W3Const.w3ApiParams: [
-            {
-                W3Const.w3ApiDataType: W3Const.w3ApiDataTypeString,
-                W3Const.w3ApiDataValue: "uidPageDebug"
-            }]
-        }],
-        W3Const.w3PropEvent: {
-            W3Const.w3EventClick: [
-                W3Const.w3PlaceHolder_1
-            ]
-        }
-    },
-
-    # Debug Page
-    "uidPageDebug": {
-        W3Const.w3PropType: W3Const.w3TypePanel,
-        W3Const.w3PropSubUI: [
-            "uidDebugContent",
-            "uidLineBreak",
-            "uidButtonDebug",
-            "uidButtonBack"
-        ],
-        W3Const.w3PropCSS: {
-            "text-align": "center",
-        }
-    },
-    "uidDebugContent": {
-        W3Const.w3PropType: W3Const.w3TypeParagraph,
-        W3Const.w3PropString: "sidDebugContent"
-    },
-    "uidButtonDebug": {
-        W3Const.w3PropType: W3Const.w3TypeButton,
-        W3Const.w3PropString: "sidButtonDebug",
-        W3Const.w3PropEvent: {
-            W3Const.w3EventClick: [
-                "W3Debug()"
             ]
         }
     },

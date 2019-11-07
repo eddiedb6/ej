@@ -2,112 +2,120 @@
 
 function EJAddNote(&$noteParams) {
     $aid = "aidAddNote";
-    if (EJIsAPIParamValid($noteParams, $aid)) {
-        $paramOffset = 1; # The first one is alway whole string from reg match
-        $session = $noteParams[W3GetAPIParamIndex($aid, "session") + $paramOffset];
-        if (!EJIsLogin($session)) {
-            return W3CreateAuthenticationResult();
-        }
-
+    return EJExecuteWithAuthenticatedFamily($aid, $noteParams, function ($fid, $aid, &$noteParams) {
         $postParams = "";
         if (W3GetAPIPostParams($aid, $postParams)) {
-            if (EJInsertNote($noteParams, $postParams)) {
+            if (EJInsertNote($noteParams, $postParams, $fid)) {
                 return W3CreateSuccessfulResult();
             }
         }
+
+        return W3CreateFailedResult();
+    });
+}
+
+function EJValidatePDF($noteID) {
+    $result = shell_exec("./tmp/validate.sh " . $noteID);
+    return preg_match("/^TRUE.*/",  $result);
+}
+
+function EJGeneratePDF($noteRawData) {
+    $result = shell_exec("./tmp/clean.sh");
+
+    $note = $noteRawData["note"];
+    $noteDecode = W3Decode($note);
+    $noteID = $noteRawData["id"];
+    $noteTxtName = "tmp/" . $noteID . ".tex";
+    $noteTxt = fopen($noteTxtName, "w");
+    if ($noteTxt == FALSE) {
+        $errorLog = "Open text file failed";
+        W3LogError($errorLog);
+        return $errorLog;
     }
 
-    return W3CreateFailedResult();    
+    fwrite($noteTxt, $noteDecode);
+    fclose($noteTxt);
+
+    $result .= shell_exec("./tmp/pdfgen.sh " . $noteTxtName);
+    if (EJValidatePDF($noteID)) {
+        return "";
+    }
+
+    return $result;
 }
 
 function EJGetNote(&$noteParams) {
-    if (!EJIsAPIParamValid($noteParams, "aidNote")) {
-        return W3CreateFailedResult();
-    }
+    $aid = "aidNote";
+    return EJExecuteWithAuthenticatedFamily($aid, $noteParams, function ($fid, $aid, &$noteParams) {
+        $paramOffset = 1; # The first one is alway whole string from reg match
+        $id = $noteParams[W3GetAPIParamIndex($aid, "id") + $paramOffset];
 
-    $paramOffset = 1; # The first one is alway whole string from reg match
-    $session = $noteParams[W3GetAPIParamIndex("aidNote", "session") + $paramOffset];
-    $id = $noteParams[W3GetAPIParamIndex("aidNote", "id") + $paramOffset];
+        $sql = "select " .
+             "note.ID as id, note.Title as title, note.Tag as tag, note.Note as note, note.Type as type" .
+             " from " .
+             "note" .
+             " where " .
+             "note.ID = " . $id .
+             " and " .
+             "note.FID = " . $fid;
 
-    if (!EJIsLogin($session)) {
-        return W3CreateAuthenticationResult();
-    }
+        $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":{";
+        EJReadTable($sql, function ($row) use (&$result, $aid) {
+            $errorLog = "";
+            $pdfType = "2";
+            if ($row["type"] == $pdfType) {
+                $errorLog = EJGeneratePDF($row);
+                $errorLog = W3Encode($errorLog);
+            }
 
-    $sql = "select " .
-         "note.Title as title, note.Tag as tag, note.Note as note" .
-         " from " .
-         "note" .
-         " where " .
-         "note.ID = " . $id;
-    $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":{";
-    EJReadTable($sql, function ($row) use (&$result) {
-        $apiDef = W3GetAPIDef("aidNote");
-        $columns = $apiDef[w3ApiResult][w3ApiResultData];
-        foreach ($columns as $value) {
-            $resultForColumn = $row[$value[w3ApiDataValue]];
-            $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($resultForColumn) . ",";
-        }
+            $row["error"] = $errorLog;
+
+            $apiDef = W3GetAPIDef($aid);
+            $columns = $apiDef[w3ApiResult][w3ApiResultData];
+            foreach ($columns as $value) {
+                $resultForColumn = $row[$value[w3ApiDataValue]];
+                $result .= W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($resultForColumn) . ",";
+            }
+        });
+        $result = rtrim($result, ",") . "}}";
+
+        return $result;
     });
-    $result = rtrim($result, ",") . "}}";
-
-    return $result;
 }
 
 function EJGetNoteTitle(&$noteParams) {
-    if (!EJIsAPIParamValid($noteParams, "aidNoteTitle")) {
-        return W3CreateFailedResult();
-    }
-    
-    $paramOffset = 1; # The first one is alway whole string from reg match
-    $session = $noteParams[W3GetAPIParamIndex("aidNoteTitle", "session") + $paramOffset];
-    $idTag = $noteParams[W3GetAPIParamIndex("aidNoteTitle", "tag") + $paramOffset];
+    $aid = "aidNoteTitle";
+    return EJExecuteWithAuthenticatedFamily($aid, $noteParams, function ($fid, $aid, &$noteParams) {
+        $paramOffset = 1; # The first one is alway whole string from reg match
+        $idTag = $noteParams[W3GetAPIParamIndex($aid, "tag") + $paramOffset];
 
-    if (!EJIsLogin($session)) {
-        return W3CreateAuthenticationResult();
-    }
+        $sql = "select " .
+             "note.Title as title, note.ID as id" .
+             " from " .
+             "note" .
+             " where " .
+             "note.FID = " . $fid .
+             " and " .
+             "note.Tag = " . $idTag .
+             " order by note.Modified desc";
 
-    $sql = "select " .
-         "note.Title as title, note.ID as id" .
-         " from " .
-         "note" .
-         " where " .
-         "note.Tag = " . $idTag .
-         " order by note.Modified desc";
-    $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":[";
-    EJReadTable($sql, function ($row) use (&$result) {
-        $apiDef = W3GetAPIDef("aidNoteTitle");
-        $columns = $apiDef[w3ApiResult][w3ApiResultData];
-        $result .= "{";
-        foreach ($columns as $value) {
-            $resultForColumn = $row[$value[w3ApiDataValue]];
-            $result .=  W3MakeString($value[w3ApiDataValue]) . ":" . W3MakeString($resultForColumn) . ",";
-        }
-        $result = rtrim($result, ",") . "},";
+        return EJReadMultiResultFromTable($aid, $sql);
     });
-    $result = rtrim($result, ",") . "]}";
-
-    return $result;
 }
 
 function EJModifyNote(&$noteParams) {
     $aid = "aidModifyNote";
-    
-    if (EJIsAPIParamValid($noteParams, $aid)) {
-        $paramOffset = 1; # The first one is alway whole string from reg match
-        $session = $noteParams[W3GetAPIParamIndex($aid, "session") + $paramOffset];
-        if (!EJIsLogin($session)) {
-            return W3CreateAuthenticationResult();
-        }
 
+    return EJExecuteWithAuthenticatedFamily($aid, $noteParams, function ($fid, $aid, &$noteParams) {
         $postParams = "";
         if (W3GetAPIPostParams($aid, $postParams)) {
-            if (EJUpdateNote($noteParams, $postParams)) {
+            if (EJUpdateNote($noteParams, $postParams, $fid)) {
                 return W3CreateSuccessfulResult();
             }
         }
-    }
 
-    return W3CreateFailedResult();    
+        return W3CreateFailedResult();
+    });
 }
 
  ?>

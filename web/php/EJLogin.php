@@ -1,5 +1,7 @@
 <?php
 
+define('familyKey', 'family');
+
 function EJLogin(&$credential) {
     if (!EJIsAPIParamValid($credential, "aidLogin")) {
         return W3CreateFailedResult();
@@ -10,16 +12,18 @@ function EJLogin(&$credential) {
     $password = $credential[W3GetAPIParamIndex("aidLogin", "password") + $paramOffset];
 
     $isLogin = false;
+    $familyID = -1;
     $sql = "select " .
-         "authentication.Authentication as authentication" .
+         "authentication.Authentication as authentication, person.FID as " . familyKey .
          " from " .
          "authentication, person" .
          " where " .
          "authentication.PID=person.ID" .
          " and " .
          "person.Name=" . W3MakeString($username, true) . ";";
-    EJReadTable($sql, function($row) use (&$isLogin, $password) {
+    EJReadTable($sql, function($row) use (&$isLogin, &$familyID, $password) {
         if ($row["authentication"] == $password) {
+            $familyID = $row[familyKey];
             $isLogin = true;
         }
     });
@@ -29,15 +33,25 @@ function EJLogin(&$credential) {
     }
 
     unset($_SESSION[w3Session]);
+    unset($_SESSION[familyKey]);
     $session = EJGenerateSession();
     $_SESSION[w3Session] = $session;
-    
+    $_SESSION[familyKey] = $familyID;
+
     $apiDef = W3GetAPIDef("aidLogin");
     $result = "{" . W3CreateSuccessfulResult(false) . "," . W3MakeString(w3ApiResultData) . ":{";
     $result .= W3MakeString($apiDef[w3ApiResult][w3ApiResultData][0][w3ApiDataValue]) . ":";
     $result .= W3MakeString($session) . "}}";
 
     return $result;
+}
+
+function EJGetLoginFamily($session) {
+    if (EJIsLogin($session)) {
+        return $_SESSION[familyKey];
+    }
+
+    return null;
 }
 
 function EJIsLogin($session) {

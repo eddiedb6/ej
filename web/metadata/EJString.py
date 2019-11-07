@@ -53,6 +53,9 @@
         "sidTableNoteTag7": "Graphic",
         "sidTableNoteTag8": "Math",
         "sidTableNoteTag9": "Mobile",
+
+        "sidTableNoteType1": "HTML",
+        "sidTableNoteType2": "PDF",
         
         # Common 
         "sidButtonBack": "Back",
@@ -65,6 +68,8 @@
         "sidTotalAmount": "0",
         "sidNull": "-",
         "sidOther": "Other",
+        "sidSearch": "Search",
+        "sidClear": "Clear",
 
         # Common label
         "sidTotalLabel": "Total: ",
@@ -91,6 +96,7 @@
         "sidPasswordLabel": "Password:",
         "sidNameLabel": "Name:",
         "sidRepeatLabel": "Repeat(month):",
+        "sidTravelerLabel": "Traveler:",
 
         # Common column
         "sidColumnDatetime": "Datetime",
@@ -99,6 +105,7 @@
         "sidColumnCategory": "Category",
         "sidColumnPayment": "Payment Mode",
         "sidColumnNote": "Note",
+        "sidColumnName": "Name",
         "sidColumnOwner": "Owner",
         "sidColumnStart": "Start",
         "sidColumnEnd": "End",
@@ -107,6 +114,7 @@
         "sidColumnYearReport": "This Year",
         "sidColumnBudget": "Budget",
         "sidColumnEvent": "Event",
+        "sidColumnTraveler": "Traverler",
         
         # Main Page
         "sidTitle": "E&J's",
@@ -116,7 +124,7 @@
         "sidNaviFinance": "Finance",
         "sidNaviNote": "Note",
         "sidNaviCalendar": "Calendar",
-        "sidNaviMap": "Map",
+        "sidNaviJourney": "Journey",
         "sidNaviDebug": "Debug",
 
         # Debug Page
@@ -138,6 +146,21 @@
 
         # Note Page
         "sidNoteTagLabel": "Tag:",
-        "sidNoteTitleLabel": "Title:"
+        "sidNoteTitleLabel": "Title:",
+        "sidNoteTypeLabel": "Type:",
+
+        # Journey Page
+        "sidJourneyTabJourney": "Journey",
+        "sidJourneyTabMap": "Map",
+        "sidGotoMap": "Display on Map",
+        "sidAddJourneyPlace": "Add to Journey",
+        "sidAddPOI": "Add to POI",
+        "sidJourneyLabel": "Current Journey: ",
+        "sidLatitudeLabel": "Latitude: ",
+        "sidLongitudeLabel": "Longitude: ",
+        "sidRemarkLabel": "Remark: ",
+        "sidShowAllPlace": "Places",
+        "sidShowAllPOI": "POIs",
+        "sidAddPOIToJourney": "Add POI to Journey"
     }
 }

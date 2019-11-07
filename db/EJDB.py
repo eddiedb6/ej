@@ -21,8 +21,14 @@
             ImportFile("TableExchangeRate.py"),
             ImportFile("TableAuthentication.py"),
             ImportFile("TableNote.py"),
+            ImportFile("TableNoteType.py"),
             ImportFile("TableNoteTag.py"),
-            ImportFile("TableCalendar.py")
+            ImportFile("TableCalendar.py"),
+            ImportFile("TableJourney.py"),
+            ImportFile("TableJourneyNote.py"),
+            ImportFile("TableJourneyPlace.py"),
+            ImportFile("TableMapJourneyPerson.py"),
+            ImportFile("TablePOI.py")
         ]
     }
     

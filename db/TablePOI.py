@@ -1,5 +1,5 @@
 {
-    PDBConst.Name: "calendar",
+    PDBConst.Name: "poi",
     PDBConst.Columns: [
     {
         PDBConst.Name: "ID",
@@ -10,16 +10,8 @@
         PDBConst.Attributes: ["int", "not null"]
     },
     {
-        PDBConst.Name: "Name",
-        PDBConst.Attributes: ["varchar(255)", "not null"]
-    },
-    {
-        PDBConst.Name: "Datetime",
-        PDBConst.Attributes: ["datetime", "not null"]
-    },
-    {
-        PDBConst.Name: "RepeatMonth",
-        PDBConst.Attributes: ["tinyint", "not null"]
+        PDBConst.Name: "Place",
+        PDBConst.Attributes: ["int", "not null"]
     },
     {
         PDBConst.Name: "Note",

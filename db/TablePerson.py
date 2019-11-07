@@ -23,6 +23,7 @@
     }],
     PDBConst.Initials: [
         {"Name": "'Joan'", "FID": "1", "Sex": "0", "Role": "0"},
-        {"Name": "'Ed'", "FID": "1", "Sex": "1", "Role": "1"}
+        {"Name": "'Ed'", "FID": "1", "Sex": "1", "Role": "1"},
+        {"Name": "'Ollie'", "FID": "1", "Sex": "0", "Role": "2"}
     ]
 }
