@@ -69,11 +69,7 @@ try:
     db = MySQLdb.connect(EJServiceConfig.ejDBServer, EJServiceConfig.ejDBUsername, EJServiceConfig.ejDBPassword, EJServiceConfig.ejDBDBName)
 
     cursor = db.cursor()
-<<<<<<< HEAD
     cursor.execute("select Name, Datetime, RepeatMonth, Note from calendar where FID=1")
-=======
-    cursor.execute("select * from calendar")
->>>>>>> master
 
     events = cursor.fetchall()
     HandleCalendarEvent(events)
