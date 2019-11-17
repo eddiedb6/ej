@@ -10,3 +10,6 @@ E&amp;J's family site
 5. python W3StringHandler.py
 6. python W3UIHandler.py
 7. python W3UserFileHandler.py
+
+* Enable Calendar Service
+    python2.7 EJCalendar.py
