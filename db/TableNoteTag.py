@@ -23,6 +23,7 @@
         {"Tag": "'Graphic'", "ID": "7", "SID": "'sidTableNoteTag7'"},
         {"Tag": "'Math'", "ID": "8", "SID": "'sidTableNoteTag8'"},
         {"Tag": "'Mobile'", "ID": "9", "SID": "'sidTableNoteTag9'"},
+        {"Tag": "'Living'", "ID": "10", "SID": "'sidTableNoteTag10'"},
         {"Tag": "'Other'", "ID": "100", "SID": "'sidOther'"}
     ]
 }
