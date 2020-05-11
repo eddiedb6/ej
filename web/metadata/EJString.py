@@ -53,6 +53,7 @@
         "sidTableNoteTag7": "Graphic",
         "sidTableNoteTag8": "Math",
         "sidTableNoteTag9": "Mobile",
+        "sidTableNoteTag10": "Living",
 
         "sidTableNoteType1": "HTML",
         "sidTableNoteType2": "PDF",
