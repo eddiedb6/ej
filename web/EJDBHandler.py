@@ -1,6 +1,7 @@
 import os
 import sys
 
+# Test GitHub
 thisDir = os.path.split(os.path.realpath(__file__))[0]
 pdbDir = os.path.join(thisDir, "../pdb")
 
